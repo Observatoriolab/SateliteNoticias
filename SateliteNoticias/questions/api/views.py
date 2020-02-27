@@ -34,7 +34,7 @@ class AnswerCreateAPIView(generics.CreateAPIView):
         if question.answers.filter(author=request_user).exists():
             raise ValidationError("You have already answered this question!")
 
-        serializer.save(author=self.request_user, question= question)
+        serializer.save(author=request_user, question=question)
 
 
 class AnswerListAPIView(generics.ListCreateAPIView):

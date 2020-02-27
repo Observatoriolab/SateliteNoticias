@@ -9,7 +9,7 @@ urlpatterns = [
     path("", include(router.urls)),
 
 
-    path("questions/<slug:slug>/answer/",
+    path("questions/<slug:slug>/answers/",
         qv.AnswerListAPIView.as_view(),
         name="answer-list"),
 
