@@ -1,17 +1,10 @@
-# QuestionTime
-**A Quora-like Single Page Application built with Django, Django REST Framework and Vue JS**
+# Satelite de Noticias de BCCH
+**Una plataforma de noticias del eje tecnologico del observatorio tecnologico de BCCH en Django, Django REST Framework y Vue JS**
 
-This is the source code of the Final Project of my Udemy Course "*The Complete Guide to Django REST Framework and Vue JS*", where you can learn how to build professional Single Page Applications with Django and Vue JS. 
+Referencia para la creacion de esta plataforma:
+English Version:(https://www.udemy.com/course/the-complete-guide-to-django-rest-framework-and-vue-js/?referralCode=A2FA0F6C1C4BE66A3B3E)
 
-This is an intermediate/advanced level course, therefore knowledge of Python, Django, HTML, CSS and JavaScript is assumed. 
-
-Enroll now if you want to learn how to build professional REST APIs with Django REST Framework, powerful Reactive Components with Vue JS and Single Page Applications like this one using both Django and Vue JS.
-
-The course is available in both English and Italian:
-
-English Version: [ENROLL NOW](https://www.udemy.com/course/the-complete-guide-to-django-rest-framework-and-vue-js/?referralCode=A2FA0F6C1C4BE66A3B3E)
-
-VERSIONE ITALIANA: [ISCRIVITI ORA](https://www.udemy.com/course/guida-per-sviluppatori-a-django-rest-framework-e-vue-js/?referralCode=DD17CAECBF2D0306DF94)
+Hasta el momento (Febrero 27, 2020) es de forma local 
 
 ## Hot to set up the project to run on your local machine?
 
@@ -24,22 +17,20 @@ python3 -m venv venv
 
 #### Activate the environment and install all the Python/Django dependencies:
 
+SI SE ESTA EN MAC:
+Vaya al requirements.txt y borre la linea de pkg-resource entera y guarde el cambio
+
+
+SINO HAGA SOLAMENTE:
 ```
-source ./venv/bin/activate
-pip install -m ./requirements.txt
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
-#### Apply the migrations as usual.
-
-#### Time to install the Vue JS dependencies:
+#### Apply the migrations as usual in the folder with the manage.py file.
 ```
-cd QuestionTime/frontend
-npm install
-```
-
-#### Run Vue JS Development Server:
-```
-npm run serve
+python manage.py makemigrations
+python manage.py migrate
 ```
 
 #### Run Django's development server:
@@ -47,12 +38,5 @@ npm run serve
 python manage.py runserver
 ```
 
-#### Open up Chrome and go to 127.0.0.1:8000 and the app is now running in development mode!
+#### Open up Chrome and go to 127.0.0.1:8000 and the app is now running in development mode! (Febrero 27, 2020)
 
-Would you like to learn how to create powerful Single Page Applications like this one on your own?
-
-I have got the course for you!
-
-[Click HERE to Enroll Now!](https://www.udemy.com/course/the-complete-guide-to-django-rest-framework-and-vue-js/?referralCode=A2FA0F6C1C4BE66A3B3E)
-
-30 Day Money Back Guarantee.
