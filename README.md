@@ -29,6 +29,7 @@ pip install -r requirements.txt
 
 #### Apply the migrations as usual in the folder with the manage.py file.
 ```
+cd SateliteNoticias
 python manage.py makemigrations
 python manage.py migrate
 ```
