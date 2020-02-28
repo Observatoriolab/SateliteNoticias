@@ -33,6 +33,16 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
+#### Time to install the Vue JS dependencies:
+```
+cd SateliteNoticias/frontend
+npm install
+```
+
+#### Run Vue JS Development Server:
+```
+npm run serve
+
 #### Run Django's development server:
 ```
 python manage.py runserver
