@@ -34,7 +34,13 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
+#### Run Django's development server:
+```
+python manage.py runserver
+```
+
 #### Time to install the Vue JS dependencies:
+En otro terminal/symbolo del sistema hacer:
 ```
 cd SateliteNoticias/frontend
 npm install
@@ -45,10 +51,6 @@ npm install
 npm run serve
 ```
 
-#### Run Django's development server:
-```
-python manage.py runserver
-```
 
 #### Open up Chrome and go to 127.0.0.1:8000 and the app is now running in development mode! (Febrero 27, 2020)
 
