@@ -42,6 +42,7 @@ npm install
 #### Run Vue JS Development Server:
 ```
 npm run serve
+```
 
 #### Run Django's development server:
 ```
