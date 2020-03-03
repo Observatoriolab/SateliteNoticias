@@ -12,10 +12,10 @@ Hasta el momento (Marzo 3, 2020) es de forma local
 
 ## Dependencias (programas a instalar)
 
-Markup : * NODEJS
-Markup : * PYTHON 3.8.2
-Markup : * PIP (viene con python incluido)
-Markup : * GIT
+NODEJS, 
+PYTHON 3.8.2, 
+PIP (viene con python incluido), 
+GIT 
 
 Guia de instalacion (proximamente)
 
