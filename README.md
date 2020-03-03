@@ -23,15 +23,16 @@ Guia de instalacion (proximamente)
 
 
 
-#### Clonar el proyecto
+
+#### *) Abrir el GIT BASH de Windows (al tener ya instalado GIT dada la guia de instalacion)
+```
+Click derecho y opcion GIT BASH
+```
+
+#### 0) Clonar el proyecto
 
 git clone https://github.com/Observatoriolab/SateliteNoticias.git
 
-
-#### 0) Abrir el GIT BASH de Windows (al tener ya instalado GIT dada la guia de instalacion)
-```
-Click derecho y opcion GIT BASH en la carpeta ya clonada
-```
 
 #### 0.5) SI SE ESTA EN WINDOWS 10 HAY QUE MODIFICAR LA SIGUIENTE LINEA EN EL ARCHIVO vue.config.js :
 ```
