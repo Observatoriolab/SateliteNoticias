@@ -4,53 +4,92 @@
 Referencia para la creacion de esta plataforma:
 English Version:(https://www.udemy.com/course/the-complete-guide-to-django-rest-framework-and-vue-js/?referralCode=A2FA0F6C1C4BE66A3B3E)
 
-Hasta el momento (Febrero 27, 2020) es de forma local 
+Hasta el momento (Marzo 3, 2020) es de forma local 
 
-## Hot to set up the project to run on your local machine?
 
-#### Download the code to your PC, unpack the zip and move inside the folder.
 
-#### Create a new Python Virtual Environment:
+## WINDOWS 10, MAC y Linux
+
+## Dependencias (programas a instalar)
+
+NODEJS
+PYTHON 3.8.2
+PIP (viene con python incluido)
+GIT
+
+Guia de instalacion (proximamente)
+
+## CRONOLOGICAMENTE HACER:
+
+
+
+#### Clonar el proyecto
+
+git clone https://github.com/Observatoriolab/SateliteNoticias.git
+
+
+#### 0) Abrir el GIT BASH de Windows (al tener ya instalado GIT dada la guia de instalacion)
 ```
-python3 -m venv venv
+Click derecho y opcion GIT BASH en la carpeta ya clonada
 ```
 
-#### Activate the environment and install all the Python/Django dependencies:
+#### 0.5) SI SE ESTA EN WINDOWS 10 HAY QUE MODIFICAR LA SIGUIENTE LINEA EN EL ARCHIVO vue.config.js :
+```
+publicPath: "http://0.0.0.0:8080/",
+```
+por 
+```
+publicPath: "http://127.0.0.1:8080/",
+```
+(como dice el comentario de // on Windows you might want to set publicPath: "http://127.0.0.1:8080/" )
+Si no se esta en WINDOWS 10, se DEBE DEJAR TAL COMO ESTABA
 
-SI SE ESTA EN MAC:
-Vaya al requirements.txt y borre la linea de pkg-resource entera y guarde el cambio
+#### 1) Crear el ambiente de desarrollo en la carpeta ya clonada
 
+```
+python -m venv venv
+```
 
-SINO HAGA SOLAMENTE:
+#### 2) Activar el ambiente de desarrollo e instalar todas las dependencias de Python/Django:
+En WINDOWS 10
+```
+source venv/Scripts/activate
+```
+EN MAC/LINUX:
 ```
 source venv/bin/activate
+```
+Despues de esto se instalan las dependencias con lo siguiente:
+
+```
 pip install -r requirements.txt
 ```
 
-#### Apply the migrations as usual in the folder with the manage.py file.
+#### 3) Aplicar las migraciones de Django
 ```
 cd SateliteNoticias
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-#### Run Django's development server:
+#### 4) Correr el servidor de Django:
 ```
 python manage.py runserver
 ```
 
-#### Time to install the Vue JS dependencies:
-En otro terminal/symbolo del sistema hacer:
+#### 5) Instalacion de las dependencias de Vue JS :
+
+En otra consola GIT BASH dentro de la carpeta original de SateliteNoticias (la que tiene la carpeta venv) hacer:
 ```
-cd SateliteNoticias/frontend
 npm install
 ```
 
-#### Run Vue JS Development Server:
+#### 6) Correr el servidor de desarrollo de Vue JS:
+En esa misma carpeta hacer:
 ```
 npm run serve
 ```
 
 
-#### Open up Chrome and go to 127.0.0.1:8000 and the app is now running in development mode! (Febrero 27, 2020)
+#### 7) Abrir chrome e ir a 127.0.0.1:8000 y alli esta el servidor de desarrollo andando (Marzo 3, 2020)
 
