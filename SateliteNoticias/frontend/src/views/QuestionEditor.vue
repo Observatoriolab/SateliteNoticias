@@ -1,11 +1,20 @@
 <template>
   <div class="container mt-2">
-    <h1 class="mb-3">Ask a Question</h1>
+    <h1 class="mb-3">Post a piece of news</h1>
     <form @submit.prevent="onSubmit">
+      <h2> Title: </h2>
+      <input
+        v-model="question_title"
+        class="form-control"
+        placeholder="Whats the title of this news?"
+      />  
+      <br>
+      <h2> Content: </h2>
+      <br>
       <textarea
         v-model="question_body"
         class="form-control"
-        placeholder="What do you want to ask?"
+        placeholder="What do you want to inform us about?"
         rows="3"
       ></textarea>
       <br>
@@ -31,6 +40,7 @@ export default {
   },
   data() {
     return {
+      question_title: null,
       question_body: null,
       error: null
     }
@@ -38,9 +48,9 @@ export default {
   methods: {
     onSubmit() {
       // Tell the REST API to create or update a Question Instance
-      if (!this.question_body) {
+      if (!this.question_title) {
         this.error = "You can't send an empty question!";
-      } else if (this.question_body.length > 240) {
+      } else if (this.question_title.length > 240) {
         this.error = "Ensure this field has no more than 240 characters!";
       } else {
         let endpoint = "/api/questions/";
@@ -49,7 +59,7 @@ export default {
           endpoint += `${ this.slug }/`;
           method = "PUT";
         }     
-        apiService(endpoint, method, { content: this.question_body })
+        apiService(endpoint, method, { title: this.question_title, content: this.question_body })
           .then(question_data => {
             this.$router.push({ 
               name: 'question', 
@@ -64,7 +74,7 @@ export default {
     if (to.params.slug !== undefined) {
       let endpoint = `/api/questions/${ to.params.slug }/`;
       let data = await apiService(endpoint);
-      return next(vm => (vm.question_body = data.content))
+      return next(vm => (vm.question_title = data.content))
     } else {
       return next();
     }   

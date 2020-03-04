@@ -1,15 +1,18 @@
 <template>
   <div class="single-question mt-2">
     <div v-if="question" class="container">
-      <h1>{{ question.content }}</h1>
+      <h1>{{ question.title }}</h1>
       <QuestionActions
         v-if="isQuestionAuthor"
         :slug="question.slug"
       />
+      <br>
       <p class="mb-0">Posted by:
         <span class="author-name">{{ question.author }}</span>
       </p>
       <p>{{ question.created_at }}</p>
+      <hr>
+      <p>{{question.content}}</p>
       <hr>
       <div v-if="userHasAnswered">
         <p class="answer-added">You've written an answer!</p>
