@@ -2,18 +2,25 @@
   <div class="home">
     <div class="container mt-4">
       <div v-for="question in questions" :key="question.pk">
-        <p class="mb-0">
-          Posted by:
-          <span class="question-author">{{ question.author }}</span>
-        </p>
+     
         <h2>
           <router-link
             :to="{ name: 'question', params: { slug: question.slug } }"
             class="question-link"
           >
-            {{ question.content }}
+            {{ question.title }}
           </router-link>
         </h2>
+        <br>
+        <p class="mb-0">
+          Posted by:
+          <span class="question-author">{{ question.author }}</span>
+        </p>
+        <br>
+        <p>
+          {{question.content}}
+
+        </p>
         <p>Answers: {{ question.answers_count }}</p>
         <hr />
       </div>

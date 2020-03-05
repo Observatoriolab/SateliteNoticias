@@ -4,7 +4,8 @@ from django.conf import settings
 class Question(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    content = models.CharField(max_length=240)
+    title = models.CharField(max_length=240)
+    content = models.TextField(blank=True)
     # Pseudo ID to retrieve the details of a single question
     slug = models.SlugField(max_length=255, unique=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -12,7 +13,7 @@ class Question(models.Model):
                                 related_name="questions")
 
     def __str__(self):
-        return self.content
+        return self.title
 
 class Answer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)

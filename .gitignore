@@ -104,3 +104,7 @@ venv.bak/
 .mypy_cache/
 
 .vscode/
+
+SateliteNoticias/frontend/webpack-stats.json
+
+SateliteNoticias/questions/migrations/
