@@ -14,8 +14,8 @@
       <textarea
         v-model="question_body"
         class="form-control"
-        placeholder="What do you want to inform us about?"
         rows="3"
+        placeholder="What do you want to inform us about?"
       ></textarea>
       <br>
       <button
@@ -74,7 +74,8 @@ export default {
     if (to.params.slug !== undefined) {
       let endpoint = `/api/questions/${ to.params.slug }/`;
       let data = await apiService(endpoint);
-      return next(vm => (vm.question_title = data.content))
+      console.log(data)
+      return next(vm => (vm.question_title = data.title, vm.question_body = data.content))
     } else {
       return next();
     }   
