@@ -47,11 +47,8 @@ export default {
 #av7lRI64e {
   --mdc-theme-primary: #673ab7;
   --mdc-theme-secondary: #f44336;
-  --mdc-theme-background: #ffffff;
   position: relative;
   margin: auto;
-  background-color: #ffffff;
-  overflow: hidden;
   width: 100%;
   height: 100%;
 }
