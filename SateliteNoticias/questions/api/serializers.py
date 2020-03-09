@@ -1,13 +1,67 @@
 from rest_framework import serializers
 from questions.models import Answer, Question
+from taggit_serializer.serializers import TaggitSerializer, TagListSerializerField
+import json
+import logging
+import six
 
-class AnswerSerializer(serializers.ModelSerializer):
+class NewTagListSerializerField(TagListSerializerField):
+    def to_internal_value(self, value):
+        logging.debug("Oh hai!")
+
+        if isinstance(value, six.string_types):
+            if not value:
+                value = "[]"
+            try:
+                if(type(value) == str):
+                    if(value.__contains__('"') == True):
+                        value = json.loads(value)
+                    else:
+                        value = value.split(',')
+
+            except ValueError:
+                self.fail('invalid_json')
+
+        if not isinstance(value, list):
+            self.fail('not_a_list', input_type=type(value).__name__)
+
+        for s in value:
+            if not isinstance(s, six.string_types):
+                self.fail('not_a_str')
+
+            self.child.run_validation(s)
+
+        return value
+class QuestionSerializer(TaggitSerializer,serializers.ModelSerializer):
+    author = serializers.StringRelatedField(read_only=True)
+    created_at = serializers.SerializerMethodField(read_only=True)
+    slug = serializers.SlugField(read_only=True)
+    answers_count = serializers.SerializerMethodField(read_only=True)
+    user_has_answered = serializers.SerializerMethodField(read_only=True)
+    tags = NewTagListSerializerField()
+
+    class Meta:
+        model = Question
+        exclude = ["updated_at"]
+
+    def get_created_at(self, instance):
+        return instance.created_at.strftime("%B %d, %Y")
+
+    def get_answers_count(self, instance):
+        return instance.answers.count()
+
+    def get_user_has_answered(self, instance):
+        request = self.context.get("request")
+        return instance.answers.filter(author=request.user).exists()
+
+class AnswerSerializer(TaggitSerializer,serializers.ModelSerializer):
 
     author = serializers.StringRelatedField(read_only=True)
     created_at = serializers.SerializerMethodField(read_only=True)
     likes_count = serializers.SerializerMethodField(read_only=True)
     user_has_voted = serializers.SerializerMethodField(read_only=True)
     question_slug = serializers.SerializerMethodField(read_only=True)
+    tags = NewTagListSerializerField()
 
     class Meta:
         model = Answer
@@ -27,25 +81,4 @@ class AnswerSerializer(serializers.ModelSerializer):
     def get_question_slug(self, instance):
         return instance.question.slug
 
-class QuestionSerializer(serializers.ModelSerializer):
-    author = serializers.StringRelatedField(read_only=True)
-    created_at = serializers.SerializerMethodField(read_only=True)
-    slug = serializers.SlugField(read_only=True)
-    answers_count = serializers.SerializerMethodField(read_only=True)
-    user_has_answered = serializers.SerializerMethodField(read_only=True)
-
-    class Meta:
-        model = Question
-        exclude = ["updated_at"]
-
-    def get_created_at(self, instance):
-        return instance.created_at.strftime("%B %d, %Y")
-
-    def get_answers_count(self, instance):
-        return instance.answers.count()
-
-
-    def get_user_has_answered(self, instance):
-        request = self.context.get("request")
-        return instance.answers.filter(author=request.user).exists()
 

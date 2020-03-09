@@ -17,6 +17,10 @@ urlpatterns = [
         qv.AnswerCreateAPIView.as_view(),
         name="answer-create"),
 
+    path("questions2/",
+        qv.QuestionListAPIView.as_view(),
+        name="question-list"),
+
      path("answers/<int:pk>/",
         qv.AnswerRUDAPIView.as_view(),
         name="answer-detail"),

@@ -1,16 +1,14 @@
 <template>
   <div class="question-actions">
     <router-link
-      :to="{name: 'question-editor', params: {slug: slug}}"
+      :to="{ name: 'question-editor', params: { slug: slug } }"
       class="btn btn-sm btn-outline-secondary mr-1"
       >Edit
     </router-link>
-    <button
-      class="btn btn-sm btn-outline-danger"
-      @click="deleteQuestion"
-      >Delete
+    <button class="btn btn-sm btn-outline-danger" @click="deleteQuestion">
+      Delete
     </button>
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -25,16 +23,16 @@ export default {
   },
   methods: {
     async deleteQuestion() {
+      console.log('aqui deberia estar el slug')
+      console.log(this.slug)
       let endpoint = `/api/questions/${this.slug}/`;
       try {
         await apiService(endpoint, "DELETE");
         this.$router.push("/");
-      }
-      catch (err) {
+      } catch (err) {
         console.log(err);
       }
     }
   }
-}
+};
 </script>
-

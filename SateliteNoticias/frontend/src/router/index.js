@@ -5,6 +5,8 @@ import Question from "../views/Question.vue";
 import QuestionEditor from "../views/QuestionEditor.vue";
 import AnswerEditor from "../views/AnswerEditor.vue";
 import NotFound from "../views/NotFound.vue";
+import Tryout from "../tryouts/ejemploSinNada.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -34,6 +36,11 @@ const routes = [
     path: "*",
     name: "page-not-found",
     component: NotFound
+  },
+  {
+    path: "/tryout",
+    name: "ejemploSinNada",
+    component: Tryout
   }
 ];
 

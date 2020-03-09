@@ -3,7 +3,7 @@
     <div class="container mt-3">
       <h1 id="notfound">{{ message }}</h1>
     </div>
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -12,9 +12,9 @@ export default {
   data() {
     return {
       message: "404 - Page Not Found"
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>
@@ -23,5 +23,3 @@ export default {
   text-align: center;
 }
 </style>
-
-

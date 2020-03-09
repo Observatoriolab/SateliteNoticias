@@ -2,7 +2,6 @@
   <div class="home">
     <div class="container mt-4">
       <div v-for="question in questions" :key="question.pk">
-     
         <h2>
           <router-link
             :to="{ name: 'question', params: { slug: question.slug } }"
@@ -11,23 +10,27 @@
             {{ question.title }}
           </router-link>
         </h2>
-        <br>
+        <br />
         <p class="mb-0">
           Posted by:
           <span class="question-author">{{ question.author }}</span>
         </p>
-        <br>
+        <br />
         <p>
-          {{question.content}}
-
+          {{ question.content }}
         </p>
         <p>Answers: {{ question.answers_count }}</p>
         <hr />
+          <br />
+        <p class="mb-0">
+          Tags:
+          <span class="question-author">{{ question.tags }}</span>
+        </p>
+        <br />
       </div>
 
       <div class="my-4">
-
-        <p v-show="loadingQuestions"> ...loading... </p>
+        <p v-show="loadingQuestions">...loading...</p>
 
         <button
           v-show="next"
@@ -36,7 +39,6 @@
         >
           Load More
         </button>
-
       </div>
     </div>
   </div>
@@ -58,26 +60,24 @@ export default {
     getQuestions() {
       let endpoint = "/api/questions/";
       if (this.next) {
-        endpoint = this.next
+        endpoint = this.next;
       }
       this.loadingQuestions = true;
       apiService(endpoint).then(data => {
         this.questions.push(...data.results);
         this.loadingQuestions = false;
-        if (data.next){
-            this.next = data.next;
-
-        }
-        else{
-          this.next = null
+        if (data.next) {
+          this.next = data.next;
+        } else {
+          this.next = null;
         }
       });
     }
   },
   created() {
     this.getQuestions();
-    console.log(this.questions)
-    document.title= "Satelite de Noticias"
+    console.log(this.questions);
+    document.title = "Satelite de Noticias";
   }
 };
 </script>

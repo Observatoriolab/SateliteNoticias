@@ -10,7 +10,7 @@ from questions.api.serializers import AnswerSerializer, QuestionSerializer
 from questions.models import Answer, Question
 
 
-
+import logging
 
 class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all().order_by("-created_at")
@@ -22,6 +22,13 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+class QuestionListAPIView(generics.ListAPIView):
+    serializer_class = QuestionSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Question.objects.all().order_by("-created_at")
+        
 class AnswerCreateAPIView(generics.CreateAPIView):
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
