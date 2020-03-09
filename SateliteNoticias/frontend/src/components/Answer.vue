@@ -4,7 +4,10 @@
       <strong> {{ answer.author }}</strong> &#8901; {{ answer.created_at }}
     </p>
     <p>{{ answer.body }}</p>
-
+     <p class="mb-0">
+        Tags:
+        <span >{{ answer.tags }}</span>
+      </p>
     <div v-if="isAnswerAuthor">
       <router-link
         :to="{ name: 'answer-editor', params: { id: answer.id } }"

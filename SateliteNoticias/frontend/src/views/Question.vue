@@ -12,6 +12,12 @@
       <hr />
       <p>{{ question.content }}</p>
       <hr />
+      <br />
+      <p class="mb-0">
+        Tags:
+        <span class="author-name">{{ question.tags }}</span>
+      </p>
+      <br />
       <div v-if="userHasAnswered">
         <p class="answer-added">You've written an answer!</p>
       </div>
@@ -145,6 +151,8 @@ export default {
       this.loadingAnswers = true;
       apiService(endpoint).then(data => {
         this.answers.push(...data.results);
+        console.log('estos son las respuestas')
+        console.log(data.results)
         this.loadingAnswers = false;
         if (data.next) {
           this.next = data.next;

@@ -21,6 +21,12 @@
         </p>
         <p>Answers: {{ question.answers_count }}</p>
         <hr />
+          <br />
+        <p class="mb-0">
+          Tags:
+          <span class="question-author">{{ question.tags }}</span>
+        </p>
+        <br />
       </div>
 
       <div class="my-4">
