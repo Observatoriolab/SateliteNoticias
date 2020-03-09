@@ -121,6 +121,8 @@ export default {
           if (data) {
             this.question = data;
             this.userHasAnswered = data.user_has_answered;
+            console.log('esta es la data')
+            console.log(data)
             this.setPageTitle(data.content)
           } else {
             this.question = null;

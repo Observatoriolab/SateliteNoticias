@@ -18,6 +18,13 @@
         placeholder="What do you want to inform us about?"
       ></textarea>
       <br>
+      <h2> Tags: </h2>
+      <input
+        v-model="question_tags"
+        class="form-control"
+        placeholder="Whats the title of this news?"
+      />  
+      <br>
       <button
         type="submit"
         class="btn btn-success"
@@ -42,6 +49,7 @@ export default {
     return {
       question_title: null,
       question_body: null,
+      question_tags: null,
       error: null
     }
   },
@@ -59,8 +67,10 @@ export default {
           endpoint += `${ this.slug }/`;
           method = "PUT";
         }     
-        apiService(endpoint, method, { title: this.question_title, content: this.question_body })
+        apiService(endpoint, method, { title: this.question_title, content: this.question_body, tags:this.question_tags })
           .then(question_data => {
+            console.log('esta es la data que me dio en el front')
+            console.log(question_data)
             this.$router.push({ 
               name: 'question', 
               params: { slug: question_data.slug }

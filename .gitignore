@@ -110,3 +110,5 @@ SateliteNoticias/frontend/webpack-stats.json
 SateliteNoticias/questions/migrations/
 
 .DS_Store
+
+SateliteNoticias/users/migrations/

@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from taggit.managers import TaggableManager
+
 # Create your models here.
 class Question(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -11,6 +13,7 @@ class Question(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE,
                                 related_name="questions")
+    tags = TaggableManager(blank = True) 
 
     def __str__(self):
         return self.title
@@ -29,6 +32,7 @@ class Answer(models.Model):
     voters = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                     related_name="votes")
 
+    tags = TaggableManager(blank = True) 
 
     def __str__(self):
         return self.author.username
