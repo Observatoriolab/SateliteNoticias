@@ -2,17 +2,16 @@
   <div class="container mt-2">
     <h1 class="mb-3">Edit Your Answer</h1>
     <form @submit.prevent="onSubmit">
-      <textarea 
-        v-model="answerBody" 
-        class="form-control" 
-        rows="3"
-      ></textarea>
+      <textarea v-model="answerBody" class="form-control" rows="3"></textarea>
+      <br />
+      <h2>Tags:</h2>
+          <input
+            v-model="answerTags"
+            class="form-control"
+            placeholder="Any tags? (separate them by commas)"
+          />
       <br>
-      <button 
-        type="submit" 
-        class="btn btn-success"
-        >Publish your answer
-      </button>
+      <button type="submit" class="btn btn-success">Publish your answer</button>
     </form>
     <p v-if="error" class="muted mt-2">{{ error }}</p>
   </div>
@@ -32,20 +31,20 @@ export default {
     return {
       questionSlug: null,
       answerBody: null,
+      answerTags: [],
       error: null
-    }
+    };
   },
   methods: {
     onSubmit() {
       if (this.answerBody) {
         let endpoint = `/api/answers/${this.id}/`;
-        apiService(endpoint, "PUT", { body: this.answerBody })
-          .then(() => {
-            this.$router.push({
-              name: "question",
-              params: { slug: this.questionSlug }
-            })
-          })
+        apiService(endpoint, "PUT", { body: this.answerBody, tags: this.answerTags }).then(() => {
+          this.$router.push({
+            name: "question",
+            params: { slug: this.questionSlug }
+          });
+        });
       } else {
         this.error = "You can't submit an empty answer!";
       }
@@ -55,10 +54,13 @@ export default {
     // get the answer's data from the REST API and set two data properties for the component
     let endpoint = `/api/answers/${to.params.id}/`;
     let data = await apiService(endpoint);
-    return next(vm => (
-      vm.answerBody = data.body,
-      vm.questionSlug = data.question_slug
-    ));
+    console.log('esta es la data cuando voy a editar una pregunta')
+    console.log(data)
+    return next(
+      vm => (
+        (vm.answerBody = data.body), (vm.questionSlug = data.question_slug), (vm.answerTags = data.tags)
+      )
+    );
   }
 };
 </script>

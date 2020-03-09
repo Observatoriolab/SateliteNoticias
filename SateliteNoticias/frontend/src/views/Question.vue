@@ -2,18 +2,16 @@
   <div class="single-question mt-2">
     <div v-if="question" class="container">
       <h1>{{ question.title }}</h1>
-      <QuestionActions
-        v-if="isQuestionAuthor"
-        :slug="question.slug"
-      />
-      <br>
-      <p class="mb-0">Posted by:
+      <QuestionActions v-if="isQuestionAuthor" :slug="question.slug" />
+      <br />
+      <p class="mb-0">
+        Posted by:
         <span class="author-name">{{ question.author }}</span>
       </p>
       <p>{{ question.created_at }}</p>
-      <hr>
-      <p>{{question.content}}</p>
-      <hr>
+      <hr />
+      <p>{{ question.content }}</p>
+      <hr />
       <div v-if="userHasAnswered">
         <p class="answer-added">You've written an answer!</p>
       </div>
@@ -23,33 +21,40 @@
             Answer the Question
           </div>
           <div class="card-block">
-            <textarea 
+            <textarea
               v-model="newAnswerBody"
               class="form-control"
               placeholder="Share Your Knowledge!"
               rows="5"
             ></textarea>
           </div>
+           <h2>Tags:</h2>
+          <input
+            v-model="answerTags"
+            class="form-control"
+            placeholder="Any tags? (separate them by commas)"
+          />
+          <br>
           <div class="card-footer px-3">
-            <button type="submit" class="btn btn-sm btn-success">Submit Your Answer</button>
+            <button type="submit" class="btn btn-sm btn-success">
+              Submit Your Answer
+            </button>
           </div>
         </form>
         <p v-if="error" class="error mt-2">{{ error }}</p>
       </div>
       <div v-else>
-        <button
-          class="btn btn-sm btn-success"
-          @click="showForm = true"
-          >Answer the Question
+        <button class="btn btn-sm btn-success" @click="showForm = true">
+          Answer the Question
         </button>
       </div>
-      <hr>
+      <hr />
     </div>
     <div v-else>
       <h1 class="error text-center">404 - Question Not Found</h1>
     </div>
     <div v-if="question" class="container">
-      <AnswerComponent 
+      <AnswerComponent
         v-for="answer in answers"
         :answer="answer"
         :requestUser="requestUser"
@@ -62,7 +67,8 @@
           v-show="next"
           @click="getQuestionAnswers"
           class="btn btn-sm btn-outline-success"
-          >Load More
+        >
+          Load More
         </button>
       </div>
     </div>
@@ -92,11 +98,12 @@ export default {
       next: null,
       loadingAnswers: false,
       newAnswerBody: null,
+      answerTags: [],
       error: null,
       userHasAnswered: false,
       showForm: false,
       requestUser: null
-    }
+    };
   },
   computed: {
     isQuestionAuthor() {
@@ -116,20 +123,18 @@ export default {
     getQuestionData() {
       // get the details of a question instance from the REST API and call setPageTitle
       let endpoint = `/api/questions/${this.slug}/`;
-      apiService(endpoint)
-        .then(data => {
-          if (data) {
-            this.question = data;
-            this.userHasAnswered = data.user_has_answered;
-            console.log('esta es la data')
-            console.log(data)
-            this.setPageTitle(data.content)
-          } else {
-            this.question = null;
-            this.setPageTitle("404 - Page Not Found")
-          }
-
-        })
+      apiService(endpoint).then(data => {
+        if (data) {
+          this.question = data;
+          this.userHasAnswered = data.user_has_answered;
+          console.log("esta es la data");
+          console.log(this.question.slug);
+          this.setPageTitle(data.content);
+        } else {
+          this.question = null;
+          this.setPageTitle("404 - Page Not Found");
+        }
+      });
     },
     getQuestionAnswers() {
       // get a page of answers for a single question from the REST API's paginated 'Questions Endpoint'
@@ -138,25 +143,30 @@ export default {
         endpoint = this.next;
       }
       this.loadingAnswers = true;
-      apiService(endpoint)
-        .then(data => {
-          this.answers.push(...data.results);
-          this.loadingAnswers = false;
-          if (data.next) {
-            this.next = data.next;
-          } else {
-            this.next = null;
-          }
-        })
+      apiService(endpoint).then(data => {
+        this.answers.push(...data.results);
+        this.loadingAnswers = false;
+        if (data.next) {
+          this.next = data.next;
+        } else {
+          this.next = null;
+        }
+      });
     },
     onSubmit() {
       // Tell the REST API to create a new answer for this question based on the user input, then update some data properties
+      
+      console.log('aqui voy a enviar una respuesta nueva')
+      console.log(this.slug)
       if (this.newAnswerBody) {
         let endpoint = `/api/questions/${this.slug}/answer/`;
-        apiService(endpoint, "POST", { body: this.newAnswerBody })
-          .then(data => {
-            this.answers.unshift(data)
-          })
+        apiService(endpoint, "POST", { body: this.newAnswerBody, tags: this.answerTags }).then(
+          data => {
+            console.log('este es la data que me entrego al responder la pregunta')
+            console.log(data)
+            this.answers.unshift(data);
+          }
+        );
         this.newAnswerBody = null;
         this.showForm = false;
         this.userHasAnswered = true;
@@ -171,27 +181,26 @@ export default {
       // delete a given answer from the answers array and make a delete request to the REST API
       let endpoint = `/api/answers/${answer.id}/`;
       try {
-        await apiService(endpoint, "DELETE")
-        this.$delete(this.answers, this.answers.indexOf(answer))
+        await apiService(endpoint, "DELETE");
+        this.$delete(this.answers, this.answers.indexOf(answer));
         this.userHasAnswered = false;
-      }
-      catch (err) {
-        console.log(err)
+      } catch (err) {
+        console.log(err);
       }
     }
   },
   created() {
-    this.getQuestionData()
-    this.getQuestionAnswers()
-    this.setRequestUser()
+    this.getQuestionData();
+    this.getQuestionAnswers();
+    this.setRequestUser();
   }
-}
+};
 </script>
 
 <style scoped>
 .author-name {
   font-weight: bold;
-  color: #DC3545;
+  color: #dc3545;
 }
 
 .answer-added {
@@ -201,6 +210,6 @@ export default {
 
 .error {
   font-weight: bold;
-  color: red; 
+  color: red;
 }
 </style>

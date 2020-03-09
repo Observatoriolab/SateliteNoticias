@@ -17,20 +17,19 @@ export default {
     NavbarComponent
   },
 
-  methods:{
+  methods: {
     //En ves de usar .then, dejarlo asincrono
-    async setUserInfo(){
-      const data = await apiService("/api/user/")
+    async setUserInfo() {
+      const data = await apiService("/api/user/");
       const requestUser = data["username"];
       //Lo deje en el local storage del browser para ser usado y corroborar que es el usuario
-      window.localStorage.setItem("username", requestUser)
+      window.localStorage.setItem("username", requestUser);
       //console.log(data)
       //console.log(requestUser)
-
     }
   },
-  created(){
-    this.setUserInfo()
+  created() {
+    this.setUserInfo();
   }
 };
 </script>
