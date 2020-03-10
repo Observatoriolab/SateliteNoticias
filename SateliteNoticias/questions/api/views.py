@@ -20,14 +20,46 @@ class QuestionViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        #self.request.data.tags (aqui deberia estar el tema)
+        #Si es que existe el filtro
+        if('filter' in self.request.data):
+            logging.debug('este es el filtro que voy a aplicar')
+            lista = self.request.data.get("tags","")
+            '''
+            logging.debug(type(lista))
+            logging.debug(lista[0])
+            logging.debug(lista)
+            '''
+            firstFilter = Question.objects.filter(tags__name__in=[lista[0]]).distinct()
+            lista.pop(0)
+            tags = lista
+            results = firstFilter
+            for tag in tags:
+                results = results.filter(tags__name__in=[tag])
+
+            logging.debug('ojala')
+
+            '''
+            logging.debug('asi quedo el auxiliar')
+            logging.debug(auxiliar)
+            logging.debug(filteredQuestions)
+            '''
+            return results
+        else:
+            serializer.save(author=self.request.user)
+
+
+    def get_queryset(self):
+        
+        return  Question.objects.all().order_by("-created_at")
 
 class QuestionListAPIView(generics.ListAPIView):
     serializer_class = QuestionSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Question.objects.all().order_by("-created_at")
+        firstFilter = Question.objects.filter(tags__name__in=[self.kwargs.get('value')]).distinct()
+        return firstFilter.order_by("-created_at")
         
 class AnswerCreateAPIView(generics.CreateAPIView):
     queryset = Answer.objects.all()
@@ -51,6 +83,9 @@ class AnswerListAPIView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         kwarg_slug = self.kwargs.get("slug")
+        logging.debug('aqui va algo')
+        logging.debug(type(Answer.objects.filter(question__slug=kwarg_slug).order_by("-created_at")))
+        logging.debug(Answer.objects.filter(question__slug=kwarg_slug).order_by("-created_at"))
         return Answer.objects.filter(question__slug=kwarg_slug).order_by("-created_at")
 
 
