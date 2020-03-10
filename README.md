@@ -69,7 +69,9 @@ pip install -r requirements.txt
 #### 3) Aplicar las migraciones de Django
 ```
 cd SateliteNoticias
-python manage.py makemigrations
+python manage.py makemigrations users
+python manage.py makemigrations questions
+
 python manage.py migrate
 ```
 
