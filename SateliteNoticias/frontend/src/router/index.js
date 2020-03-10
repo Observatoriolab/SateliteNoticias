@@ -5,7 +5,7 @@ import Question from "../views/Question.vue";
 import QuestionEditor from "../views/QuestionEditor.vue";
 import AnswerEditor from "../views/AnswerEditor.vue";
 import NotFound from "../views/NotFound.vue";
-import Tryout from "../tryouts/ejemploSinNada.vue";
+import Tryout from "../tryouts/vistaPrincipal.vue";
 
 Vue.use(VueRouter);
 
@@ -38,8 +38,8 @@ const routes = [
     component: NotFound
   },
   {
-    path: "/tryout",
-    name: "ejemploSinNada",
+    path: "/prueba",
+    name: "vistaPrincipal",
     component: Tryout
   }
 ];

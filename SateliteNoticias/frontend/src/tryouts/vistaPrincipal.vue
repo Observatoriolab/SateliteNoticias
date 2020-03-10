@@ -5,7 +5,7 @@
 			<div class="row">
 				<div class="col-md-10">
 					<h3 class="text-center">
-						h3. Lorem ipsum dolor sit amet.
+						h3. Lorem ipsum dolor sit amet. asdasddasadsadasddsadsa
 					</h3>
 				</div>
 				<div class="col-md-2">
