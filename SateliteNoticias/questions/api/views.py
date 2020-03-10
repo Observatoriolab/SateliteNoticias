@@ -20,46 +20,30 @@ class QuestionViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
     def perform_create(self, serializer):
-        #self.request.data.tags (aqui deberia estar el tema)
-        #Si es que existe el filtro
-        if('filter' in self.request.data):
-            logging.debug('este es el filtro que voy a aplicar')
-            lista = self.request.data.get("tags","")
-            '''
-            logging.debug(type(lista))
-            logging.debug(lista[0])
-            logging.debug(lista)
-            '''
-            firstFilter = Question.objects.filter(tags__name__in=[lista[0]]).distinct()
-            lista.pop(0)
-            tags = lista
-            results = firstFilter
-            for tag in tags:
-                results = results.filter(tags__name__in=[tag])
-
-            logging.debug('ojala')
-
-            '''
-            logging.debug('asi quedo el auxiliar')
-            logging.debug(auxiliar)
-            logging.debug(filteredQuestions)
-            '''
-            return results
-        else:
-            serializer.save(author=self.request.user)
-
-
-    def get_queryset(self):
-        
-        return  Question.objects.all().order_by("-created_at")
+        serializer.save(author=self.request.user)
 
 class QuestionListAPIView(generics.ListAPIView):
     serializer_class = QuestionSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        firstFilter = Question.objects.filter(tags__name__in=[self.kwargs.get('value')]).distinct()
-        return firstFilter.order_by("-created_at")
+
+        listFormat = self.kwargs.get('value')
+        #Convertirlo a lista
+        listFormat = listFormat.split("-")
+        #Primer filtro
+        
+        firstFilter = Question.objects.filter(tags__name__in=[listFormat[0]]).distinct()
+        #Sacarle el primer elemento 
+        listFormat.pop(0)
+        tags = listFormat
+        results = firstFilter
+        #Iterar para realizar filtros con los que quedan
+        for tag in tags:
+            results = results.filter(tags__name__in=[tag])
+
+
+        return results.order_by("-created_at")
         
 class AnswerCreateAPIView(generics.CreateAPIView):
     queryset = Answer.objects.all()

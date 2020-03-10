@@ -16,6 +16,12 @@
         >
           Filter news by tags
         </button>
+        <button
+          @click="getQuestions"
+          class="btn btn-sm btn-outline-danger"
+        >
+          Cancel Filter
+        </button>
       </div>
 
       <div v-for="question in questions" :key="question.pk">
@@ -46,7 +52,7 @@
         <br />
       </div>
 
-      <div class="my-4">
+      <div v-if="!filterFlag" class="my-4">
         <p v-show="loadingQuestions">...loading...</p>
 
         <button
@@ -72,7 +78,8 @@ export default {
       next: null,
       loadingQuestions: false,
       tags: '',
-      slugger: 'tag'
+      filterFlag: false,
+      pageCount: null
     };
   },
   methods: {
@@ -80,12 +87,22 @@ export default {
       let listTags = this.tags.split(",")
       console.log('Estos son los tags a buscar')
       console.log(listTags)
-      let endpoint = `/api/questions/tags/${this.slugger}/`;
+      var stringFormat = ""
+      for (var i=0;i<listTags.length;i++){
+        stringFormat = stringFormat+listTags[i]+"-"
+      }
+      stringFormat = stringFormat.substring(0, stringFormat.length-1);
+      console.log('este es el stringformat de los tags que voy a usar')
+      console.log(stringFormat)
+
+      let endpoint = `/api/questions/tags/${stringFormat}/`;
       let method = "GET"
       apiService(endpoint,method)
         .then(data => {
           console.log("este es el resultado de lo que me dio el back")
-          console.log(data)
+          console.log(data.results)
+          this.questions = data.results
+          this.filterFlag = true
       });
       
     },
@@ -95,6 +112,7 @@ export default {
         endpoint = this.next;
       }
       this.loadingQuestions = true;
+      console.log(this.questions)
       apiService(endpoint).then(data => {
         this.questions.push(...data.results);
         this.loadingQuestions = false;
