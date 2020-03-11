@@ -116,3 +116,7 @@ SateliteNoticias/users/migrations/
 SateliteNoticias/frontend/package-lock.json
 
 SateliteNoticias/package-lock.json
+
+SateliteNoticias/questions/migrations/0001_initial.py
+
+SateliteNoticias/questions/migrations/__init__.py
