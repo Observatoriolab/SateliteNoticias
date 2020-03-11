@@ -17,7 +17,7 @@
           Filter news by tags
         </button>
         <button
-          @click="getQuestions"
+          @click="cancelFilter"
           class="btn btn-sm btn-outline-danger"
         >
           Cancel Filter
@@ -77,36 +77,58 @@ export default {
       questions: [],
       next: null,
       loadingQuestions: false,
-      tags: '',
+      tags: null,
       filterFlag: false,
       pageCount: null
     };
   },
   methods: {
-    FilterbyTagsSearch(){
-      let listTags = this.tags.split(",")
-      console.log('Estos son los tags a buscar')
-      console.log(listTags)
-      var stringFormat = ""
-      for (var i=0;i<listTags.length;i++){
-        stringFormat = stringFormat+listTags[i]+"-"
-      }
-      stringFormat = stringFormat.substring(0, stringFormat.length-1);
-      console.log('este es el stringformat de los tags que voy a usar')
-      console.log(stringFormat)
+    cancelFilter(){
+      //vaciar las preguntas para poderlas preguntar denuevo
+      this.questions.splice(0)
+      this.filterFlag = false
+      this.tags = null
+      this.getQuestions()
 
-      let endpoint = `/api/questions/tags/${stringFormat}/`;
-      let method = "GET"
-      apiService(endpoint,method)
-        .then(data => {
-          console.log("este es el resultado de lo que me dio el back")
-          console.log(data.results)
-          this.questions = data.results
-          this.filterFlag = true
-      });
+    },
+    FilterbyTagsSearch(){
+      if(this.tags !== null){
+        if(this.tags.length !== 0){
+                   let listTags = this.tags.split(",")
+                  console.log('Estos son los tags a buscar')
+                  console.log(listTags)
+                  var stringFormat = ""
+                  for (var i=0;i<listTags.length;i++){
+                    stringFormat = stringFormat+listTags[i]+"-"
+                  }
+                  stringFormat = stringFormat.substring(0, stringFormat.length-1);
+                  console.log('este es el stringformat de los tags que voy a usar')
+                  console.log(stringFormat)
+
+                  let endpoint = `/api/questions/tags/${stringFormat}/`;
+                  let method = "GET"
+                  apiService(endpoint,method)
+                    .then(data => {
+                      console.log("este es el resultado de lo que me dio el back")
+                      console.log(data.results)
+                      this.questions = data.results
+                      this.filterFlag = true
+                      this.next = null
+                  });
+        }
+        else{
+             alert('esta vacio')
+        }
+         
+      }
+      else{
+        alert('esta vacio')
+      }
       
     },
     getQuestions() {
+      console.log('estos son las preguntas antes de consultar a la api')
+      console.log(this.questions)
       let endpoint = "/api/questions/";
       if (this.next) {
         endpoint = this.next;
@@ -115,6 +137,7 @@ export default {
       console.log(this.questions)
       apiService(endpoint).then(data => {
         this.questions.push(...data.results);
+        console.log(data)
         this.loadingQuestions = false;
         if (data.next) {
           this.next = data.next;
