@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      questionSlug: null,
+      newslug: null,
       answerBody: null,
       answerTags: [],
       error: null
@@ -41,8 +41,8 @@ export default {
         let endpoint = `/api/answers/${this.id}/`;
         apiService(endpoint, "PUT", { body: this.answerBody, tags: this.answerTags }).then(() => {
           this.$router.push({
-            name: "question",
-            params: { slug: this.questionSlug }
+            name: "news",
+            params: { slug: this.newslug }
           });
         });
       } else {
@@ -58,7 +58,7 @@ export default {
     console.log(data)
     return next(
       vm => (
-        (vm.answerBody = data.body), (vm.questionSlug = data.question_slug), (vm.answerTags = data.tags)
+        (vm.answerBody = data.body), (vm.newslug = data.news_slug), (vm.answerTags = data.tags)
       )
     );
   }

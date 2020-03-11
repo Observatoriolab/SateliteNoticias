@@ -107,7 +107,7 @@ venv.bak/
 
 SateliteNoticias/frontend/webpack-stats.json
 
-SateliteNoticias/questions/migrations/
+SateliteNoticias/news/migrations/
 
 .DS_Store
 

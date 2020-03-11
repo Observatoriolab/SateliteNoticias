@@ -14,9 +14,9 @@
           </li>
           <li class="nav-item mx-1">
             <router-link
-              :to="{ name: 'question-editor' }"
+              :to="{ name: 'news-editor' }"
               class="btn btn-sm btn-danger"
-              >Ask Question</router-link
+              >Ask news</router-link
             >
           </li>
           <li class="nav-item">

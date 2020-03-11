@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'webpack_loader',
     'users',
-    'questions',
+    'news',
     'taggit',
     'taggit_serializer'
 ]

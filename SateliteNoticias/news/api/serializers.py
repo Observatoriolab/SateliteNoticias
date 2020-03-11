@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from questions.models import Answer, Question
+from news.models import Answer, News
 from taggit_serializer.serializers import TaggitSerializer, TagListSerializerField
 import json
 import logging
@@ -32,7 +32,7 @@ class NewTagListSerializerField(TagListSerializerField):
             self.child.run_validation(s)
 
         return value
-class QuestionSerializer(TaggitSerializer,serializers.ModelSerializer):
+class Newserializer(TaggitSerializer,serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     created_at = serializers.SerializerMethodField(read_only=True)
     slug = serializers.SlugField(read_only=True)
@@ -41,7 +41,7 @@ class QuestionSerializer(TaggitSerializer,serializers.ModelSerializer):
     tags = NewTagListSerializerField()
 
     class Meta:
-        model = Question
+        model = News
         exclude = ["updated_at"]
 
     def get_created_at(self, instance):
@@ -60,12 +60,12 @@ class AnswerSerializer(TaggitSerializer,serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField(read_only=True)
     likes_count = serializers.SerializerMethodField(read_only=True)
     user_has_voted = serializers.SerializerMethodField(read_only=True)
-    question_slug = serializers.SerializerMethodField(read_only=True)
+    news_slug = serializers.SerializerMethodField(read_only=True)
     tags = NewTagListSerializerField()
 
     class Meta:
         model = Answer
-        exclude =["question", "voters", "updated_at"]
+        exclude =["news", "voters", "updated_at"]
 
     def get_created_at(self, instance):
         return instance.created_at.strftime("%B %d, %Y")
@@ -78,7 +78,7 @@ class AnswerSerializer(TaggitSerializer,serializers.ModelSerializer):
         request = self.context.get("request")
         return instance.voters.filter(pk=request.user.pk).exists()
 
-    def get_question_slug(self, instance):
-        return instance.question.slug
+    def get_news_slug(self, instance):
+        return instance.news.slug
 
 

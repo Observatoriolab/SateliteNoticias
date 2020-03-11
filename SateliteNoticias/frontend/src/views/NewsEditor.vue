@@ -4,7 +4,7 @@
     <form @submit.prevent="onSubmit">
       <h2>Title:</h2>
       <input
-        v-model="question_title"
+        v-model="news_title"
         class="form-control"
         placeholder="Whats the title of this news?"
       />
@@ -12,7 +12,7 @@
       <h2>Content:</h2>
       <br />
       <textarea
-        v-model="question_body"
+        v-model="news_body"
         class="form-control"
         rows="3"
         placeholder="What do you want to inform us about?"
@@ -20,7 +20,7 @@
       <br />
       <h2>Tags:</h2>
       <input
-        v-model="question_tags"
+        v-model="news_tags"
         class="form-control"
         placeholder="Whats the title of this news?"
       />
@@ -34,7 +34,7 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 export default {
-  name: "QuestionEditor",
+  name: "NewsEditor",
   props: {
     slug: {
       type: String,
@@ -43,21 +43,21 @@ export default {
   },
   data() {
     return {
-      question_title: null,
-      question_body: null,
-      question_tags: [],
+      news_title: null,
+      news_body: null,
+      news_tags: [],
       error: null
     };
   },
   methods: {
     onSubmit() {
-      // Tell the REST API to create or update a Question Instance
-      if (!this.question_title) {
-        this.error = "You can't send an empty question!";
-      } else if (this.question_title.length > 240) {
+      // Tell the REST API to create or update a news Instance
+      if (!this.news_title) {
+        this.error = "You can't send an empty news!";
+      } else if (this.news_title.length > 240) {
         this.error = "Ensure this field has no more than 240 characters!";
       } else {
-        let endpoint = "/api/questions/";
+        let endpoint = "/api/news/";
         let method = "POST";
         console.log('este es el slug que EXISTE WN')
         console.log(this.$route.params.slug)
@@ -66,29 +66,29 @@ export default {
           method = "PUT";
         }
         apiService(endpoint, method, {
-          title: this.question_title,
-          content: this.question_body,
-          tags: this.question_tags
-        }).then(question_data => {
+          title: this.news_title,
+          content: this.news_body,
+          tags: this.news_tags
+        }).then(news_data => {
           console.log("esta es la data que me dio en el front");
-          console.log(question_data);
+          console.log(news_data);
           this.$router.push({
-            name: "question",
-            params: { slug: question_data.slug }
+            name: "news",
+            params: { slug: news_data.slug }
           });
         });
       }
     }
   },
   async beforeRouteEnter(to, from, next) {
-    // if the component will be used to update a question, then get the question's data from the REST API
+    // if the component will be used to update a news, then get the news's data from the REST API
     if (to.params.slug !== undefined) {
-      let endpoint = `/api/questions/${to.params.slug}/`;
+      let endpoint = `/api/news/${to.params.slug}/`;
       let data = await apiService(endpoint);
       console.log(data);
       return next(
         vm => (
-          (vm.question_title = data.title), (vm.question_body = data.content), (vm.question_tags = data.tags)
+          (vm.news_title = data.title), (vm.news_body = data.content), (vm.news_tags = data.tags)
         )
       );
     } else {
@@ -96,7 +96,7 @@ export default {
     }
   },
   created() {
-    document.title = "Editor - QuestionTime";
+    document.title = "Editor - newsTime";
   }
 };
 </script>

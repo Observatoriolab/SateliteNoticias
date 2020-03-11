@@ -1,21 +1,21 @@
 <template>
-  <div class="single-question mt-2">
-    <div v-if="question" class="container">
-      <h1>{{ question.title }}</h1>
-      <QuestionActions v-if="isQuestionAuthor" :slug="question.slug" />
+  <div class="single-news mt-2">
+    <div v-if="news" class="container">
+      <h1>{{ news.title }}</h1>
+      <newsActions v-if="isnewsAuthor" :slug="news.slug" />
       <br />
       <p class="mb-0">
         Posted by:
-        <span class="author-name">{{ question.author }}</span>
+        <span class="author-name">{{ news.author }}</span>
       </p>
-      <p>{{ question.created_at }}</p>
+      <p>{{ news.created_at }}</p>
       <hr />
-      <p>{{ question.content }}</p>
+      <p>{{ news.content }}</p>
       <hr />
       <br />
       <p class="mb-0">
         Tags:
-        <span class="author-name">{{ question.tags }}</span>
+        <span class="author-name">{{ news.tags }}</span>
       </p>
       <br />
       <div v-if="userHasAnswered">
@@ -24,7 +24,7 @@
       <div v-else-if="showForm">
         <form class="card" @submit.prevent="onSubmit">
           <div class="card-header px-3">
-            Answer the Question
+            Answer the news
           </div>
           <div class="card-block">
             <textarea
@@ -51,15 +51,15 @@
       </div>
       <div v-else>
         <button class="btn btn-sm btn-success" @click="showForm = true">
-          Answer the Question
+          Answer the news
         </button>
       </div>
       <hr />
     </div>
     <div v-else>
-      <h1 class="error text-center">404 - Question Not Found</h1>
+      <h1 class="error text-center">404 - news Not Found</h1>
     </div>
-    <div v-if="question" class="container">
+    <div v-if="news" class="container">
       <AnswerComponent
         v-for="answer in answers"
         :answer="answer"
@@ -71,7 +71,7 @@
         <p v-show="loadingAnswers">...loading...</p>
         <button
           v-show="next"
-          @click="getQuestionAnswers"
+          @click="getnewsAnswers"
           class="btn btn-sm btn-outline-success"
         >
           Load More
@@ -84,9 +84,9 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 import AnswerComponent from "@/components/Answer.vue";
-import QuestionActions from "@/components/QuestionActions.vue";
+import NewsActions from "@/components/NewsActions.vue";
 export default {
-  name: "Question",
+  name: "News",
   props: {
     slug: {
       type: String,
@@ -95,11 +95,11 @@ export default {
   },
   components: {
     AnswerComponent,
-    QuestionActions
+    NewsActions
   },
   data() {
     return {
-      question: {},
+      news: {},
       answers: [],
       next: null,
       loadingAnswers: false,
@@ -112,9 +112,9 @@ export default {
     };
   },
   computed: {
-    isQuestionAuthor() {
-      // return true if the logged in user is also the author of the question instance
-      return this.question.author === this.requestUser;
+    isnewsAuthor() {
+      // return true if the logged in user is also the author of the news instance
+      return this.news.author === this.requestUser;
     }
   },
   methods: {
@@ -126,25 +126,25 @@ export default {
       // the username has been set to localStorage by the App.vue component
       this.requestUser = window.localStorage.getItem("username");
     },
-    getQuestionData() {
-      // get the details of a question instance from the REST API and call setPageTitle
-      let endpoint = `/api/questions/${this.slug}/`;
+    getnewsData() {
+      // get the details of a news instance from the REST API and call setPageTitle
+      let endpoint = `/api/news/${this.slug}/`;
       apiService(endpoint).then(data => {
         if (data) {
-          this.question = data;
+          this.news = data;
           this.userHasAnswered = data.user_has_answered;
           console.log("esta es la data");
-          console.log(this.question.slug);
+          console.log(this.news.slug);
           this.setPageTitle(data.content);
         } else {
-          this.question = null;
+          this.news = null;
           this.setPageTitle("404 - Page Not Found");
         }
       });
     },
-    getQuestionAnswers() {
-      // get a page of answers for a single question from the REST API's paginated 'Questions Endpoint'
-      let endpoint = `/api/questions/${this.slug}/answers/`;
+    getnewsAnswers() {
+      // get a page of answers for a single news from the REST API's paginated 'news Endpoint'
+      let endpoint = `/api/news/${this.slug}/answers/`;
       if (this.next) {
         endpoint = this.next;
       }
@@ -162,12 +162,12 @@ export default {
       });
     },
     onSubmit() {
-      // Tell the REST API to create a new answer for this question based on the user input, then update some data properties
+      // Tell the REST API to create a new answer for this news based on the user input, then update some data properties
       
       console.log('aqui voy a enviar una respuesta nueva')
       console.log(this.slug)
       if (this.newAnswerBody) {
-        let endpoint = `/api/questions/${this.slug}/answer/`;
+        let endpoint = `/api/news/${this.slug}/answer/`;
         apiService(endpoint, "POST", { body: this.newAnswerBody, tags: this.answerTags }).then(
           data => {
             console.log('este es la data que me entrego al responder la pregunta')
@@ -198,8 +198,8 @@ export default {
     }
   },
   created() {
-    this.getQuestionData();
-    this.getQuestionAnswers();
+    this.getnewsData();
+    this.getnewsAnswers();
     this.setRequestUser();
   }
 };

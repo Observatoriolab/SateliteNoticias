@@ -24,40 +24,40 @@
         </button>
       </div>
 
-      <div v-for="question in questions" :key="question.pk">
+      <div v-for="news in news" :key="news.pk">
         <h2>
           <router-link
-            :to="{ name: 'question', params: { slug: question.slug } }"
-            class="question-link"
+            :to="{ name: 'news', params: { slug: news.slug } }"
+            class="news-link"
           >
-            {{ question.title }}
+            {{ news.title }}
           </router-link>
         </h2>
         <br />
         <p class="mb-0">
           Posted by:
-          <span class="question-author">{{ question.author }}</span>
+          <span class="news-author">{{ news.author }}</span>
         </p>
         <br />
         <p>
-          {{ question.content }}
+          {{ news.content }}
         </p>
-        <p>Answers: {{ question.answers_count }}</p>
+        <p>Answers: {{ news.answers_count }}</p>
         <hr />
           <br />
         <p class="mb-0">
           Tags:
-          <span class="question-author">{{ question.tags }}</span>
+          <span class="news-author">{{ news.tags }}</span>
         </p>
         <br />
       </div>
 
       <div v-if="!filterFlag" class="my-4">
-        <p v-show="loadingQuestions">...loading...</p>
+        <p v-show="loadingnews">...loading...</p>
 
         <button
           v-show="next"
-          @click="getQuestions"
+          @click="getnews"
           class="btn btn-sm btn-outline-success"
         >
           Load More
@@ -74,9 +74,9 @@ export default {
   name: "home",
   data() {
     return {
-      questions: [],
+      news: [],
       next: null,
-      loadingQuestions: false,
+      loadingnews: false,
       tags: null,
       filterFlag: false,
       pageCount: null
@@ -85,10 +85,10 @@ export default {
   methods: {
     cancelFilter(){
       //vaciar las preguntas para poderlas preguntar denuevo
-      this.questions.splice(0)
+      this.news.splice(0)
       this.filterFlag = false
       this.tags = null
-      this.getQuestions()
+      this.getnews()
 
     },
     FilterbyTagsSearch(){
@@ -105,13 +105,13 @@ export default {
                   console.log('este es el stringformat de los tags que voy a usar')
                   console.log(stringFormat)
 
-                  let endpoint = `/api/questions/tags/${stringFormat}/`;
+                  let endpoint = `/api/news/tags/${stringFormat}/`;
                   let method = "GET"
                   apiService(endpoint,method)
                     .then(data => {
                       console.log("este es el resultado de lo que me dio el back")
                       console.log(data.results)
-                      this.questions = data.results
+                      this.news = data.results
                       this.filterFlag = true
                       this.next = null
                   });
@@ -126,19 +126,19 @@ export default {
       }
       
     },
-    getQuestions() {
+    getnews() {
       console.log('estos son las preguntas antes de consultar a la api')
-      console.log(this.questions)
-      let endpoint = "/api/questions/";
+      console.log(this.news)
+      let endpoint = "/api/news/";
       if (this.next) {
         endpoint = this.next;
       }
-      this.loadingQuestions = true;
-      console.log(this.questions)
+      this.loadingnews = true;
+      console.log(this.news)
       apiService(endpoint).then(data => {
-        this.questions.push(...data.results);
+        this.news.push(...data.results);
         console.log(data)
-        this.loadingQuestions = false;
+        this.loadingnews = false;
         if (data.next) {
           this.next = data.next;
         } else {
@@ -148,24 +148,24 @@ export default {
     }
   },
   created() {
-    this.getQuestions();
-    console.log(this.questions);
+    this.getnews();
+    console.log(this.news);
     document.title = "Satelite de Noticias";
   }
 };
 </script>
 
 <style scooped>
-.question-author {
+.news-author {
   font-weight: bold;
   color: red;
 }
 
-.question-link {
+.news-link {
   font-weight: bold;
   color: black;
 }
-.question-link:hover {
+.news-link:hover {
   color: #343a40;
   text-decoration: none;
 }

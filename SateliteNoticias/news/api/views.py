@@ -5,25 +5,25 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from questions.api.permissions import IsAuthorOrReadOnly
-from questions.api.serializers import AnswerSerializer, QuestionSerializer
-from questions.models import Answer, Question
+from news.api.permissions import IsAuthorOrReadOnly
+from news.api.serializers import AnswerSerializer, Newserializer
+from news.models import Answer, News
 
 
 import logging
 
-class QuestionViewSet(viewsets.ModelViewSet):
-    queryset = Question.objects.all().order_by("-created_at")
+class NewsViewSet(viewsets.ModelViewSet):
+    queryset = News.objects.all().order_by("-created_at")
     lookup_field = "slug"
-    serializer_class = QuestionSerializer
-    #Only authors can delete their question
+    serializer_class = Newserializer
+    #Only authors can delete their News
     permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-class QuestionListAPIView(generics.ListAPIView):
-    serializer_class = QuestionSerializer
+class NewsListAPIView(generics.ListAPIView):
+    serializer_class = Newserializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
@@ -33,7 +33,7 @@ class QuestionListAPIView(generics.ListAPIView):
         listFormat = listFormat.split("-")
         #Primer filtro
         
-        firstFilter = Question.objects.filter(tags__name__in=[listFormat[0]]).distinct()
+        firstFilter = News.objects.filter(tags__name__in=[listFormat[0]]).distinct()
         #Sacarle el primer elemento 
         listFormat.pop(0)
         tags = listFormat
@@ -53,12 +53,12 @@ class AnswerCreateAPIView(generics.CreateAPIView):
     def perform_create(self, serializer):
         request_user = self.request.user
         kwarg_slug = self.kwargs.get("slug")
-        question = get_object_or_404(Question, slug=kwarg_slug)
+        news = get_object_or_404(News, slug=kwarg_slug)
 
-        if question.answers.filter(author=request_user).exists():
-            raise ValidationError("You have already answered this question!")
+        if news.answers.filter(author=request_user).exists():
+            raise ValidationError("You have already answered this news!")
 
-        serializer.save(author=request_user, question=question)
+        serializer.save(author=request_user, news=news)
 
 
 class AnswerListAPIView(generics.ListCreateAPIView):
@@ -68,9 +68,9 @@ class AnswerListAPIView(generics.ListCreateAPIView):
     def get_queryset(self):
         kwarg_slug = self.kwargs.get("slug")
         logging.debug('aqui va algo')
-        logging.debug(type(Answer.objects.filter(question__slug=kwarg_slug).order_by("-created_at")))
-        logging.debug(Answer.objects.filter(question__slug=kwarg_slug).order_by("-created_at"))
-        return Answer.objects.filter(question__slug=kwarg_slug).order_by("-created_at")
+        logging.debug(type(Answer.objects.filter(news__slug=kwarg_slug).order_by("-created_at")))
+        logging.debug(Answer.objects.filter(news__slug=kwarg_slug).order_by("-created_at"))
+        return Answer.objects.filter(news__slug=kwarg_slug).order_by("-created_at")
 
 
 class AnswerRUDAPIView(generics.RetrieveUpdateDestroyAPIView):

@@ -1,22 +1,22 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from questions.api import views as qv
+from news.api import views as qv
 
 router = DefaultRouter()
-router.register(r"questions", qv.QuestionViewSet)
+router.register(r"news", qv.NewsViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
 
-    path("questions/tags/<str:value>/",
-        qv.QuestionListAPIView.as_view(),
-        name="question-list"),
+    path("news/tags/<str:value>/",
+        qv.NewsListAPIView.as_view(),
+        name="news-list"),
 
-    path("questions/<slug:slug>/answers/",
+    path("news/<slug:slug>/answers/",
         qv.AnswerListAPIView.as_view(),
         name="answer-list"),
 
-    path("questions/<slug:slug>/answer/",
+    path("news/<slug:slug>/answer/",
         qv.AnswerCreateAPIView.as_view(),
         name="answer-create"),
 

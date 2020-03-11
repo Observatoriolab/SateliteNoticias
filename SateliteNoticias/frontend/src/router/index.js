@@ -1,8 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import Question from "../views/Question.vue";
-import QuestionEditor from "../views/QuestionEditor.vue";
+import News from "../views/News.vue";
+import NewsEditor from "../views/NewsEditor.vue";
 import AnswerEditor from "../views/AnswerEditor.vue";
 import NotFound from "../views/NotFound.vue";
 import Tryout from "../tryouts/vistaPrincipal.vue";
@@ -16,15 +16,15 @@ const routes = [
     component: Home
   },
   {
-    path: "/question/:slug",
-    name: "question",
-    component: Question,
+    path: "/news/:slug",
+    name: "news",
+    component: News,
     props: true
   },
   {
     path: "/ask",
-    name: "question-editor",
-    component: QuestionEditor
+    name: "news-editor",
+    component: NewsEditor
   },
   {
     path: "/answer/:id",

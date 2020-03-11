@@ -70,7 +70,7 @@ pip install -r requirements.txt
 ```
 cd SateliteNoticias
 python manage.py makemigrations users
-python manage.py makemigrations questions
+python manage.py makemigrations news
 
 python manage.py migrate
 ```
