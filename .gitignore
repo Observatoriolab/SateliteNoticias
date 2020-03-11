@@ -114,3 +114,5 @@ SateliteNoticias/questions/migrations/
 SateliteNoticias/users/migrations/
 
 SateliteNoticias/frontend/package-lock.json
+
+SateliteNoticias/package-lock.json
