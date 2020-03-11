@@ -4,6 +4,11 @@ import router from "./router";
 Vue.config.productionTip = false;
 import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
 
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
+
+Vue.use(VueMaterial)
+
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 
