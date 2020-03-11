@@ -1,22 +1,22 @@
 <template>
-  <div class="single-answer">
+  <div class="single-edition">
     <p class="text-muted">
-      <strong> {{ answer.author }}</strong> &#8901; {{ answer.created_at }}
+      <strong> {{ edition.author }}</strong> &#8901; {{ edition.created_at }}
     </p>
-    <p>{{ answer.body }}</p>
+    <p>{{ edition.body }}</p>
      <p class="mb-0">
         Tags:
-        <span >{{ answer.tags }}</span>
+        <span >{{ edition.tags }}</span>
       </p>
-    <div v-if="isAnswerAuthor">
+    <div v-if="isEditionAuthor">
       <router-link
-        :to="{ name: 'answer-editor', params: { id: answer.id } }"
+        :to="{ name: 'edition-editor', params: { id: edition.id } }"
         class="btn btn-sm btn-outline-secondary mr-1"
       >
         Edit
       </router-link>
       <button
-        @click="triggerDeleteAnswer"
+        @click="triggerDeleteEdition"
         class="btn btn-sm btn-outline-danger"
       >
         Delete
@@ -28,8 +28,8 @@
         class="btn btn-sm"
         @click="toggleLike"
         :class="{
-          'btn-danger': userLikedAnswer,
-          'btn-outline-danger': !userLikedAnswer
+          'btn-danger': userLikedEdition,
+          'btn-outline-danger': !userLikedEdition
         }"
       >
         <strong> Like [{{ likesCounter }}]</strong>
@@ -44,9 +44,9 @@
 import { apiService } from "@/common/api.service.js";
 
 export default {
-  name: "AnswerComponent",
+  name: "EditionComponent",
   props: {
-    answer: {
+    edition: {
       type: Object,
       required: true
     },
@@ -57,33 +57,33 @@ export default {
   },
   data() {
     return {
-      userLikedAnswer: this.answer.user_has_voted,
-      likesCounter: this.answer.likes_count
+      userLikedEdition: this.edition.user_has_voted,
+      likesCounter: this.edition.likes_count
     };
   },
   computed: {
-    isAnswerAuthor() {
-      return this.answer.author == this.requestUser;
+    isEditionAuthor() {
+      return this.edition.author == this.requestUser;
     }
   },
   methods: {
     toggleLike() {
-      this.userLikedAnswer === false ? this.likeAnswer() : this.unLikeAnswer();
+      this.userLikedEdition === false ? this.likeEdition() : this.unLikeEdition();
     },
-    likeAnswer() {
-      this.userLikedAnswer = true;
+    likeEdition() {
+      this.userLikedEdition = true;
       this.likesCounter += 1;
-      let endpoint = `/api/answers/${this.answer.id}/like/`;
+      let endpoint = `/api/editions/${this.edition.id}/like/`;
       apiService(endpoint, "POST");
     },
-    unLikeAnswer() {
-      this.userLikedAnswer = false;
+    unLikeEdition() {
+      this.userLikedEdition = false;
       this.likesCounter -= 1;
-      let endpoint = `/api/answers/${this.answer.id}/like/`;
+      let endpoint = `/api/editions/${this.edition.id}/like/`;
       apiService(endpoint, "DELETE");
     },
-    triggerDeleteAnswer() {
-      this.$emit("delete-answer", this.answer);
+    triggerDeleteEdition() {
+      this.$emit("delete-edition", this.edition);
     }
   }
 };

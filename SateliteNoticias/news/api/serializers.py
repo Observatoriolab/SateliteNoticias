@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from news.models import Answer, News
+from news.models import Edition, News
 from taggit_serializer.serializers import TaggitSerializer, TagListSerializerField
 import json
 import logging
@@ -36,8 +36,8 @@ class Newserializer(TaggitSerializer,serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     created_at = serializers.SerializerMethodField(read_only=True)
     slug = serializers.SlugField(read_only=True)
-    answers_count = serializers.SerializerMethodField(read_only=True)
-    user_has_answered = serializers.SerializerMethodField(read_only=True)
+    editions_count = serializers.SerializerMethodField(read_only=True)
+    user_has_editioned = serializers.SerializerMethodField(read_only=True)
     tags = NewTagListSerializerField()
 
     class Meta:
@@ -47,14 +47,14 @@ class Newserializer(TaggitSerializer,serializers.ModelSerializer):
     def get_created_at(self, instance):
         return instance.created_at.strftime("%B %d, %Y")
 
-    def get_answers_count(self, instance):
-        return instance.answers.count()
+    def get_editions_count(self, instance):
+        return instance.editions.count()
 
-    def get_user_has_answered(self, instance):
+    def get_user_has_editioned(self, instance):
         request = self.context.get("request")
-        return instance.answers.filter(author=request.user).exists()
+        return instance.editions.filter(author=request.user).exists()
 
-class AnswerSerializer(TaggitSerializer,serializers.ModelSerializer):
+class EditionSerializer(TaggitSerializer,serializers.ModelSerializer):
 
     author = serializers.StringRelatedField(read_only=True)
     created_at = serializers.SerializerMethodField(read_only=True)
@@ -64,7 +64,7 @@ class AnswerSerializer(TaggitSerializer,serializers.ModelSerializer):
     tags = NewTagListSerializerField()
 
     class Meta:
-        model = Answer
+        model = Edition
         exclude =["news", "voters", "updated_at"]
 
     def get_created_at(self, instance):

@@ -12,21 +12,21 @@ urlpatterns = [
         qv.NewsListAPIView.as_view(),
         name="news-list"),
 
-    path("news/<slug:slug>/answers/",
-        qv.AnswerListAPIView.as_view(),
-        name="answer-list"),
+    path("news/<slug:slug>/editions/",
+        qv.EditionListAPIView.as_view(),
+        name="edition-list"),
 
-    path("news/<slug:slug>/answer/",
-        qv.AnswerCreateAPIView.as_view(),
-        name="answer-create"),
+    path("news/<slug:slug>/edition/",
+        qv.EditionCreateAPIView.as_view(),
+        name="edition-create"),
 
-     path("answers/<int:pk>/",
-        qv.AnswerRUDAPIView.as_view(),
-        name="answer-detail"),
+     path("editions/<int:pk>/",
+        qv.EditionRUDAPIView.as_view(),
+        name="edition-detail"),
 
-     path("answers/<int:pk>/like/",
-        qv.AnswerLikeAPIView.as_view(),
-        name="answer-like")
+     path("editions/<int:pk>/like/",
+        qv.EditionLikeAPIView.as_view(),
+        name="edition-like")
 ]
     
 

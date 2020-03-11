@@ -18,17 +18,17 @@
         <span class="author-name">{{ news.tags }}</span>
       </p>
       <br />
-      <div v-if="userHasAnswered">
-        <p class="answer-added">You've written an answer!</p>
+      <div v-if="userHasEditioned">
+        <p class="edition-added">You've written an edition!</p>
       </div>
       <div v-else-if="showForm">
         <form class="card" @submit.prevent="onSubmit">
           <div class="card-header px-3">
-            Answer the news
+            Edition the news
           </div>
           <div class="card-block">
             <textarea
-              v-model="newAnswerBody"
+              v-model="newEditionBody"
               class="form-control"
               placeholder="Share Your Knowledge!"
               rows="5"
@@ -36,14 +36,14 @@
           </div>
            <h2>Tags:</h2>
           <input
-            v-model="answerTags"
+            v-model="editionTags"
             class="form-control"
             placeholder="Any tags? (separate them by commas)"
           />
           <br>
           <div class="card-footer px-3">
             <button type="submit" class="btn btn-sm btn-success">
-              Submit Your Answer
+              Submit Your Edition
             </button>
           </div>
         </form>
@@ -51,7 +51,7 @@
       </div>
       <div v-else>
         <button class="btn btn-sm btn-success" @click="showForm = true">
-          Answer the news
+          Edition the news
         </button>
       </div>
       <hr />
@@ -60,18 +60,18 @@
       <h1 class="error text-center">404 - news Not Found</h1>
     </div>
     <div v-if="news" class="container">
-      <AnswerComponent
-        v-for="answer in answers"
-        :answer="answer"
+      <EditionComponent
+        v-for="edition in editions"
+        :edition="edition"
         :requestUser="requestUser"
-        :key="answer.id"
-        @delete-answer="deleteAnswer"
+        :key="edition.id"
+        @delete-edition="deleteEdition"
       />
       <div class="my-4">
-        <p v-show="loadingAnswers">...loading...</p>
+        <p v-show="loadingEditions">...loading...</p>
         <button
           v-show="next"
-          @click="getnewsAnswers"
+          @click="getnewsEditions"
           class="btn btn-sm btn-outline-success"
         >
           Load More
@@ -83,7 +83,7 @@
 
 <script>
 import { apiService } from "@/common/api.service.js";
-import AnswerComponent from "@/components/Answer.vue";
+import EditionComponent from "@/components/Edition.vue";
 import NewsActions from "@/components/NewsActions.vue";
 export default {
   name: "News",
@@ -94,19 +94,19 @@ export default {
     }
   },
   components: {
-    AnswerComponent,
+    EditionComponent,
     NewsActions
   },
   data() {
     return {
       news: {},
-      answers: [],
+      editions: [],
       next: null,
-      loadingAnswers: false,
-      newAnswerBody: null,
-      answerTags: [],
+      loadingEditions: false,
+      newEditionBody: null,
+      editionTags: [],
       error: null,
-      userHasAnswered: false,
+      userHasEditioned: false,
       showForm: false,
       requestUser: null
     };
@@ -132,7 +132,7 @@ export default {
       apiService(endpoint).then(data => {
         if (data) {
           this.news = data;
-          this.userHasAnswered = data.user_has_answered;
+          this.userHasEditioned = data.user_has_editioned;
           console.log("esta es la data");
           console.log(this.news.slug);
           this.setPageTitle(data.content);
@@ -142,18 +142,18 @@ export default {
         }
       });
     },
-    getnewsAnswers() {
-      // get a page of answers for a single news from the REST API's paginated 'news Endpoint'
-      let endpoint = `/api/news/${this.slug}/answers/`;
+    getnewsEditions() {
+      // get a page of editions for a single news from the REST API's paginated 'news Endpoint'
+      let endpoint = `/api/news/${this.slug}/editions/`;
       if (this.next) {
         endpoint = this.next;
       }
-      this.loadingAnswers = true;
+      this.loadingEditions = true;
       apiService(endpoint).then(data => {
-        this.answers.push(...data.results);
+        this.editions.push(...data.results);
         console.log('estos son las respuestas')
         console.log(data.results)
-        this.loadingAnswers = false;
+        this.loadingEditions = false;
         if (data.next) {
           this.next = data.next;
         } else {
@@ -162,36 +162,36 @@ export default {
       });
     },
     onSubmit() {
-      // Tell the REST API to create a new answer for this news based on the user input, then update some data properties
+      // Tell the REST API to create a new edition for this news based on the user input, then update some data properties
       
       console.log('aqui voy a enviar una respuesta nueva')
       console.log(this.slug)
-      if (this.newAnswerBody) {
-        let endpoint = `/api/news/${this.slug}/answer/`;
-        apiService(endpoint, "POST", { body: this.newAnswerBody, tags: this.answerTags }).then(
+      if (this.newEditionBody) {
+        let endpoint = `/api/news/${this.slug}/edition/`;
+        apiService(endpoint, "POST", { body: this.newEditionBody, tags: this.editionTags }).then(
           data => {
             console.log('este es la data que me entrego al responder la pregunta')
             console.log(data)
-            this.answers.unshift(data);
+            this.editions.unshift(data);
           }
         );
-        this.newAnswerBody = null;
+        this.newEditionBody = null;
         this.showForm = false;
-        this.userHasAnswered = true;
+        this.userHasEditioned = true;
         if (this.error) {
           this.error = null;
         }
       } else {
-        this.error = "You can't send an empty answer!";
+        this.error = "You can't send an empty edition!";
       }
     },
-    async deleteAnswer(answer) {
-      // delete a given answer from the answers array and make a delete request to the REST API
-      let endpoint = `/api/answers/${answer.id}/`;
+    async deleteEdition(edition) {
+      // delete a given edition from the editions array and make a delete request to the REST API
+      let endpoint = `/api/editions/${edition.id}/`;
       try {
         await apiService(endpoint, "DELETE");
-        this.$delete(this.answers, this.answers.indexOf(answer));
-        this.userHasAnswered = false;
+        this.$delete(this.editions, this.editions.indexOf(edition));
+        this.userHasEditioned = false;
       } catch (err) {
         console.log(err);
       }
@@ -199,7 +199,7 @@ export default {
   },
   created() {
     this.getnewsData();
-    this.getnewsAnswers();
+    this.getnewsEditions();
     this.setRequestUser();
   }
 };
@@ -211,7 +211,7 @@ export default {
   color: #dc3545;
 }
 
-.answer-added {
+.edition-added {
   font-weight: bold;
   color: green;
 }

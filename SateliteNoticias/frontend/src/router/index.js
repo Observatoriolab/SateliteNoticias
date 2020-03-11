@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import News from "../views/News.vue";
 import NewsEditor from "../views/NewsEditor.vue";
-import AnswerEditor from "../views/AnswerEditor.vue";
+import EditionEditor from "../views/EditionEditor.vue";
 import NotFound from "../views/NotFound.vue";
 import Tryout from "../tryouts/vistaPrincipal.vue";
 
@@ -27,9 +27,9 @@ const routes = [
     component: NewsEditor
   },
   {
-    path: "/answer/:id",
-    name: "answer-editor",
-    component: AnswerEditor,
+    path: "/edition/:id",
+    name: "edition-editor",
+    component: EditionEditor,
     props: true
   },
   {

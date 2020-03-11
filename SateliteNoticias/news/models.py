@@ -18,13 +18,13 @@ class News(models.Model):
     def __str__(self):
         return self.title
 
-class Answer(models.Model):
+class Edition(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     body = models.TextField()
     news = models.ForeignKey(News,
                                 on_delete=models.CASCADE,
-                                related_name="answers")
+                                related_name="editions")
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE)

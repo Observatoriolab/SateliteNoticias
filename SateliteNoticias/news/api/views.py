@@ -6,8 +6,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from news.api.permissions import IsAuthorOrReadOnly
-from news.api.serializers import AnswerSerializer, Newserializer
-from news.models import Answer, News
+from news.api.serializers import EditionSerializer, Newserializer
+from news.models import Edition, News
 
 
 import logging
@@ -45,9 +45,9 @@ class NewsListAPIView(generics.ListAPIView):
 
         return results.order_by("-created_at")
         
-class AnswerCreateAPIView(generics.CreateAPIView):
-    queryset = Answer.objects.all()
-    serializer_class = AnswerSerializer
+class EditionCreateAPIView(generics.CreateAPIView):
+    queryset = Edition.objects.all()
+    serializer_class = EditionSerializer
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
@@ -55,55 +55,55 @@ class AnswerCreateAPIView(generics.CreateAPIView):
         kwarg_slug = self.kwargs.get("slug")
         news = get_object_or_404(News, slug=kwarg_slug)
 
-        if news.answers.filter(author=request_user).exists():
-            raise ValidationError("You have already answered this news!")
+        if news.editions.filter(author=request_user).exists():
+            raise ValidationError("You have already editioned this news!")
 
         serializer.save(author=request_user, news=news)
 
 
-class AnswerListAPIView(generics.ListCreateAPIView):
-    serializer_class = AnswerSerializer
+class EditionListAPIView(generics.ListCreateAPIView):
+    serializer_class = EditionSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         kwarg_slug = self.kwargs.get("slug")
         logging.debug('aqui va algo')
-        logging.debug(type(Answer.objects.filter(news__slug=kwarg_slug).order_by("-created_at")))
-        logging.debug(Answer.objects.filter(news__slug=kwarg_slug).order_by("-created_at"))
-        return Answer.objects.filter(news__slug=kwarg_slug).order_by("-created_at")
+        logging.debug(type(Edition.objects.filter(news__slug=kwarg_slug).order_by("-created_at")))
+        logging.debug(Edition.objects.filter(news__slug=kwarg_slug).order_by("-created_at"))
+        return Edition.objects.filter(news__slug=kwarg_slug).order_by("-created_at")
 
 
-class AnswerRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Answer.objects.all()
-    serializer_class = AnswerSerializer
+class EditionRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Edition.objects.all()
+    serializer_class = EditionSerializer
     permission_classes = [IsAuthenticated,IsAuthorOrReadOnly]
 
 
 
-class AnswerLikeAPIView(APIView):
-    serializer_class = AnswerSerializer
+class EditionLikeAPIView(APIView):
+    serializer_class = EditionSerializer
     permission_classes = [IsAuthenticated]
 
     def delete(self,request,pk):
-        answer = get_object_or_404(Answer, pk=pk)
+        edition = get_object_or_404(Edition, pk=pk)
         user = request.user
 
-        answer.voters.remove(user)
-        answer.save()
+        edition.voters.remove(user)
+        edition.save()
 
         serializer_context= {"request":request}
-        serializer = self.serializer_class(answer, context = serializer_context)
+        serializer = self.serializer_class(edition, context = serializer_context)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self,request,pk):
-        answer = get_object_or_404(Answer, pk=pk)
+        edition = get_object_or_404(Edition, pk=pk)
         user = request.user
 
-        answer.voters.add(user)
-        answer.save()
+        edition.voters.add(user)
+        edition.save()
 
         serializer_context= {"request":request}
-        serializer = self.serializer_class(answer, context = serializer_context)
+        serializer = self.serializer_class(edition, context = serializer_context)
 
         return Response(serializer.data, status=status.HTTP_200_OK)

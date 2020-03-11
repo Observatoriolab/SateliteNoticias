@@ -42,7 +42,7 @@
         <p>
           {{ news.content }}
         </p>
-        <p>Answers: {{ news.answers_count }}</p>
+        <p>Editions: {{ news.editions_count }}</p>
         <hr />
           <br />
         <p class="mb-0">
