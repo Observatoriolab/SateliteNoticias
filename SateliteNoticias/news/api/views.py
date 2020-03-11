@@ -6,8 +6,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from news.api.permissions import IsAuthorOrReadOnly
-from news.api.serializers import EditionSerializer, Newserializer
-from news.models import Edition, News
+from news.api.serializers import EditionSerializer, Newserializer, CommentSerializer
+from news.models import Edition, News, Comment
 
 
 import logging
@@ -45,6 +45,71 @@ class NewsListAPIView(generics.ListAPIView):
 
         return results.order_by("-created_at")
         
+#VIEWS PARA COMENTARIOS
+
+
+class CommentCreateAPIView(generics.CreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        request_user = self.request.user
+        kwarg_slug = self.kwargs.get("slug")
+        news = get_object_or_404(News, slug=kwarg_slug)
+        serializer.save(author=request_user, news=news)
+
+
+class CommentListAPIView(generics.ListCreateAPIView):
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        kwarg_slug = self.kwargs.get("slug")
+        logging.debug('aqui va algo')
+        logging.debug(type(Comment.objects.filter(news__slug=kwarg_slug).order_by("-created_at")))
+        logging.debug(Comment.objects.filter(news__slug=kwarg_slug).order_by("-created_at"))
+        return Comment.objects.filter(news__slug=kwarg_slug).order_by("-created_at")
+
+
+class CommentRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated,IsAuthorOrReadOnly]
+
+
+
+class CommentLikeAPIView(APIView):
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def delete(self,request,pk):
+        comment = get_object_or_404(Comment, pk=pk)
+        user = request.user
+
+        comment.voters.remove(user)
+        comment.save()
+
+        serializer_context= {"request":request}
+        serializer = self.serializer_class(comment, context = serializer_context)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self,request,pk):
+        comment = get_object_or_404(Comment, pk=pk)
+        user = request.user
+
+        comment.voters.add(user)
+        comment.save()
+
+        serializer_context= {"request":request}
+        serializer = self.serializer_class(comment, context = serializer_context)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+#VIEWS PARA EDITION        
 class EditionCreateAPIView(generics.CreateAPIView):
     queryset = Edition.objects.all()
     serializer_class = EditionSerializer
