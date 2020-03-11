@@ -36,19 +36,47 @@ class Newserializer(TaggitSerializer,serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     created_at = serializers.SerializerMethodField(read_only=True)
     slug = serializers.SlugField(read_only=True)
+
     editions_count = serializers.SerializerMethodField(read_only=True)
     user_has_editioned = serializers.SerializerMethodField(read_only=True)
+
+    #Parte de relevancias
+    relevance_count = serializers.SerializerMethodField(read_only=True)
+    user_has_relevanced = serializers.SerializerMethodField(read_only=True)
+
+    #Parte de irrelevancias
+    irrelevance_count = serializers.SerializerMethodField(read_only=True)
+    user_has_irrelevanced = serializers.SerializerMethodField(read_only=True)
+
     tags = NewTagListSerializerField()
 
     class Meta:
         model = News
-        exclude = ["updated_at"]
+        #Se excluye ya que al crear una "noticia", no tiene relevancia ni irrelevancia
+        #Se lo dan los usuarios
+        exclude = ["updated_at", "relevance","irrelevance"]
 
     def get_created_at(self, instance):
         return instance.created_at.strftime("%B %d, %Y")
 
     def get_editions_count(self, instance):
         return instance.editions.count()
+        
+    def get_relevance_count(self, instance):
+        #Modificar para sacar el promedio despues
+        return instance.relevance.count()
+
+    def get_irrelevance_count(self, instance):
+        #Modificar para sacar el promedio despues
+        return instance.irrelevance.count()
+
+    def get_user_has_relevanced(self, instance):
+        request = self.context.get("request")
+        return instance.relevance.filter(pk=request.user.pk).exists()
+
+    def get_user_has_irrelevanced(self, instance):
+        request = self.context.get("request")
+        return instance.irrelevance.filter(pk=request.user.pk).exists()
 
     def get_user_has_editioned(self, instance):
         request = self.context.get("request")

@@ -8,8 +8,17 @@ class News(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=240)
     content = models.TextField(blank=True)
+    fullContent = models.TextField(blank=True)
+    relevance = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                    related_name="relevance")
+    irrelevance = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                    related_name="irrelevance")
+
+
     # Pseudo ID to retrieve the details of a single news
     slug = models.SlugField(max_length=255, unique=True)
+
+
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE,
                                 related_name="news")
@@ -21,7 +30,13 @@ class News(models.Model):
 class Edition(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    #cambio nuevo
+    title = models.CharField(max_length=240)
+    #cambio nuevo
+
     body = models.TextField()
+
+
     news = models.ForeignKey(News,
                                 on_delete=models.CASCADE,
                                 related_name="editions")

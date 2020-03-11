@@ -2,6 +2,14 @@
   <div class="container mt-2">
     <h1 class="mb-3">Edit Your Edition</h1>
     <form @submit.prevent="onSubmit">
+      <h3>Title:</h3>
+      <input
+        v-model="editionTitle"
+        class="form-control"
+        placeholder="Whats the title of this edition?"
+      />
+      <br>
+      <h3>Content::</h3>
       <textarea v-model="editionBody" class="form-control" rows="3"></textarea>
       <br />
       <h2>Tags:</h2>
@@ -30,6 +38,7 @@ export default {
   data() {
     return {
       newslug: null,
+      editionTitle:null,
       editionBody: null,
       editionTags: [],
       error: null
@@ -39,7 +48,7 @@ export default {
     onSubmit() {
       if (this.editionBody) {
         let endpoint = `/api/editions/${this.id}/`;
-        apiService(endpoint, "PUT", { body: this.editionBody, tags: this.editionTags }).then(() => {
+        apiService(endpoint, "PUT", { title: this.editionTitle, body: this.editionBody, tags: this.editionTags }).then(() => {
           this.$router.push({
             name: "news",
             params: { slug: this.newslug }
@@ -58,7 +67,7 @@ export default {
     console.log(data)
     return next(
       vm => (
-        (vm.editionBody = data.body), (vm.newslug = data.news_slug), (vm.editionTags = data.tags)
+        (vm.editionBody = data.body), (vm.newslug = data.news_slug), (vm.editionTags = data.tags), (vm.editionTitle = data.title)
       )
     );
   }

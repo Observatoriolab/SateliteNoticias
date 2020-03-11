@@ -23,9 +23,18 @@
       </div>
       <div v-else-if="showForm">
         <form class="card" @submit.prevent="onSubmit">
-          <div class="card-header px-3">
-            Edition the news
-          </div>
+                  <div style="padding-bottom: 50px"></div>
+
+            <h1>Edit the news</h1>
+          
+          <h3>Title:</h3>
+          <input
+            v-model="newEditionTitle"
+            class="form-control"
+            placeholder="Whats the title of this edition?"
+          />
+          <br>
+          <h3>Content:</h3>
           <div class="card-block">
             <textarea
               v-model="newEditionBody"
@@ -103,6 +112,7 @@ export default {
       editions: [],
       next: null,
       loadingEditions: false,
+      newEditionTitle: null,
       newEditionBody: null,
       editionTags: [],
       error: null,
@@ -168,7 +178,7 @@ export default {
       console.log(this.slug)
       if (this.newEditionBody) {
         let endpoint = `/api/news/${this.slug}/edition/`;
-        apiService(endpoint, "POST", { body: this.newEditionBody, tags: this.editionTags }).then(
+        apiService(endpoint, "POST", { title: this.newEditionTitle,body: this.newEditionBody, tags: this.editionTags }).then(
           data => {
             console.log('este es la data que me entrego al responder la pregunta')
             console.log(data)
