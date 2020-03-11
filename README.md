@@ -82,8 +82,9 @@ python manage.py runserver
 
 #### 5) Instalacion de las dependencias de Vue JS :
 
-En otra consola GIT BASH (si se esta en WIN10, sino terminal/consola) dentro de la carpeta original de SateliteNoticias (la que tiene la carpeta venv) hacer:
+En otra consola GIT BASH (si se esta en WIN10, sino terminal/consola) hacer:
 ```
+cd SateliteNoticias/frontend
 npm install
 ```
 
