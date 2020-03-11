@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from news.models import Edition, News
+from news.models import Edition, News, Comment
 from taggit_serializer.serializers import TaggitSerializer, TagListSerializerField
 import json
 import logging
@@ -82,3 +82,19 @@ class EditionSerializer(TaggitSerializer,serializers.ModelSerializer):
         return instance.news.slug
 
 
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    author = serializers.StringRelatedField(read_only=True)
+    created_at = serializers.SerializerMethodField(read_only=True)
+    news_slug = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Comment
+        exclude =["news", "updated_at"]
+
+    def get_created_at(self, instance):
+        return instance.created_at.strftime("%B %d, %Y")
+
+    def get_news_slug(self, instance):
+        return instance.news.slug

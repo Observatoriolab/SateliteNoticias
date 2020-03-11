@@ -37,3 +37,18 @@ class Edition(models.Model):
     def __str__(self):
         return self.author.username
 
+
+class Comment(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    body = models.TextField()
+    news = models.ForeignKey(News,
+                                on_delete=models.CASCADE,
+                                related_name="comments")
+
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.author.username
+
