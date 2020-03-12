@@ -5,13 +5,13 @@
         <md-button @click="showSidepanel = true">Favorites</md-button>
 
           <md-drawer class="md-right" :md-active.sync="showSidepanel">
-            <md-toolbar class="md-transparent" md-elevation="0">
-              <span class="md-title">Favorites</span>
-            </md-toolbar>
+      
              <!-- EDITION COMPONENT -->
-
+                    <div style="padding: 1em"></div>
                   
-                    <div>
+                    <div style=" width: 82%;
+                                margin-right: auto;
+                                margin-left: auto;">
 
                       <NewsEdition></NewsEdition>
                       <PrimaryTagsEdition></PrimaryTagsEdition>
