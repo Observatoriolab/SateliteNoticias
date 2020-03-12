@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div style="text-align:right">
     <!-- EDITION COMPONENT -->
-    <b-col md="6" class="p-2"></b-col>
-    <b-col md="6" class="p-2">
+    <div style="padding-right:3em">
       <b-button lg="4" variant="outline-primary">Editar</b-button>
-    </b-col>
+
+
+    </div>
     <!-- EDITION COMPONENT -->
   </div>
 </template>

@@ -1,35 +1,25 @@
 <template>
   <!-- NEWS COMPONENT -->
 
-   <vue-custom-scrollbar class="scroll-area" v-bind:style="{position: relative,
-                                                          margin: auto,
-                                                          
-                                                          width: '100%',
-                                                          height: '60em' }"
-                                                      :settings="settings" 
-                                                      @ps-scroll-y="scrollHandle">
+   <vue-custom-scrollbar class="scroll-area" :settings="settings" 
+                          v-bind:style="{position: relative,
+                                        margin: auto,                                                          
+                                        width: '100%',
+                                        height: '60em' }">
 
 
           <b-col md="12" >
-            <div>
-              <NewsSummary></NewsSummary>
+               
+                
+                <NewsSummary></NewsSummary>
 
-                  <b-row>
                     <PrimaryTags></PrimaryTags>
-                  </b-row>
-                  <b-row>
-                    <b-col md="12" class="p-5"></b-col>
-                  </b-row>
-                  <b-row>
+                 
                     <Bibliography></Bibliography>
-                  </b-row>
 
-                  <b-row>
                     <RelevanceEdition></RelevanceEdition>
-                  </b-row>
 
 
-            </div>
             
           </b-col>
           <!-- NEWS COMPONENT -->
@@ -75,7 +65,4 @@ export default {
 };
 </script>
 <style scoped>
-.scroll-area {
-
-}
 </style>

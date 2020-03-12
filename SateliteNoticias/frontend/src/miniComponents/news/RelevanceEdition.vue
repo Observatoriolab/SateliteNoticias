@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width: 100%; text-align:center;  margin-left:auto;margin-right:auto; border:1px solid blue; color:blue; padding: 1em 0px 1em" fluid>
     <Relevance></Relevance>
     <EditionButton></EditionButton>
   </div>
