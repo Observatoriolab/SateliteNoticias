@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="stop-scrolling">
     <div id="nav">
-      <NavbarComponent />
+      <!-- <NavbarComponent /> -->
       <router-view />
     </div>
   </div>
@@ -10,11 +10,11 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 
-import NavbarComponent from "@/components/NavBar.vue";
+//import NavbarComponent from "@/components/NavBar.vue";
 export default {
   name: "App",
   components: {
-    NavbarComponent
+  //  NavbarComponent
   },
 
   methods: {
@@ -42,5 +42,9 @@ body {
 
 .btn:focus {
   box-shadow: none !important;
+}
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
 }
 </style>

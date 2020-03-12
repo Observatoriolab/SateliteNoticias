@@ -272,7 +272,7 @@
                               </b-col>  
                             <!-- NEWS COMPONENT -->
 
-			                 </b-row> 
+			             </b-row> 
             
 
 		                 </b-col>
@@ -473,7 +473,9 @@
 </template>>
 <script>
 export default {
-    name: "vistaPrincipal"
+    name: "BackUpMainPage",
+    components:{
+    }
 }
 </script>
 <style scoped>

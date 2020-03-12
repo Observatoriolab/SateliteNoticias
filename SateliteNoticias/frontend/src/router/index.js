@@ -5,7 +5,7 @@ import News from "../views/News.vue";
 import NewsEditor from "../views/NewsEditor.vue";
 import EditionEditor from "../views/EditionEditor.vue";
 import NotFound from "../views/NotFound.vue";
-import Tryout from "../tryouts/vistaPrincipal.vue";
+import MainPage from "../mainComponents/MainPage.vue";
 
 Vue.use(VueRouter);
 
@@ -39,8 +39,8 @@ const routes = [
   },
   {
     path: "/prueba",
-    name: "vistaPrincipal",
-    component: Tryout
+    name: "MainPage",
+    component: MainPage
   }
 ];
 
