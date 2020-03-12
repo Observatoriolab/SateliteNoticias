@@ -17,11 +17,15 @@
         <a class="dropdown-item" href="#">Something else here</a>
       </div>
     </div>
+     
   </b-col>
 </template>
 <script>
 export default {
   name: "Categories"
+  
 };
 </script>
-<style lang="stylus"></style>
+<style scoped>
+
+</style>
