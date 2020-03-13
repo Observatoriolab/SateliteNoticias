@@ -1,21 +1,24 @@
 <template>
   <b-col md="2">
     <div class="dropdown p-4">
-      <b-dropdown class="mx-1" block variant="primary" right text="Categorias">
-        <b-dropdown-item>1</b-dropdown-item>
-        <b-dropdown-item>2</b-dropdown-item>
-        <b-dropdown-item>3</b-dropdown-item>
-        <b-dropdown-item>4</b-dropdown-item>
-        <b-dropdown-item>5</b-dropdown-item>
-        <b-dropdown-item>6</b-dropdown-item>
-        <b-dropdown-item>7</b-dropdown-item>
-        <b-dropdown-item>8</b-dropdown-item>
-      </b-dropdown>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item disabled" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
-      </div>
+     <md-menu md-size="big"  md-align-trigger>
+      <md-button md-menu-trigger  class="md-raised md-primary">CATEGORIAS</md-button>
+
+      <md-menu-content>
+        <md-menu-item>My Item 1</md-menu-item>
+        <md-menu-item>My Item 2</md-menu-item>
+        <md-menu-item>My Item 3</md-menu-item>
+
+        <md-menu-item>My Item 1</md-menu-item>
+        <md-menu-item>My Item 2</md-menu-item>
+        <md-menu-item>My Item 3</md-menu-item>
+
+        <md-menu-item>My Item 1</md-menu-item>
+        <md-menu-item>My Item 2</md-menu-item>
+        <md-menu-item>My Item 3</md-menu-item>
+      </md-menu-content>
+    </md-menu>
+     
     </div>
      
   </b-col>
@@ -27,5 +30,4 @@ export default {
 };
 </script>
 <style scoped>
-
 </style>

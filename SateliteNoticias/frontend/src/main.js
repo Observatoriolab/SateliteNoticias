@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 Vue.config.productionTip = false;
 import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
-import { MdButton, MdContent, MdTabs, MdDrawer, MdToolbar, MdIcon, MdList } from 'vue-material/dist/components'
+import { MdButton, MdContent, MdTabs, MdDrawer, MdToolbar, MdIcon, MdList,MdMenu } from 'vue-material/dist/components'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 Vue.use(MdButton)
@@ -13,6 +13,13 @@ Vue.use(MdDrawer)
 Vue.use(MdToolbar)
 Vue.use(MdIcon)
 Vue.use(MdList)
+Vue.use(MdMenu)
+
+
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
+
+Vue.use(VueMaterial)
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 
