@@ -1,5 +1,5 @@
-# Satelite de Noticias de BCCH
-**Una plataforma de noticias del eje tecnologico del observatorio tecnologico de BCCH en Django, Django REST Framework y Vue JS**
+# Satelite de Noticias 
+**Una plataforma de noticias del eje tecnologico en Django, Django REST Framework y Vue JS**
 
 Referencia para la creacion de esta plataforma:
 English Version:(https://www.udemy.com/course/the-complete-guide-to-django-rest-framework-and-vue-js/?referralCode=A2FA0F6C1C4BE66A3B3E)
