@@ -1,7 +1,7 @@
 <template>
-  <div style="text-align:right">
+  <div >
     <!-- EDITION COMPONENT -->
-    <div style="padding-right:3em">
+    <div >
       <b-button lg="4" variant="outline-primary">Editar</b-button>
 
 

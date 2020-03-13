@@ -23,12 +23,6 @@
             
           </b-col>
           <!-- NEWS COMPONENT -->
-              <NewsSummary></NewsSummary>
-              <NewsSummary></NewsSummary>
-              <NewsSummary></NewsSummary>
-              <NewsSummary></NewsSummary>
-              <NewsSummary></NewsSummary>
-              <NewsSummary></NewsSummary>
 
   </vue-custom-scrollbar>
 
