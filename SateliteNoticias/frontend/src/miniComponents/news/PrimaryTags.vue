@@ -15,8 +15,7 @@
                           <b-dropdown-item href="#">Eje 3</b-dropdown-item>
                         </b-dropdown>
                       </b-col>
-
-                      
+                  
                     <b-col md="3" >
                         <div style="padding: 5px"></div>
 
@@ -88,8 +87,17 @@
     <!-- PRIMARY TAGS COMPONENT -->
 </template>
 <script>
+
 export default {
-  name: "PrimaryTags"
+  name: "PrimaryTags",
+  components:{
+
+
+    },
+  data() {
+    return {
+    };
+  },
 };
 </script>
 <style lang="stylus"></style>

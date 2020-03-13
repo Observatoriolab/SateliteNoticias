@@ -11,10 +11,11 @@
           <b-col md="12" >
                
                 
-                <NewsSummary></NewsSummary>
+                    <NewsSummary></NewsSummary>
 
                     <PrimaryTags></PrimaryTags>
-                 
+                    <SecondaryTags></SecondaryTags>
+
                     <Bibliography></Bibliography>
 
                     <RelevanceEdition></RelevanceEdition>
@@ -30,6 +31,8 @@
 <script>
 import NewsSummary from "@/miniComponents/news/NewsSummary.vue";
 import PrimaryTags from "@/miniComponents/news/PrimaryTags.vue";
+import SecondaryTags from "@/miniComponents/news/SecondaryTags.vue";
+
 import Bibliography from "@/miniComponents/news/Bibliography.vue";
 import RelevanceEdition from "@/miniComponents/news/RelevanceEdition.vue";
 import vueCustomScrollbar from 'vue-custom-scrollbar'
@@ -48,7 +51,8 @@ export default {
     PrimaryTags,
     Bibliography,
     RelevanceEdition,
-    vueCustomScrollbar
+    vueCustomScrollbar,
+    SecondaryTags
 
   },
   methods: {
