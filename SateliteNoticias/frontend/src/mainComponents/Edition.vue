@@ -9,15 +9,16 @@
              <!-- EDITION COMPONENT -->
                     <div style="padding: 1em"></div>
                   
-                    <div style=" width: 82%;
+                    <form style=" width: 82%;
                                 margin-right: auto;
-                                margin-left: auto;">
+                                margin-left: auto; border: 1px solid blue">
 
                       <NewsEdition></NewsEdition>
                       <PrimaryTagsEdition></PrimaryTagsEdition>
-                      <AddTagsEdition></AddTagsEdition>
+                      <SecondaryTagsEdition></SecondaryTagsEdition>
                       <BibliographyEdition></BibliographyEdition>
-                    </div>
+                      <PublishButton></PublishButton>
+                    </form>
 
                   
                   <!-- EDITION COMPONENT -->
@@ -30,17 +31,18 @@
 
 import NewsEdition from "@/miniComponents/edition/NewsEdition.vue";
 import BibliographyEdition from "@/miniComponents/edition/BibliographyEdition.vue";
-import AddTagsEdition from "@/miniComponents/edition/AddTagsEdition.vue";
 import PrimaryTagsEdition from "@/miniComponents/edition/PrimaryTagsEdition.vue";
-
+import SecondaryTagsEdition from "@/miniComponents/edition/SecondaryTagsEdition.vue";
+import PublishButton from  "@/miniComponents/edition/PublishButton.vue";
 export default {
   name: "Edition",
   components: {
     
     NewsEdition,
     BibliographyEdition,
-    AddTagsEdition,
-    PrimaryTagsEdition
+    PrimaryTagsEdition,
+    SecondaryTagsEdition,
+    PublishButton
     
   },
     data: () => ({
