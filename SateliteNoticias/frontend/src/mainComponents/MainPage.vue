@@ -4,12 +4,10 @@
     <Banner></Banner>
     <!-- BANNER COMPONENT -->
 
-    <b-row>
-      <b-col md="12">
         <!-- WHOLE COMPONENT -->
         <b-row>
           <!-- CATEGORY COMPONENT -->
-          <Categories></Categories>
+          <Categories  @clicked-category="categoryClicked"></Categories>
           <!-- CATEGORY COMPONENT -->
 
           <b-col md="7">
@@ -17,16 +15,30 @@
             <SearchButtons></SearchButtons>
             <!-- SEARCH BUTTONS COMPONENT -->
 
-            <b-row>
-              <News></News>
-            </b-row>
-          </b-col>
+            <b-row >
+                <vue-custom-scrollbar class="scroll-area" :settings="settings" 
+                          v-bind:style="{position: 'relative',
+                                        margin: 'auto',                                                          
+                                        width: '100%',
+                                        height: '60em' }">
+                      <News></News>
+                                  <News></News>
 
-          <Edition></Edition>
+                    <News></News>
+
+                    <News></News>
+
+                </vue-custom-scrollbar>
+             
+
+            </b-row>
+
+          </b-col>
+                      <Edition></Edition>
+
         </b-row>
+        
         <!-- WHOLE COMPONENT -->
-      </b-col>
-    </b-row>
   </b-container>
 </template>>
 <script>
@@ -35,6 +47,8 @@ import Categories from "@/miniComponents/main/Categories.vue";
 import SearchButtons from "@/miniComponents/main/SearchButtons.vue";
 import News from "./News.vue";
 import Edition from "./Edition.vue";
+import vueCustomScrollbar from 'vue-custom-scrollbar'
+import { apiService } from "@/common/api.service.js";
 
 export default {
   name: "MainPage",
@@ -43,7 +57,38 @@ export default {
     Categories,
     SearchButtons,
     News,
-    Edition
+    Edition,
+    vueCustomScrollbar
+  },
+  data() {
+    return {
+      news: [],
+      next:null,
+      filterFlag: false,
+      pageCount: null,
+      settings: {
+        maxScrollbarLength: 20
+      },
+      categoryToFilterWith: null
+    }
+  },
+  methods:{
+    categoryClicked(category){
+        this.categoryToFilterWith = category
+        //Llamada a la API para filtrar con este tag mas grande
+
+        let endpoint = `/api/news/tags/${this.categoryToFilterWith}/`;
+        let method = "GET"
+        apiService(endpoint,method)
+          .then(data => {
+            console.log("este es el resultado de lo que me dio el back")
+            console.log(data.results)
+            this.news = data.results
+            this.filterFlag = true
+            this.next = null
+        });
+
+    }
   }
 };
 </script>

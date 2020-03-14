@@ -1,16 +1,11 @@
 <template>
   <!-- NEWS COMPONENT -->
 
-   <vue-custom-scrollbar class="scroll-area" :settings="settings" 
-                          v-bind:style="{position: relative,
-                                        margin: auto,                                                          
-                                        width: '100%',
-                                        height: '60em' }">
+ 
 
-
-          <b-col md="12" >
+          <b-col md="11" style="margin-left:auto;margin-right:auto" >
                
-                
+                  <div style="padding: 2em"></div>
                     <NewsSummary></NewsSummary>
 
                     <PrimaryTags></PrimaryTags>
@@ -19,13 +14,14 @@
                     <Bibliography></Bibliography>
 
                     <RelevanceEdition></RelevanceEdition>
+                    <NewsSummaryFull></NewsSummaryFull>
+                    <Comments></Comments>
 
 
             
           </b-col>
           <!-- NEWS COMPONENT -->
 
-  </vue-custom-scrollbar>
 
 </template>
 <script>
@@ -35,15 +31,14 @@ import SecondaryTags from "@/miniComponents/news/SecondaryTags.vue";
 
 import Bibliography from "@/miniComponents/news/Bibliography.vue";
 import RelevanceEdition from "@/miniComponents/news/RelevanceEdition.vue";
-import vueCustomScrollbar from 'vue-custom-scrollbar'
+import Comments from "@/miniComponents/news/Comments.vue";
+import NewsSummaryFull from "@/miniComponents/news/NewsSummaryFull.vue";
+
 
 export default {
   name: "News",
   data() {
     return {
-      settings: {
-        maxScrollbarLength: 100
-      }
     }
   },
   components: {
@@ -51,8 +46,9 @@ export default {
     PrimaryTags,
     Bibliography,
     RelevanceEdition,
-    vueCustomScrollbar,
-    SecondaryTags
+    SecondaryTags,
+    Comments,
+    NewsSummaryFull
 
   },
   methods: {

@@ -1,9 +1,9 @@
 <template>
-      <div>
+      <div style="text-align:center">
       
           <h2 style="color: blue">TITULO NOTICIA</h2>
           <div style="padding: 7px"></div>
-          <div style="color: blue;border:1px solid blue;font-size: 15px">
+          <div style="color: blue;border:1px solid blue;font-size: 15px; ">
                     <h5>Link: www.pagina.cl</h5>
 
 
@@ -11,8 +11,8 @@
                         CONDICIONES: ESTAR EN HOVER EN EL ELEMENTO
               -->
 
-                     <vue-custom-scrollbar class="scroll-area" v-bind:style="{position: relative,
-                                                          margin: auto,
+                     <vue-custom-scrollbar class="scroll-area" v-bind:style="{position: 'relative',
+                                                          margin: 'auto',
                                                           
                                                           width: '100%',
                                                           height: '10em' }"

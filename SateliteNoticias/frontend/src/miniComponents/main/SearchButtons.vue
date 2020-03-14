@@ -1,5 +1,5 @@
 <template>
-  <b-row>
+  <b-row style="text-align:center">
     <b-col md="4">
       <div class="button p-4">
         <b-button squared lg="4" variant="primary">Trending</b-button>
