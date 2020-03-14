@@ -5,17 +5,10 @@
       <md-button md-menu-trigger  class="md-raised md-primary">CATEGORIAS</md-button>
 
       <md-menu-content>
-        <md-menu-item  @click="categoryClicked('My Item 1')">My Item 1</md-menu-item>
-        <md-menu-item>My Item 2</md-menu-item>
-        <md-menu-item>My Item 3</md-menu-item>
+        <md-menu-item  v-for= "axis in Axis" :key="axis.key" @click="categoryClicked(axis)">
+          {{axis}}
 
-        <md-menu-item>My Item 1</md-menu-item>
-        <md-menu-item>My Item 2</md-menu-item>
-        <md-menu-item>My Item 3</md-menu-item>
-
-        <md-menu-item>My Item 1</md-menu-item>
-        <md-menu-item>My Item 2</md-menu-item>
-        <md-menu-item>My Item 3</md-menu-item>
+        </md-menu-item>
       </md-menu-content>
     </md-menu>
      
@@ -26,6 +19,11 @@
 <script>
 export default {
   name: "Categories",
+  data (){
+      return{
+          Axis: ['Big Data', 'Pagos Digitales','CBCD','Criptoactivos','Banca abierta','Ciberseguridad','Monitoreo tecnologico','DLT']
+      }
+  },
   methods: {
   categoryClicked(item) {
       this.$emit('clicked-category', item)

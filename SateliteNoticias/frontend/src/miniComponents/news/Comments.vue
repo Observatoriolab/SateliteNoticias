@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="border:1px solid blue; padding:0.8em 0.8em 0.8em 0.8em ">
         <div>
         <h4 class="text-primary p-2">Comentarios</h4>
 
