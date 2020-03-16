@@ -37,7 +37,7 @@
                               :bibliography="newsPiece.bibliography"
                               :relevance="newsPiece.relevance"
                               :irrelevance="newsPiece.irrelevance"
-                              :comments="newsPiece.comments"
+                              :slug="newsPiece.slug"
                       
                       
                       >

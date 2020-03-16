@@ -19,12 +19,12 @@
 
                     <PrimaryTags 
                                  :primaryTags="primaryTags"
->
+                    >
 
                     </PrimaryTags>
                     <SecondaryTags 
                             :secondaryTags="secondaryTags"
->
+                    >
 
 
                     </SecondaryTags>
@@ -54,8 +54,10 @@
                         >
                         
                         </NewsSummaryFull>
+
+
                         <Comments
-                                 :comments="comments"
+                            :slug="slug"
 
                         >
                         
@@ -94,14 +96,17 @@ export default {
           bibliography: Object,
           relevance: Number,
           irrelevance:Number,
-          comments: Object,
-          link: String
+          link: String,
+          slug: String
 
   },
   data() {
     return {
       fullNewsToggle: false,
-      openOrClosed: false
+      openOrClosed: false,
+      comments: [],
+      next:null
+      
     }
   },
   components: {
@@ -135,6 +140,7 @@ export default {
 
       }
     }
+    
   }
 };
 </script>

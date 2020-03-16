@@ -1,16 +1,21 @@
 <template>
     <div style="border:1px solid blue; padding:0.8em 0.8em 0.8em 0.8em ">
-        <div>
-        <h4 class="text-primary p-2">Comentarios</h4>
-
-              <b-form-textarea
-                      id="textarea"
-                      placeholder="Escribe tu comentario aqui!"
-                      rows="3"
-                      max-rows="12"
-                    ></b-form-textarea>
-
-        </div>
+        <form  @submit.prevent="onSubmit">
+            <h4 class="text-primary p-2">Comentarios</h4>
+            <b-button type="submit" variant="success">
+                Postear
+              </b-button>
+            <b-form-textarea
+                    id="textarea"
+                    placeholder="Escribe tu comentario aqui!"
+                    rows="3"
+                    max-rows="12"
+                    v-model="newCommentBody"
+                  >
+                  
+            </b-form-textarea>
+            
+        </form>
 
           <div style="padding: 1em"></div>
         <vue-custom-scrollbar class="scroll-area" v-bind:style="{position: 'relative',
@@ -23,101 +28,132 @@
 
 
                         <ul class="list-unstyled">
-                          <b-media tag="li">
+                          <b-media v-for="comment in comments" :key="comment.key">
+
                             <template v-slot:aside>
                               <b-img blank blank-color="#abc" width="64" alt="placeholder"></b-img>
                             </template>
-                            <h5 class="mt-0 mb-1">List-based media object</h5>
+                            <h5 class="mt-1 mb-1">      
+                              {{comment.author}}
+                              
+                              
+                             </h5>
                             <p class="mb-0">
-                              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-                              Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
-                              ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                              {{comment.body}}
+
                             </p>
+                              <div style="padding: 1em"></div>
+
                           </b-media>
 
-                          <b-media tag="li" class="my-4">
-                            <template v-slot:aside>
-                            <b-img blank blank-color="#cba" width="64" alt="placeholder"></b-img>
-                            </template>
-
-                            <h5 class="mt-0 mb-1">List-based media object</h5>
-                            <p class="mb-0">
-                              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-                              Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
-                              ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </p>
-                          </b-media>
-
-                          <b-media tag="li">
-                            <template v-slot:aside>
-                              <b-img blank blank-color="#bac" width="64" alt="placeholder"></b-img>
-                            </template>
-
-                            <h5 class="mt-0 mb-1">List-based media object</h5>
-                            <p class="mb-0">
-                              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-                              Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
-                              ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </p>
-                          </b-media>
-                            <b-media tag="li">
-                            <template v-slot:aside>
-                              <b-img blank blank-color="#bac" width="64" alt="placeholder"></b-img>
-                            </template>
-
-                            <h5 class="mt-0 mb-1">List-based media object</h5>
-                            <p class="mb-0">
-                              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-                              Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
-                              ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </p>
-                          </b-media>
-                            <b-media tag="li">
-                            <template v-slot:aside>
-                              <b-img blank blank-color="#bac" width="64" alt="placeholder"></b-img>
-                            </template>
-
-                            <h5 class="mt-0 mb-1">List-based media object</h5>
-                            <p class="mb-0">
-                              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-                              Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
-                              ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </p>
-                          </b-media>
-                            <b-media tag="li">
-                            <template v-slot:aside>
-                              <b-img blank blank-color="#bac" width="64" alt="placeholder"></b-img>
-                            </template>
-
-                            <h5 class="mt-0 mb-1">List-based media object</h5>
-                            <p class="mb-0">
-                              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-                              Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
-                              ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </p>
-                          </b-media>
                         </ul>
 
           </vue-custom-scrollbar>
+           <b-row >
+
+                <b-col md="5">
+
+                
+
+                </b-col>
+                  <b-col md="4">
+                      <div style="padding:1em"></div>
+                      <b-button
+                      v-show="next"
+                      @click="getNewsComments"
+                      variant="success"
+                          >
+                        Load More
+                      </b-button>
+
+                </b-col>
+                  <b-col md="3">
+
+
+                </b-col>
+              
+
+        </b-row>
 
 </div>
 </template>
 <script>
 import vueCustomScrollbar from 'vue-custom-scrollbar'
+import { apiService } from "@/common/api.service.js";
 
 export default {
     name:"Comments",
+    props: {
+        slug:String
+    },
      data() {
-    return {
-      settings: {
-        maxScrollbarLength: 20
-          }
-        }
-      },
-      components: {
-        vueCustomScrollbar
+          return {
+            settings: {
+                     maxScrollbarLength: 20
+            },
+            comments: [],
+            next:null,
+            newCommentBody: null,
+            requestUser:null
 
+          }
       },
+    components: {
+        vueCustomScrollbar
+    },
+    methods: {
+          setRequestUser() {
+              // the username has been set to localStorage by the App.vue component
+              this.requestUser = window.localStorage.getItem("username");
+          },
+          getNewsComments() {
+          // get a page of comments for a single news from the REST API's paginated 'news Endpoint'
+                let endpoint = `/api/news/${this.slug}/comments/`;
+                if (this.next) {
+                  endpoint = this.next;
+                }
+                apiService(endpoint).then(data => {
+                  this.comments.push(...data.results);
+                  console.log('estos son las respuestas')
+                  console.log(data.results)
+                  console.log(data.next)
+                  if (data.next) {
+                    this.next = data.next;
+                  } else {
+                    this.next = null;
+                  }
+                });
+        },
+        onSubmit() {
+          // Tell the REST API to create a new edition for this news based on the user input, then update some data properties
+          
+            console.log('aqui voy a enviar una respuesta nueva')
+            console.log(this.slug)
+            console.log(this.new)
+            if (this.newCommentBody) {
+              let endpoint = `/api/news/${this.slug}/comment/`;
+              apiService(endpoint, "POST", { body: this.newCommentBody}).then(
+                data => {
+                  console.log('este es la data que me entrego al responder la pregunta')
+                  console.log(data)
+                  this.comments.unshift(data);
+                }
+              );
+              this.newCommentBody = null;
+              this.showForm = false;
+              this.userHasEditioned = true;
+              if (this.error) {
+                this.error = null;
+              }
+            } else {
+              this.error = "You can't send an empty comment!";
+            }
+        }
+    },
+    created() {
+        this.getNewsComments();
+        this.setRequestUser();
+  }
 }
 </script>
 <style scoped>
