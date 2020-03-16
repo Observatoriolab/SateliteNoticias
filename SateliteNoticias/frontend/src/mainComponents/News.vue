@@ -6,7 +6,7 @@
           <b-col md="11" style="margin-left:auto;margin-right:auto" >
                
                   <div style="padding: 2em"></div>
-                    <NewsSummary></NewsSummary>
+                    <NewsSummary :openOrClosed="openOrClosed" @clicked-fullNews="fullNewsClicked"></NewsSummary>
 
                     <PrimaryTags></PrimaryTags>
                     <SecondaryTags></SecondaryTags>
@@ -14,9 +14,14 @@
                     <Bibliography></Bibliography>
 
                     <RelevanceEdition @clicked-edition="clickedEdition"></RelevanceEdition>
-                    <NewsSummaryFull></NewsSummaryFull>
-                    <Comments></Comments>
 
+                    <div v-if="fullNewsToggle">
+
+                        <NewsSummaryFull></NewsSummaryFull>
+                        <Comments></Comments>
+
+
+                    </div>
 
             
           </b-col>
@@ -39,6 +44,8 @@ export default {
   name: "News",
   data() {
     return {
+      fullNewsToggle: false,
+      openOrClosed: false
     }
   },
   components: {
@@ -54,6 +61,19 @@ export default {
   methods: {
     clickedEdition() {
         this.$emit('clicked-edition')
+    },
+    fullNewsClicked(toggle) {
+      console.log('aqui se apreto el seguir leyendo')
+      if(toggle){
+          this.fullNewsToggle = true
+          this.openOrClosed = true
+
+      }
+      else{
+          this.fullNewsToggle = false
+          this.openOrClosed = false
+
+      }
     }
   }
 };

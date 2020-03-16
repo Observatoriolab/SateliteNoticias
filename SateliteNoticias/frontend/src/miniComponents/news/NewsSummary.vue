@@ -31,10 +31,18 @@
                           </p>
                     </vue-custom-scrollbar>
 
-                  
-                    <div>
-                          <b-button lg="4" variant="outline-primary" href="#">Seguir leyendo</b-button>
-                         <b-dropdown
+                            <div style="padding-top: 1em"></div>
+
+                    <b-row>
+
+                      <b-col>
+                          <b-button @click="fullNewsClicked" lg="4" variant="outline-primary" ref="readingButton">{{reading}}</b-button>
+
+
+                      </b-col>
+
+                        <b-col>
+                            <b-dropdown
                                   split
                                   split-variant="outline-primary"
                                   variant="primary"
@@ -45,7 +53,10 @@
                                   <b-dropdown-item href="#">Another action</b-dropdown-item>
                                   <b-dropdown-item href="#">Something else here...</b-dropdown-item>
                                 </b-dropdown>
-                  </div>
+                        
+                      </b-col>
+                        
+                  </b-row>
 
               <div style="border:1px solid blue">
 
@@ -61,17 +72,37 @@ import vueCustomScrollbar from 'vue-custom-scrollbar'
 
 export default {
   name: "NewsSummary",
+  props:{
+    openOrClosed: Boolean
+  },
   data() {
     return {
       settings: {
         maxScrollbarLength: 20
-      }
+      },
+      reading: "Seguir leyendo"
     }
   },
   components: {
      vueCustomScrollbar
 
   },
+  methods:{
+    fullNewsClicked() {
+      if(this.openOrClosed){
+        this.openOrClosed = false
+      this.reading = "Seguir Leyendo"
+
+      }
+      else{
+        this.openOrClosed = true
+              this.reading = "Cerrar noticia"
+
+
+      }
+        this.$emit('clicked-fullNews', this.openOrClosed)    
+    }
+  }
 };
 </script>
 <style scoped>

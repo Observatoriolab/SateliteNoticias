@@ -6,7 +6,6 @@
                    
                       <h2 style="color: blue">Texto Completo</h2>
 
-
               <!--TODO: DISABLE DEL SCROLL DE LAS NOTICIAS PARA PODER SCROLLEAR EL CONTENIDO SIN PROBLEMAS 
                         CONDICIONES: ESTAR EN HOVER EN EL ELEMENTO
               -->

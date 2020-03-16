@@ -22,11 +22,11 @@
                                         width: '100%',
                                         height: '60em' }">
                       <News  @clicked-edition="clickedEdition"></News>
-                                  <News></News>
+                                  <News @clicked-edition="clickedEdition"></News>
 
-                    <News></News>
+                    <News @clicked-edition="clickedEdition"></News>
 
-                    <News></News>
+                    <News @clicked-edition="clickedEdition"></News>
 
                 </vue-custom-scrollbar>
              
