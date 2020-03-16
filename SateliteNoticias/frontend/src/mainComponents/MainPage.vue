@@ -48,7 +48,7 @@
 
                       </News>
 
-
+                 
 
                   </div>
 
@@ -74,6 +74,33 @@
         </b-row>
         
         <!-- WHOLE COMPONENT -->
+
+        <b-row >
+
+          <b-col md="5">
+
+           
+
+          </b-col>
+             <b-col md="4">
+                <div style="padding:1em"></div>
+                <b-button
+                v-show="next"
+                @click="getnews"
+                variant="success"
+                    >
+                  Load More
+                </b-button>
+
+          </b-col>
+             <b-col md="3">
+
+
+          </b-col>
+        
+
+        </b-row>
+          
   </b-container>
 </template>>
 <script>

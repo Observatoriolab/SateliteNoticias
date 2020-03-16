@@ -18,7 +18,7 @@
                                                           height: '10em' }"
                                                       :settings="settings" 
                                                      >
-                          <p >  {{content}}
+                          <p v-html="content"> 
                                      </p>
                     </vue-custom-scrollbar>
 
