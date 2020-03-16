@@ -31,8 +31,11 @@ import VueTagsInput from '@johmun/vue-tags-input';
 
 export default {
   name: "SecondaryTags",
+  props:{
+    secondaryTags:Array
+  },
   components:{
-VueTagsInput
+        VueTagsInput
   },
   data() {
     return {
@@ -40,6 +43,15 @@ VueTagsInput
       tags: [],
     };
   },
+  created(){
+    console.log(this.$props.secondaryTags)
+    var i = 0
+    for(i=0;i<this.$props.secondaryTags.length;i++){
+          this.$set(this.tags, i, {"text":this.$props.secondaryTags[i]})
+
+    }
+    console.log(this.tags)
+  }
 };
 </script>
 <style scoped>

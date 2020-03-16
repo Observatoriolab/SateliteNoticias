@@ -21,12 +21,42 @@
                                         margin: 'auto',                                                          
                                         width: '100%',
                                         height: '60em' }">
-                      <News  @clicked-edition="clickedEdition"></News>
-                                  <News @clicked-edition="clickedEdition"></News>
 
-                    <News @clicked-edition="clickedEdition"></News>
 
-                    <News @clicked-edition="clickedEdition"></News>
+                  <div v-for="newsPiece in news" v-bind:key="newsPiece.key">
+
+
+                      <News  @clicked-edition="clickedEdition"
+                      
+                              :title="newsPiece.title"
+                              :link="newsPiece.link"
+                              :content="newsPiece.content"
+                              :fullContent="newsPiece.fullContent"
+                              :primaryTags="newsPiece.primaryTags"
+                              :secondaryTags="newsPiece.tags"
+                              :bibliography="newsPiece.bibliography"
+                              :relevance="newsPiece.relevance"
+                              :irrelevance="newsPiece.irrelevance"
+                              :comments="newsPiece.comments"
+                      
+                      
+                      >
+
+                         
+
+
+
+                      </News>
+
+
+
+                  </div>
+
+
+
+
+
+
 
                 </vue-custom-scrollbar>
              
@@ -102,7 +132,33 @@ export default {
     },
     hidePanel(){
         this.editionToggle = false
+    },
+    getnews() {
+      console.log('estos son las preguntas antes de consultar a la api')
+      console.log(this.news)
+      let endpoint = "/api/news/";
+      if (this.next) {
+        endpoint = this.next;
+      }
+      this.loadingnews = true;
+      console.log(this.news)
+      apiService(endpoint).then(data => {
+        this.news.push(...data.results);
+        console.log(data)
+        this.loadingnews = false;
+        if (data.next) {
+          this.next = data.next;
+        } else {
+          this.next = null;
+        }
+      });
     }
+  },
+  created() {
+    this.getnews();
+    console.log('estas son las news')
+    console.log(this.news);
+    document.title = "Satelite de Noticias";
   }
 };
 </script>

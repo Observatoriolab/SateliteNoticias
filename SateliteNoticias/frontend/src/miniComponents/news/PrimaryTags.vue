@@ -90,6 +90,9 @@
 
 export default {
   name: "PrimaryTags",
+  props:{
+    primaryTags:Array
+  },
   components:{
 
 

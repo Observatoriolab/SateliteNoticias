@@ -7,7 +7,7 @@
 
         <h6 style="padding-top: 1em"> Relevancia</h6>
 
-        <star-rating   :increment="0.5" :star-size=starSize></star-rating>
+        <star-rating v-model="localRelevance"  :increment="0.5" :star-size=starSize></star-rating>
 
 
 
@@ -17,7 +17,7 @@
                     display:flex;">
 
         <h6 style="padding-top: 1em"> Irrelevancia</h6>
-          <star-rating  inactive-color="#e1bad9" active-color="#cc1166"  :increment="0.5" :star-size=starSize></star-rating>
+          <star-rating v-model="localIrrelevance" inactive-color="#e1bad9" active-color="#cc1166"  :increment="0.5" :star-size=starSize></star-rating>
 
 
 
@@ -39,6 +39,11 @@ import EditionButton from "./EditionButton.vue";
 
 
 export default{
+  name:"Relevance",
+  props:{
+    relevance:Number,
+    irrelevance:Number
+  },
   components: {
     StarRating,
         EditionButton
@@ -50,7 +55,9 @@ export default{
         rating: "No Rating Selected",
         currentRating: "No Rating",
         currentSelectedRating: "No Current Rating",
-        starSize: 30
+        starSize: 30,
+        localRelevance:null,
+        localIrrelevance:null
     }
   },
   methods: {
@@ -58,6 +65,12 @@ export default{
         this.$emit('clicked-edition')
     }
   },
+  created(){
+    console.log(this.relevance)
+    this.localRelevance = this.$props.relevance
+    this.localIrrelevance = this.$props.irrelevance
+
+  }
 
 }
 </script>

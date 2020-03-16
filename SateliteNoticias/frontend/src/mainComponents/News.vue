@@ -6,19 +6,61 @@
           <b-col md="11" style="margin-left:auto;margin-right:auto" >
                
                   <div style="padding: 2em"></div>
-                    <NewsSummary :openOrClosed="openOrClosed" @clicked-fullNews="fullNewsClicked"></NewsSummary>
+                    <NewsSummary 
+                              :title="title"
+                              :content="content"
+                              :link="link"
+                          :openOrClosed="openOrClosed" 
+                          
+                          
+                          @clicked-fullNews="fullNewsClicked"
+                    
+                    ></NewsSummary>
 
-                    <PrimaryTags></PrimaryTags>
-                    <SecondaryTags></SecondaryTags>
+                    <PrimaryTags 
+                                 :primaryTags="primaryTags"
+>
 
-                    <Bibliography></Bibliography>
+                    </PrimaryTags>
+                    <SecondaryTags 
+                            :secondaryTags="secondaryTags"
+>
 
-                    <RelevanceEdition @clicked-edition="clickedEdition"></RelevanceEdition>
+
+                    </SecondaryTags>
+
+                    <Bibliography
+                          :bibliography="bibliography"
+
+                    >
+
+
+                    </Bibliography>
+
+                    <RelevanceEdition 
+                               @clicked-edition="clickedEdition"
+                                :relevance="relevance"
+                                :irrelevance="irrelevance"
+                               
+                               >
+                          
+                    
+                    </RelevanceEdition>
 
                     <div v-if="fullNewsToggle">
 
-                        <NewsSummaryFull></NewsSummaryFull>
-                        <Comments></Comments>
+                        <NewsSummaryFull
+                           :fullContent="fullContent"
+                        >
+                        
+                        </NewsSummaryFull>
+                        <Comments
+                                 :comments="comments"
+
+                        >
+                        
+                        
+                        </Comments>
 
 
                     </div>
@@ -42,6 +84,20 @@ import NewsSummaryFull from "@/miniComponents/news/NewsSummaryFull.vue";
 
 export default {
   name: "News",
+  props:{
+          title:String,
+          content:String,
+          visits:Number,
+          fullContent:String,
+          primaryTags:Array,
+          secondaryTags:Array,
+          bibliography: Object,
+          relevance: Number,
+          irrelevance:Number,
+          comments: Object,
+          link: String
+
+  },
   data() {
     return {
       fullNewsToggle: false,
@@ -57,6 +113,10 @@ export default {
     Comments,
     NewsSummaryFull
 
+  },
+  created(){
+    console.log('aqui va algo 2')
+    console.log(this.$props)
   },
   methods: {
     clickedEdition() {

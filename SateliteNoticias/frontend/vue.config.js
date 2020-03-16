@@ -4,13 +4,13 @@ module.exports = {
   // on Windows you might want to set publicPath: "http://127.0.0.1:8080/"
   publicPath: "http://0.0.0.0:8080/",
   outputDir: "./dist/",
-
   chainWebpack: config => {
     config
       .plugin("BundleTracker")
       .use(BundleTracker, [{ filename: "./webpack-stats.json" }]);
 
     config.output.filename("bundle.js");
+    devtool: 'source-map';
 
     config.optimization.splitChunks(false);
 
