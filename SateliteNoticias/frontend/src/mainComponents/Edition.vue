@@ -3,9 +3,15 @@
 <div >
     
 
-          <md-drawer class="md-right" :md-active.sync="showSidepanel">
+          <md-drawer class="md-right" :md-active.sync="showSidepanel"  md-persistent="full" >
       
              <!-- EDITION COMPONENT -->
+                  <md-toolbar class="md-transparent" md-elevation="2">
+
+                      <md-button class="md-icon-button md-dense" @click="toggleMenu" style="margin-left:auto">
+                          <b-icon-x variant="danger" font-scale="7.5"></b-icon-x>                   
+                       </md-button>
+                  </md-toolbar>
                     <div style="padding: 1em"></div>
                   
                     <form style=" width: 85%;
@@ -40,6 +46,10 @@ import BibliographyEdition from "@/miniComponents/edition/BibliographyEdition.vu
 import PrimaryTagsEdition from "@/miniComponents/edition/PrimaryTagsEdition.vue";
 import SecondaryTagsEdition from "@/miniComponents/edition/SecondaryTagsEdition.vue";
 import PublishButton from  "@/miniComponents/edition/PublishButton.vue";
+
+import { BIconX } from 'bootstrap-vue'
+
+
 export default {
   name: "Edition",
   props:{
@@ -51,23 +61,32 @@ export default {
     BibliographyEdition,
     PrimaryTagsEdition,
     SecondaryTagsEdition,
-    PublishButton
+    PublishButton,
+    BIconX
     
   },
-    data: () => ({
-      showNavigation: false,
-      showSidepanel: false
-    }),
-    created(){
-      console.log('se esta creando el drawer')
-      this.showSidepanel = this.showPanel
-    },
-    beforeUpdate(){
-      console.log('se viene')
-      console.log('se destruye')
-      this.showSidepanel = false
-      this.$emit('hide-panel')
-    }
+
+  data: () => ({
+    showNavigation: false,
+    showSidepanel: false
+  }),
+
+  methods:{
+      toggleMenu(){
+            this.showSidepanel =  !this.showSidepanel
+
+      }
+  },
+  created(){
+    console.log('se esta creando el drawer')
+    this.showSidepanel = this.showPanel
+  },
+  beforeUpdate(){
+    console.log('se viene')
+    console.log('se destruye')
+    this.showSidepanel = false
+    this.$emit('hide-panel')
+  }
 };
 </script>
 <style scoped>

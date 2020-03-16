@@ -1,7 +1,7 @@
 <template>
   <div style="width:90%; text-align:center; margin-right:auto; margin-left:auto">
     <!-- NEWS EDITION COMPONENT -->
-    <h3 class="text-primary text-center p-2">Edición</h3>
+    <h1 class="text-primary" style="margin-center:auto" >Edición</h1>
     <h4 class="text-primary p-1">Titulo</h4>
     <b-form-input
       id="input"
