@@ -1,11 +1,11 @@
 <template>
     <!-- PRIMARY TAGS COMPONENT -->
 
-    <div style="width: 90%;  margin-left:auto;margin-right:auto;">
+    <div style="width: 90%;  margin-left:auto;margin-right:auto;text-align:center">
+          <h4 style="color: blue">Tags secundarios</h4>
 
-          <b-row style="color: blue;text-align:center" fluid>
+          <b-row style="color: blue" fluid>
 
-                    <h5 style="padding: 0.5em 0.5em 0em 0.5em;" >Tags secundarios</h5>
                       <vue-tags-input
                         v-model="tag"
                         :tags="tags"
@@ -18,7 +18,6 @@
       
     </div>
             
-
 
 
   

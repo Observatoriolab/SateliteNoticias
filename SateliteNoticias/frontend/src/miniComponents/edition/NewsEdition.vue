@@ -13,7 +13,8 @@
       id="textarea"
       placeholder="Edición contenido..."
       rows="3"
-      max-rows="12"
+      max-rows="15"
+      style="height:18em"
     ></b-form-textarea>
     <pre class="mt-3 mb-0"></pre>
 
@@ -26,4 +27,7 @@ export default {
 
 };
 </script>
-<style lang="stylus"></style>
+<style lang="stylus">
+
+
+</style>

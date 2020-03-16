@@ -1,82 +1,71 @@
 <template>
-  <div style =" width: 90%; margin-left:auto;margin-right:auto">
+  <div style =" width: 90%; margin-left:auto; margin-right:auto; text-align:center;">
     <!-- PRIMARY TAGS EDITION COMPONENT -->
     <b-row>
-              <b-col md="4">
-                <h5 class="text-primary">#EJE</h5>
+           <b-col md="2" > 
 
-                <h5 class="text-primary p-1">#PAIS</h5>
-                <h5 class="text-primary p-1">#ORGANISMO</h5>
-                <h5 class="text-primary p-1">#FECHA</h5>
+              <h6>EJE</h6>
+                <b-dropdown split split-variant="outline-primary" variant="primary" text="#EJE" class="m-2">
+                <b-dropdown-item href="#">Eje 1</b-dropdown-item>
+                <b-dropdown-item href="#">Eje 2</b-dropdown-item>
+                <b-dropdown-item href="#">Eje 3</b-dropdown-item>
+              </b-dropdown>
+            </b-col>
+                  
+            <b-col md="3" >
 
-              </b-col>
-              <b-col md="4">
-                  <b-dropdown
-                    split
-                    split-variant="outline-primary"
-                    variant="primary"
-                    text="Ejes"
-                  >
-                    <b-dropdown-item href="#">Bibliografia 1</b-dropdown-item>
-                    <b-dropdown-item href="#">Bibliografia 2</b-dropdown-item>
-                    <b-dropdown-item href="#">Bibliografia 3</b-dropdown-item>
-                  </b-dropdown>
-
-                  <b-dropdown
-                    split
-                    split-variant="outline-primary"
-                    variant="primary"
-                    text="Pais"
-                  >
-                    <b-dropdown-item href="#">Bibliografia 1</b-dropdown-item>
-                    <b-dropdown-item href="#">Bibliografia 2</b-dropdown-item>
-                    <b-dropdown-item href="#">Bibliografia 3</b-dropdown-item>
-
-                  </b-dropdown>
+                <h6>PAIS/REGION</h6>
+                <b-dropdown
+                  split
+                  split-variant="outline-primary"
+                  variant="primary"
+                  text="#PAIS"
+                  class="m-2"
+                >
+                  <b-dropdown-item href="#">Pais 1</b-dropdown-item>
+                  <b-dropdown-item href="#">Pais 2</b-dropdown-item>
+                  <b-dropdown-item href="#">Pais 3</b-dropdown-item>
+                </b-dropdown>
+                
+            </b-col>
 
 
-                    <b-dropdown
-                      split
-                      split-variant="outline-primary"
-                      variant="primary"
-                      text="Organismo"
-                    >
-                      <b-dropdown-item href="#">Bibliografia 1</b-dropdown-item>
-                      <b-dropdown-item href="#">Bibliografia 2</b-dropdown-item>
-                      <b-dropdown-item href="#">Bibliografia 3</b-dropdown-item>
-                    </b-dropdown>
 
-                      <b-dropdown
-                        split
-                        split-variant="outline-primary"
-                        variant="primary"
-                        text="Fecha"
-                      >
-                        <b-dropdown-item href="#">Bibliografia 1</b-dropdown-item>
-                        <b-dropdown-item href="#">Bibliografia 2</b-dropdown-item>
-                        <b-dropdown-item href="#">Bibliografia 3</b-dropdown-item>
-                      </b-dropdown>
+            <b-col md="4" >
+                <h6>ORGANISMO/ENTIDAD</h6>
 
-                      
-              </b-col>
-              <b-col md="4">
-                <div class="buttonn">
-                  <b-button squared lg="4" variant="primary">Agregar</b-button>
-                </div>
-
-                <div class="buttonn ">
-                  <b-button squared lg="4" variant="primary">Agregar</b-button>
-                </div>
-                <div class="buttonn ">
-                  <b-button squared lg="4" variant="primary">Agregar</b-button>
-                </div>
-                <div class="buttonn ">
-                  <b-button squared lg="4" variant="primary">Agregar</b-button>
-                </div>
-              </b-col>
+                <b-dropdown
+                  split
+                  split-variant="outline-primary"
+                  variant="primary"
+                  text="#ORGANISMO"
+                  class="m-2"
+                >
+                  <b-dropdown-item href="#">Organismo 1</b-dropdown-item>
+                  <b-dropdown-item href="#">Organismo 2</b-dropdown-item>
+                  <b-dropdown-item href="#">Organismo 3</b-dropdown-item>
+                </b-dropdown>
+            </b-col>
 
 
-        </b-row>
+            <b-col md="3" > 
+
+              <h6>FECHA</h6>
+            <b-dropdown
+                split
+                split-variant="outline-primary"
+                variant="primary"
+                text="#FECHA"
+                class="m-2"
+              >
+                <b-dropdown-item href="#">Fecha 1</b-dropdown-item>
+                <b-dropdown-item href="#">Fecha 2</b-dropdown-item>
+                <b-dropdown-item href="#">Fecha 3</b-dropdown-item>
+              </b-dropdown>
+
+            </b-col>
+          
+    </b-row>
 
     <!-- PRIMARY TAGS EDITION COMPONENT -->
   </div>

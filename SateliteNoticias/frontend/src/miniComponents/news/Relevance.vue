@@ -13,8 +13,8 @@
 
     </b-col>
      <b-col md="4"  style="margin-left:auto;
-   margin-right:auto;
-   display:flex;">
+                    margin-right:auto;
+                    display:flex;">
 
         <h6 style="padding-top: 1em"> Irrelevancia</h6>
           <star-rating  inactive-color="#e1bad9" active-color="#cc1166"  :increment="0.5" :star-size=starSize></star-rating>
@@ -23,7 +23,7 @@
 
     </b-col>
     <b-col md="2">
-      <EditionButton ></EditionButton>
+      <EditionButton @clicked-edition= "clickedEdition"></EditionButton>
 
       
 
@@ -53,17 +53,11 @@ export default{
         starSize: 30
     }
   },
-    methods: {
-        setRating: function(rating) {
-          this.rating = "You have Selected: " + rating + " stars";
-        },
-        showCurrentRating: function(rating) {
-          this.currentRating = (rating === 0) ? this.currentSelectedRating : "Click to select " + rating + " stars"
-        },
-        setCurrentSelectedRating: function(rating) {
-          this.currentSelectedRating = "You have Selected: " + rating + " stars";
-        }
-      },
+  methods: {
+    clickedEdition() {
+        this.$emit('clicked-edition')
+    }
+  },
 
 }
 </script>

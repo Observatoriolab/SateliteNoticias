@@ -21,7 +21,7 @@
                                         margin: 'auto',                                                          
                                         width: '100%',
                                         height: '60em' }">
-                      <News></News>
+                      <News  @clicked-edition="clickedEdition"></News>
                                   <News></News>
 
                     <News></News>
@@ -34,7 +34,12 @@
             </b-row>
 
           </b-col>
-                      <Edition></Edition>
+          <div v-if="editionToggle"> 
+
+               <Edition :showPanel="editionToggle" @hide-panel="hidePanel"></Edition>
+
+          </div>
+
 
         </b-row>
         
@@ -69,7 +74,8 @@ export default {
       settings: {
         maxScrollbarLength: 20
       },
-      categoryToFilterWith: null
+      categoryToFilterWith: null,
+      editionToggle: false
     }
   },
   methods:{
@@ -88,6 +94,14 @@ export default {
             this.next = null
         });
 
+    },
+    //Se apreto el boton de editar por lo que se debe desplegar el drawer derecho para ver/editar la edicion
+    clickedEdition(){
+        console.log("acabo de apretar el boton")
+        this.editionToggle = true
+    },
+    hidePanel(){
+        this.editionToggle = false
     }
   }
 };

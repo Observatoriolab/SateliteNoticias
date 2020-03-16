@@ -1,10 +1,10 @@
 <template>
 
 
-      <div>
-                <h4  style="padding:0.5em;  color:blue">Bibliografia</h4>
+      <div style="text-align:center">
+                <h4  style="padding:1em;  color:blue">Bibliografia</h4>
 
-            <b-row style="width: 100%; text-align:center;  margin-left:auto;margin-right:auto;  color:blue" fluid>
+            <b-row style="width: 95%; text-align:center;  margin-left:auto;margin-right:auto;  color:blue" fluid>
               <!-- BIBLIOGRAPHY COMPONENT -->
               <b-col md="4 p-1" >
                 <h6 >Nombre:</h6>

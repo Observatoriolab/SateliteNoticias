@@ -2,20 +2,26 @@
 
 <div >
     
-        <md-button @click="showSidepanel = true">Favorites</md-button>
 
           <md-drawer class="md-right" :md-active.sync="showSidepanel">
       
              <!-- EDITION COMPONENT -->
                     <div style="padding: 1em"></div>
                   
-                    <form style=" width: 82%;
+                    <form style=" width: 85%;
+                                  height: 85%;
                                 margin-right: auto;
                                 margin-left: auto; border: 1px solid blue">
 
                       <NewsEdition></NewsEdition>
+                                          <div style="padding: 1em"></div>
+
                       <PrimaryTagsEdition></PrimaryTagsEdition>
+                                          <div style="padding: 1em"></div>
+
                       <SecondaryTagsEdition></SecondaryTagsEdition>
+                                          <div style="padding: 1em"></div>
+
                       <BibliographyEdition></BibliographyEdition>
                       <PublishButton></PublishButton>
                     </form>
@@ -36,6 +42,9 @@ import SecondaryTagsEdition from "@/miniComponents/edition/SecondaryTagsEdition.
 import PublishButton from  "@/miniComponents/edition/PublishButton.vue";
 export default {
   name: "Edition",
+  props:{
+      showPanel:Boolean
+  },
   components: {
     
     NewsEdition,
@@ -48,7 +57,17 @@ export default {
     data: () => ({
       showNavigation: false,
       showSidepanel: false
-    })
+    }),
+    created(){
+      console.log('se esta creando el drawer')
+      this.showSidepanel = this.showPanel
+    },
+    beforeUpdate(){
+      console.log('se viene')
+      console.log('se destruye')
+      this.showSidepanel = false
+      this.$emit('hide-panel')
+    }
 };
 </script>
 <style scoped>

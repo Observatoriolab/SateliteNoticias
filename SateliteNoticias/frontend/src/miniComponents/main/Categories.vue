@@ -25,7 +25,7 @@ export default {
       }
   },
   methods: {
-  categoryClicked(item) {
+    categoryClicked(item) {
       this.$emit('clicked-category', item)
     }
   }

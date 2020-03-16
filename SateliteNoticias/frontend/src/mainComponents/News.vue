@@ -13,7 +13,7 @@
 
                     <Bibliography></Bibliography>
 
-                    <RelevanceEdition></RelevanceEdition>
+                    <RelevanceEdition @clicked-edition="clickedEdition"></RelevanceEdition>
                     <NewsSummaryFull></NewsSummaryFull>
                     <Comments></Comments>
 
@@ -52,8 +52,8 @@ export default {
 
   },
   methods: {
-    scrollHandle(evt) {
-      console.log(evt)
+    clickedEdition() {
+        this.$emit('clicked-edition')
     }
   }
 };
