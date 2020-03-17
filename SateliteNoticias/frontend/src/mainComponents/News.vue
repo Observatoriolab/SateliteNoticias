@@ -82,6 +82,7 @@ import Bibliography from "@/miniComponents/news/Bibliography.vue";
 import RelevanceEdition from "@/miniComponents/news/RelevanceEdition.vue";
 import Comments from "@/miniComponents/news/Comments.vue";
 import NewsSummaryFull from "@/miniComponents/news/NewsSummaryFull.vue";
+import { apiService } from "@/common/api.service.js";
 
 
 export default {
@@ -105,7 +106,9 @@ export default {
       fullNewsToggle: false,
       openOrClosed: false,
       comments: [],
-      next:null
+      next:null,
+      next2:null,
+      editions: []
       
     }
   },
@@ -119,13 +122,11 @@ export default {
     NewsSummaryFull
 
   },
-  created(){
-    console.log('aqui va algo 2')
-    console.log(this.$props)
-  },
   methods: {
     clickedEdition() {
-        this.$emit('clicked-edition')
+      console.log('estos son las ediciones')
+      console.log(this.editions)
+        this.$emit('clicked-edition',this.editions,this.slug)
     },
     fullNewsClicked(toggle) {
       console.log('aqui se apreto el seguir leyendo')
@@ -139,9 +140,33 @@ export default {
           this.openOrClosed = false
 
       }
-    }
+    },
+    getnewsEditions() {
+      // get a page of editions for a single news from the REST API's paginated 'news Endpoint'
+      console.log(this.slug)
+      let endpoint = `/api/news/${this.slug}/editions/`;
+      if (this.next2) {
+        endpoint = this.next2;
+      }
+      apiService(endpoint).then(data => {
+        this.editions.push(...data.results);
+        console.log('estos son las respuestas')
+        console.log(data.results)
+        console.log(this.editions)
+        if (data.next2) {
+          this.next2 = data.next;
+        } else {
+          this.next2 = null;
+        }
+      });
+    },
     
-  }
+  },
+  created(){
+    console.log('aqui va algo 2')
+    console.log(this.$props)
+    this.getnewsEditions()
+  },
 };
 </script>
 <style scoped>

@@ -6,6 +6,9 @@
     <b-form-input
       id="input"
       placeholder="Edición titulo..."
+      v-model="titleInternal"
+      v-on:change="onChange"
+
     ></b-form-input>
 
     <h4 class="text-primary p-2">Contenido</h4>
@@ -14,7 +17,10 @@
       placeholder="Edición contenido..."
       rows="3"
       max-rows="15"
+      v-model="bodyInternal"
       style="height:18em"
+      v-on:change="onChange"
+
     ></b-form-textarea>
     <pre class="mt-3 mb-0"></pre>
 
@@ -23,7 +29,27 @@
 </template>
 <script>
 export default {
-  name: "NewsEdition"
+  name: "NewsEdition",
+  props:{
+    title:String,
+    body:String
+  },
+
+  data: () => ({
+      titleInternal: '',
+      bodyInternal: ''
+
+  }),
+  methods:{
+      onChange(){
+        this.$emit('news-change', this.titleInternal,this.bodyInternal)
+      }
+  },
+
+  created(){
+    this.titleInternal = this.title
+    this.bodyInternal = this.body
+  }
 
 };
 </script>

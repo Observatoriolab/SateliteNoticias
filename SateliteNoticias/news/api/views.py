@@ -120,9 +120,6 @@ class EditionCreateAPIView(generics.CreateAPIView):
         kwarg_slug = self.kwargs.get("slug")
         news = get_object_or_404(News, slug=kwarg_slug)
 
-        if news.editions.filter(author=request_user).exists():
-            raise ValidationError("You have already editioned this news!")
-
         serializer.save(author=request_user, news=news)
 
 
@@ -133,6 +130,8 @@ class EditionListAPIView(generics.ListCreateAPIView):
     def get_queryset(self):
         kwarg_slug = self.kwargs.get("slug")
         logging.debug('aqui va algo')
+        algo2 = Edition.objects.filter(body='dasasdaddasdsa')
+        logging.debug('esto es lo que salio')
         logging.debug(type(Edition.objects.filter(news__slug=kwarg_slug).order_by("-created_at")))
         logging.debug(Edition.objects.filter(news__slug=kwarg_slug).order_by("-created_at"))
         return Edition.objects.filter(news__slug=kwarg_slug).order_by("-created_at")
@@ -141,7 +140,7 @@ class EditionListAPIView(generics.ListCreateAPIView):
 class EditionRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Edition.objects.all()
     serializer_class = EditionSerializer
-    permission_classes = [IsAuthenticated,IsAuthorOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
 
 

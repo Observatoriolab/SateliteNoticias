@@ -72,7 +72,25 @@
 </template>
 <script>
 export default {
-  name: "PrimaryTagsEdition"
+  name: "PrimaryTagsEdition",
+  props:{
+    tags:Array
+  },
+
+  data: () => ({
+      tagsInternal: null
+
+  }),
+  
+  methods:{
+      onChange(){
+        this.$emit('primary-tags-change', this.tagsInternal)
+      }
+  },
+
+  created(){
+    this.tagsInternal = this.tags
+  }
 };
 </script>
 <style scope>

@@ -17,10 +17,10 @@
                                                           height: '25em' }"
                                                       :settings="settings" 
                                                      >
-                                                                         <div style="padding:3em"></div>
-
+                           <div style="padding:3em"></div>
+    
                           <p v-html="content"> 
-                                     </p>
+                          </p>
                     </vue-custom-scrollbar>
 
                             <div style="padding-top: 1em"></div>

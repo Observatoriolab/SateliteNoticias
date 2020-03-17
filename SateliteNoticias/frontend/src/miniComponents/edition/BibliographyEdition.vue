@@ -33,7 +33,21 @@
 </template>
 <script>
 export default {
-  name: "Bibliography"
+  name: "Bibliography",
+  props:{
+    bibliographyName: String,
+    bibliographyLink: String
+  },
+  data: () => ({
+      bibliographyNameInternal: null,
+      bibliographyLinkInternal: null
+
+  }),
+  methods:{
+      onChange(){
+        this.$emit('bibliography-change', this.bibliographyNameInternal,this.bibliographyLinkInternal)
+      }
+  },
 };
 </script>
 <style lang="stylus"></style>

@@ -10,6 +10,7 @@
                         v-model="tag"
                         :tags="tags"
                         @tags-changed="newTags => tags = newTags"
+                        v-on:change="onChange"
                       />
                       
                    
@@ -30,15 +31,38 @@ import VueTagsInput from '@johmun/vue-tags-input';
 
 export default {
   name: "SecondaryTags",
+  props:{
+    secondaryTags:Array
+  },
   components:{
-VueTagsInput
+        VueTagsInput
   },
   data() {
     return {
       tag: '',
-      tags: [],
+      tags: []
     };
   },
+  
+  methods:{
+      onChange(){
+        this.$emit('secondary-tags-change', this.tags)
+      }
+  },
+  updated(){
+        this.onChange();
+
+  },
+  created(){
+    console.log('aqui va los tags')
+    console.log(this.secondaryTags)
+    var i = 0
+    for(i=0;i<this.secondaryTags.length;i++){
+          this.$set(this.tags, i, {"text":this.secondaryTags[i]})
+
+    }
+    console.log(this.tags)
+  }
 };
 </script>
 <style scoped>

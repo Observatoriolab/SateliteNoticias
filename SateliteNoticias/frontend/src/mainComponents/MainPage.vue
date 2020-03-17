@@ -66,7 +66,7 @@
           </b-col>
           <div v-if="editionToggle"> 
 
-               <Edition :showPanel="editionToggle" @hide-panel="hidePanel"></Edition>
+               <Edition :slug="slug" :editions="editions" :showPanel="editionToggle" @hide-panel="hidePanel"></Edition>
 
           </div>
 
@@ -132,7 +132,9 @@ export default {
         maxScrollbarLength: 20
       },
       categoryToFilterWith: null,
-      editionToggle: false
+      editionToggle: false,
+      editions: null,
+      slug:''
     }
   },
   methods:{
@@ -153,8 +155,11 @@ export default {
 
     },
     //Se apreto el boton de editar por lo que se debe desplegar el drawer derecho para ver/editar la edicion
-    clickedEdition(){
+    clickedEdition(ediciones,slug){
         console.log("acabo de apretar el boton")
+        console.log(ediciones)
+        this.editions = ediciones
+        this.slug = slug
         this.editionToggle = true
     },
     hidePanel(){
