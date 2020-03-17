@@ -19,7 +19,7 @@
                 <vue-custom-scrollbar class="scroll-area" :settings="settings" 
                           v-bind:style="{position: 'relative',
                                         margin: 'auto',                                                          
-                                        width: '100%',
+                                        width: '120%',
                                         height: '60em' }">
 
 

@@ -3,7 +3,7 @@
 
  
 
-          <b-col md="11" style="margin-left:auto;margin-right:auto" >
+          <b-col md="10" style="margin-left:auto;margin-right:auto" >
                
                   <div style="padding: 2em"></div>
                     <NewsSummary 

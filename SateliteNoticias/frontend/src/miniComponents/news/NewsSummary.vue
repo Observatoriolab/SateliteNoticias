@@ -3,21 +3,22 @@
       
           <h2 style="color: blue">{{title}}</h2>
           <div style="padding: 7px"></div>
-          <div style="color: blue;border:1px solid blue;font-size: 15px; ">
+          <div style="color: blue;border:1px solid blue;font-size: 15px;text-align:center ">
                     <a>{{link}}</a>
 
 
               <!--TODO: DISABLE DEL SCROLL DE LAS NOTICIAS PARA PODER SCROLLEAR EL CONTENIDO SIN PROBLEMAS 
                         CONDICIONES: ESTAR EN HOVER EN EL ELEMENTO
               -->
-
                      <vue-custom-scrollbar class="scroll-area" v-bind:style="{position: 'relative',
                                                           margin: 'auto',
                                                           
                                                           width: '100%',
-                                                          height: '10em' }"
+                                                          height: '25em' }"
                                                       :settings="settings" 
                                                      >
+                                                                         <div style="padding:3em"></div>
+
                           <p v-html="content"> 
                                      </p>
                     </vue-custom-scrollbar>
