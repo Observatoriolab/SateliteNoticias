@@ -17,7 +17,7 @@ class NewsViewSet(viewsets.ModelViewSet):
     lookup_field = "slug"
     serializer_class = Newserializer
     #Only authors can delete their News
-    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

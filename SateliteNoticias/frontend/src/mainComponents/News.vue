@@ -30,8 +30,9 @@
                     </SecondaryTags>
 
                     <Bibliography
-                          :bibliography="bibliography"
-
+                          :bibliography_name="bibliography_name"
+                          :bibliography_link="bibliography_link"
+                          :slug="slug"
                     >
 
 
@@ -94,7 +95,8 @@ export default {
           fullContent:String,
           primaryTags:Array,
           secondaryTags:Array,
-          bibliography: Object,
+          bibliography_name: String,
+          bibliography_link: String,
           relevance: Number,
           irrelevance:Number,
           link: String,

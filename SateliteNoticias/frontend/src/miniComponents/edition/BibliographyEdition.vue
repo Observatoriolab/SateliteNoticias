@@ -2,33 +2,89 @@
 
 
       <div style="text-align:center">
-                <h4  style="padding:1em;  color:blue">Bibliografia</h4>
+            <h4  style="padding:1em;  color:blue">Bibliografia</h4>
 
-            <b-row style="width: 95%; text-align:center;  margin-left:auto;margin-right:auto;  color:blue" fluid>
-              <!-- BIBLIOGRAPHY COMPONENT -->
-              <b-col md="4 p-1" >
-                <h6 >Nombre:</h6>
-                <div style="padding:0.5em"></div>
-                <h6 >Link:</h6>
+            <b-row  style="width: 95%; text-align:center;  margin-left:auto;margin-right:auto;  color:blue" fluid>
 
-              </b-col>
+                   <b-col md="4 p-1" >
+                          <h6 >Nombre:</h6>
+                          <div style="padding:0.5em"></div>
+                          <h6 >Link:</h6>
 
-              <b-col md="5" > 
-                            <b-form-input></b-form-input>
-                          <b-form-input></b-form-input>
+                      </b-col>
 
-                                </b-col>
+                      <b-col md="5" > 
 
-              <b-col md="3" >
-                 <div class="button">
-                  <b-button squared lg="4" variant="primary">Agregar</b-button>
-                </div>
-              </b-col>
-              <!-- BIBLIOGRAPHY COMPONENT -->
+                               <vue-single-select
+                                      v-model="bibliographyNameModelSelect"
+                                      :options="bibliographyNameArray"
+                                      :getOptionValue="nameSelected"
+                                       :inputId="'asdsad'"
+                                ></vue-single-select>
+
+
+
+                                <b-form-input
+                                     v-model="bibliographyLinkModelSelect"
+
+                                  
+                                  >
+
+                                    
+                                </b-form-input>
+
+                      </b-col>
+
+                      <b-col md="3" >
+
+                      </b-col>
+
+
             </b-row>
+            <b-row style="width: 95%; text-align:center;  margin-left:auto;margin-right:auto;  color:blue" fluid>
+             
+
+                      <b-col md="4 p-1" >
+                          <h6 >Nombre:</h6>
+                          <div style="padding:0.5em"></div>
+                          <h6 >Link:</h6>
+
+                      </b-col>
+
+                      <b-col md="5" > 
+
+                                <b-form-input
+                                     v-model="bibliographyNameModel"
+
+                                  
+                                  >
+
+                                </b-form-input>
+
+
+                                <b-form-input
+                                     v-model="bibliographyLinkModel"
+
+                                  
+                                  >
+
+                                    
+                                </b-form-input>
+
+                      </b-col>
+
+                      <b-col md="3" >
+                           <div class="button" >
+                                    <b-button @click="addBibliography" squared lg="4" variant="primary">Agregar</b-button>
+                              </div>
+                            
+
+                      </b-col>
 
 
 
+             
+            </b-row>
       </div>
 </template>
 <script>
@@ -39,15 +95,82 @@ export default {
     bibliographyLink: String
   },
   data: () => ({
-      bibliographyNameInternal: null,
-      bibliographyLinkInternal: null
+      bibliographyNameInternal: '',
+      bibliographyLinkInternal: '',
+      bibliographyNameModel: '',
+      bibliographyNameModelSelect: '',
+      bibliographyNameArray: [],
+      bibliographyLinkModel: '',
+      bibliographyLinkModelSelect: '',
+      bibliographyLinkArray: [],
 
   }),
   methods:{
-      onChange(){
+      addBibliography(){
+        console.log('paso por aqui')
+        this.$set(this.bibliographyNameArray,this.bibliographyNameArray.length,this.bibliographyNameModel)
+        this.$set(this.bibliographyLinkArray,this.bibliographyLinkArray.length,this.bibliographyLinkModel)
+        console.log(this.bibliographyNameArray)
+        console.log(this.bibliographyLinkArray)
+
+        this.createStrings();
+        this.bibliographyLinkModel = ''
+        this.bibliographyNameModel = ''
         this.$emit('bibliography-change', this.bibliographyNameInternal,this.bibliographyLinkInternal)
+
+      },
+      createArrays(){
+        console.log('esto es lo que me entro')
+        console.log(this.bibliographyName)
+        console.log(this.bibliographyLink)
+        if(this.bibliographyName.length !== 0){
+              var nameArray = this.bibliographyName.split(';')
+              var linkArray = this.bibliographyLink.split(';')
+              console.log(nameArray)
+              console.log(linkArray)
+              console.log(nameArray.length-1)
+              console.log(linkArray.length)
+              for(var i = 0; i<nameArray.length-1; i++){
+                    this.$set(this.bibliographyNameArray, i, nameArray[i])
+                    this.$set(this.bibliographyLinkArray, i,linkArray[i])
+              } 
+        }
+       
+      },
+      createStrings(){
+        console.log('estos son los arrays para irme')
+        console.log(this.bibliographyNameArray[0])
+        console.log(this.bibliographyLinkArray)
+        for(var i = 0; i<this.bibliographyNameArray.length;i++){
+          
+            this.bibliographyNameInternal = this.bibliographyNameInternal + this.bibliographyNameArray[i]+";"
+            console.log(this.bibliographyNameInternal)
+            this.bibliographyLinkInternal = this.bibliographyLinkInternal + this.bibliographyLinkArray[i]+";"
+
+        }
+        console.log('ASI SALIERON')
+        console.log(this.bibliographyNameInternal)
+        console.log(this.bibliographyLinkInternal)
+        
+      },
+      nameSelected(parameter){
+        console.log('paso por aqui2')
+        console.log(parameter)
+
+        var pos = this.bibliographyNameArray.lastIndexOf(parameter)
+        this.bibliographyLinkModelSelect = this.bibliographyLinkArray[pos]
+
       }
   },
+  created(){
+    this.createArrays();
+  },
+  beforeUpdate(){
+    console.log(this.bibliographyNameModelSelect)
+    if(this.bibliographyNameModelSelect === null) {
+      this.bibliographyLinkModelSelect = ''
+    }
+  }
 };
 </script>
 <style lang="stylus"></style>

@@ -6,7 +6,7 @@ from taggit.managers import TaggableManager
 class News(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    title = models.CharField(max_length=240)
+    title = models.CharField(max_length=240,blank=True)
     content = models.TextField(blank=True)
     fullContent = models.TextField(blank=True)
     relevance = models.ManyToManyField(settings.AUTH_USER_MODEL,
@@ -14,12 +14,12 @@ class News(models.Model):
     irrelevance = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                     related_name="irrelevance")
 
-    bibliography_name = models.CharField(max_length=500,blank=True)
-    bibliography_link = models.CharField(max_length=500,blank=True)
+    bibliography_name = models.TextField(blank=True)
+    bibliography_link = models.TextField(blank=True)
     # Pseudo ID to retrieve the details of a single news
     slug = models.SlugField(max_length=255, unique=True)
 
-
+    authors = models.TextField(blank=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE,
                                 related_name="news")
@@ -33,8 +33,8 @@ class Edition(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=240)
     #cambio nuevo
-    bibliography_name = models.CharField(max_length=500,blank=True)
-    bibliography_link = models.CharField(max_length=500,blank=True)
+    bibliography_name = models.TextField(blank=True)
+    bibliography_link = models.TextField(blank=True)
     #cambio nuevo
 
     body = models.TextField()

@@ -14,7 +14,8 @@ Vue.use(MdToolbar)
 Vue.use(MdIcon)
 Vue.use(MdList)
 Vue.use(MdMenu)
-
+import VueSingleSelect from "vue-single-select";
+Vue.component('vue-single-select', VueSingleSelect);
 
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'

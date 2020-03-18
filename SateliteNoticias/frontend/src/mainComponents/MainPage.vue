@@ -34,7 +34,8 @@
                               :fullContent="newsPiece.fullContent"
                               :primaryTags="newsPiece.primaryTags"
                               :secondaryTags="newsPiece.tags"
-                              :bibliography="newsPiece.bibliography"
+                              :bibliography_name="newsPiece.bibliography_name"
+                              :bibliography_link="newsPiece.bibliography_link"
                               :relevance="newsPiece.relevance"
                               :irrelevance="newsPiece.irrelevance"
                               :slug="newsPiece.slug"
@@ -162,8 +163,9 @@ export default {
         this.slug = slug
         this.editionToggle = true
     },
-    hidePanel(){
+    hidePanel(bibliographyName,bibliographyLink,slug,tags){
         this.editionToggle = false
+        this.editnews(bibliographyName,bibliographyLink,slug,tags)
     },
     getnews() {
       console.log('estos son las preguntas antes de consultar a la api')
@@ -184,7 +186,22 @@ export default {
           this.next = null;
         }
       });
-    }
+    },
+    editnews(bibliographyName,bibliographyLink,slug,tags) {
+      
+        let endpoint = "/api/news/"+slug+"/";
+        console.log('este son los tags')
+        console.log(tags)
+        let method = "PUT"
+        apiService(endpoint, method, {
+           tags:tags,
+           bibliography_name: bibliographyName, 
+           bibliography_link: bibliographyLink
+        }).then(news_data => {
+          console.log("esta es la data que me dio en el front");
+          console.log(news_data);
+        });
+      }
   },
   created() {
     this.getnews();
