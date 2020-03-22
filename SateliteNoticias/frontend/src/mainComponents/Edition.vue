@@ -81,18 +81,27 @@ export default {
     BIconX
     
   },
+  computed: {
+      changeData() {
+        const { title, body,tags,bibliographyName,bibliographyLink } = this
+        return {
+          title,
+          body,
+          tags,
+          bibliographyName,
+          bibliographyLink
+        }
+      }
+  },
   watch: {
     // whenever question changes, this function will run
-    editions: function (newEditions, oldEditions) {
-      console.log('se cambiaron las ediciones adentro o.o')
-      console.log(newEditions[0])
-      console.log(oldEditions[0])
-      this.debouncedGetEditions()
-
-      
-      
-      
-    }
+    changeData: {
+        handler: function(val) {
+          console.log('value change: ', val)
+          this.debouncedGetEditions()
+        },
+        deep: true
+      }
   },
 
   data: () => ({
@@ -277,6 +286,10 @@ export default {
                 else if(this.comparingEditions(data.results)){
                     this.editions.splice(0)
                                     this.editions.push(...data.results);
+                                    console.log(data.results)
+                                    alert('ALGUIEN HA MODIFICADO LA NOTICIA, SU NOMBRE ES: ',data.results[0].author  )
+                                    alert(data.results[0].author  )
+
                                                 this.setEdition(true)
             
 

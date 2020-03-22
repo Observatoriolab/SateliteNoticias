@@ -154,9 +154,14 @@ export default {
     news: function (newNews, oldNews) {
       //console.log('se cambiaron las noticias o.o')
       console.log(newNews,oldNews)
-      this.debouncedGetNews()
     }
   },
+
+    beforeUpdate() {
+            this.debouncedGetNews()
+
+    },
+   
 
   methods:{
     categoryClicked(category){
@@ -208,7 +213,6 @@ export default {
 
           });
     },
-   
     async getnews() {
       //console.log(this.pageNumbers)
 
@@ -217,13 +221,15 @@ export default {
         const todo = await this.delayedNews(url);
         console.log(`Received Todo ${idx+1}:`, todo);
       }
+      console.log(this.updatedNews)
       for(var i=0;i<this.updatedNews.length;i++){
         console.log(this.updatedNews[i])
         this.$set(this.news,i,this.updatedNews[i])
       }
       this.updatedNews.splice(0)
+      
       this.updateNews +=1
-      //console.log('Done updating the news!');
+      console.log('Done updating the news!');
 
 
     },
@@ -231,7 +237,7 @@ export default {
         return parseInt(pageString.substr(pageString.length-1))-1
 
     },
-    async getnewsLoadMore() {
+     getnewsLoadMore() {
    
       this.loadingnews = true;
       //console.log(this.news)
@@ -240,7 +246,7 @@ export default {
         this.endpoint = this.next
       }
 
-      await apiService(this.endpoint).then(data => {
+       apiService(this.endpoint).then(data => {
         this.news.push(...data.results);
         //console.log(data)
         this.loadingnews = false;
@@ -274,11 +280,11 @@ export default {
   },
   created() {
     this.getnewsLoadMore();
+    document.title = "Satelite de Noticias";
 
     //console.log('estas son las news')
     //console.log(this.news);
     this.debouncedGetNews = _.debounce(this.getnews, 10000)
-    document.title = "Satelite de Noticias";
   }
 };
 </script>
