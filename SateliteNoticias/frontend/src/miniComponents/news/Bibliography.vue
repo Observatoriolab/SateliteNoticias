@@ -7,12 +7,15 @@
     <b-row style="margin-left:auto;margin-right:auto; " >
             <b-col md="5">
                   <h6  >Nombre:</h6>
+
+                  
                   <vue-single-select
                             v-model="bibliographyNameModelSelect"
                             :options="bibliographyNameArray"
                             :getOptionValue="nameSelected"
-                            :inputId="'id'+slug"
+                            :inputId="'id'+slug+content+title"
                    ></vue-single-select>
+                   
             </b-col>
             <b-col md="2"></b-col>
              <b-col  md="5">
@@ -40,7 +43,9 @@ export default {
    
     bibliography_name: String,
     bibliography_link: String,
-    slug:String
+    slug:String,
+    content:String,
+    title:String
   },
   data: () => ({
       bibliographyNameModelSelect: '',
@@ -51,16 +56,16 @@ export default {
   }),
   methods:{      
       createArrays(){
-        console.log('esto es lo que me entro')
-        console.log(this.bibliography_name)
-        console.log(this.bibliography_link)
+        //console.log('esto es lo que me entro')
+        //console.log(this.bibliography_name)
+        //console.log(this.bibliography_link)
         if(this.bibliography_name.length !== 0){
               var nameArray = this.bibliography_name.split(';')
               var linkArray = this.bibliography_link.split(';')
-              console.log(nameArray)
-              console.log(linkArray)
-              console.log(nameArray.length-1)
-              console.log(linkArray.length)
+              //console.log(nameArray)
+              //console.log(linkArray)
+              //console.log(nameArray.length-1)
+              //console.log(linkArray.length)
               for(var i = 0; i<nameArray.length-1; i++){
                     this.$set(this.bibliographyNameArray, i, nameArray[i])
                     this.$set(this.bibliographyLinkArray, i, linkArray[i])
@@ -69,8 +74,8 @@ export default {
        
       },
       nameSelected(parameter){
-        console.log('paso por aqui2')
-        console.log(parameter)
+        //console.log('paso por aqui2')
+        //console.log(parameter)
 
         var pos = this.bibliographyNameArray.lastIndexOf(parameter)
         this.bibliographyLinkModelSelect = this.bibliographyLinkArray[pos]
@@ -81,7 +86,7 @@ export default {
     this.createArrays();
   },
   beforeUpdate(){
-    console.log(this.bibliographyNameModelSelect)
+    //console.log(this.bibliographyNameModelSelect)
     if(this.bibliographyNameModelSelect === null) {
       this.bibliographyLinkModelSelect = ''
     }

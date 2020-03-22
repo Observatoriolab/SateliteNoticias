@@ -114,9 +114,9 @@ export default {
                 }
                 apiService(endpoint).then(data => {
                   this.comments.push(...data.results);
-                  console.log('estos son las respuestas')
-                  console.log(data.results)
-                  console.log(data.next)
+                  //console.log('estos son las respuestas')
+                  //console.log(data.results)
+                  //console.log(data.next)
                   if (data.next) {
                     this.next = data.next;
                   } else {
@@ -127,15 +127,15 @@ export default {
         onSubmit() {
           // Tell the REST API to create a new edition for this news based on the user input, then update some data properties
           
-            console.log('aqui voy a enviar una respuesta nueva')
-            console.log(this.slug)
-            console.log(this.new)
+            //console.log('aqui voy a enviar una respuesta nueva')
+            //console.log(this.slug)
+            //console.log(this.new)
             if (this.newCommentBody) {
               let endpoint = `/api/news/${this.slug}/comment/`;
               apiService(endpoint, "POST", { body: this.newCommentBody}).then(
                 data => {
-                  console.log('este es la data que me entrego al responder la pregunta')
-                  console.log(data)
+                  //console.log('este es la data que me entrego al responder la pregunta')
+                  //console.log(data)
                   this.comments.unshift(data);
                 }
               );

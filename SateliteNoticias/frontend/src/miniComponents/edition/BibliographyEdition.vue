@@ -107,11 +107,11 @@ export default {
   }),
   methods:{
       addBibliography(){
-        console.log('paso por aqui')
+        //console.log('paso por aqui')
         this.$set(this.bibliographyNameArray,this.bibliographyNameArray.length,this.bibliographyNameModel)
         this.$set(this.bibliographyLinkArray,this.bibliographyLinkArray.length,this.bibliographyLinkModel)
-        console.log(this.bibliographyNameArray)
-        console.log(this.bibliographyLinkArray)
+        //console.log(this.bibliographyNameArray)
+        //console.log(this.bibliographyLinkArray)
 
         this.createStrings();
         this.bibliographyLinkModel = ''
@@ -120,16 +120,16 @@ export default {
 
       },
       createArrays(){
-        console.log('esto es lo que me entro')
-        console.log(this.bibliographyName)
-        console.log(this.bibliographyLink)
+        //console.log('esto es lo que me entro')
+        //console.log(this.bibliographyName)
+        //console.log(this.bibliographyLink)
         if(this.bibliographyName.length !== 0){
               var nameArray = this.bibliographyName.split(';')
               var linkArray = this.bibliographyLink.split(';')
-              console.log(nameArray)
-              console.log(linkArray)
-              console.log(nameArray.length-1)
-              console.log(linkArray.length)
+              //console.log(nameArray)
+              //console.log(linkArray)
+              //console.log(nameArray.length-1)
+              //console.log(linkArray.length)
               for(var i = 0; i<nameArray.length-1; i++){
                     this.$set(this.bibliographyNameArray, i, nameArray[i])
                     this.$set(this.bibliographyLinkArray, i,linkArray[i])
@@ -138,24 +138,24 @@ export default {
        
       },
       createStrings(){
-        console.log('estos son los arrays para irme')
-        console.log(this.bibliographyNameArray[0])
-        console.log(this.bibliographyLinkArray)
+        //console.log('estos son los arrays para irme')
+        //console.log(this.bibliographyNameArray[0])
+        //console.log(this.bibliographyLinkArray)
         for(var i = 0; i<this.bibliographyNameArray.length;i++){
           
             this.bibliographyNameInternal = this.bibliographyNameInternal + this.bibliographyNameArray[i]+";"
-            console.log(this.bibliographyNameInternal)
+            //console.log(this.bibliographyNameInternal)
             this.bibliographyLinkInternal = this.bibliographyLinkInternal + this.bibliographyLinkArray[i]+";"
 
         }
-        console.log('ASI SALIERON')
-        console.log(this.bibliographyNameInternal)
-        console.log(this.bibliographyLinkInternal)
+        //console.log('ASI SALIERON')
+        //console.log(this.bibliographyNameInternal)
+        //console.log(this.bibliographyLinkInternal)
         
       },
       nameSelected(parameter){
-        console.log('paso por aqui2')
-        console.log(parameter)
+        //console.log('paso por aqui2')
+        //console.log(parameter)
 
         var pos = this.bibliographyNameArray.lastIndexOf(parameter)
         this.bibliographyLinkModelSelect = this.bibliographyLinkArray[pos]
@@ -166,7 +166,7 @@ export default {
     this.createArrays();
   },
   beforeUpdate(){
-    console.log(this.bibliographyNameModelSelect)
+    //console.log(this.bibliographyNameModelSelect)
     if(this.bibliographyNameModelSelect === null) {
       this.bibliographyLinkModelSelect = ''
     }

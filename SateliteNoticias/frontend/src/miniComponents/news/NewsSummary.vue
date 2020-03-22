@@ -83,8 +83,8 @@ export default {
 
   },
   created(){
-    console.log("aqui va algo")
-    console.log(this.props)
+    //console.log("aqui va algo")
+    //console.log(this.props)
   },
   methods:{
     fullNewsClicked() {

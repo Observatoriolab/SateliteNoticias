@@ -8,41 +8,45 @@
              <!-- EDITION COMPONENT -->
                   <md-toolbar class="md-transparent" md-elevation="2">
 
-                      <md-button class="md-icon-button md-dense" @click="toggleMenu" style="margin-left:auto">
+                      <md-button class="md-icon-button md-dense" @click="toggleMenu(false)" style="margin-left:auto">
                           <b-icon-x variant="danger" font-scale="7.5"></b-icon-x>                   
                        </md-button>
                   </md-toolbar>
                     <div style="padding: 1em"></div>
+                <div :key="updateEditions">
+                        <form style="   width: 85%;
+                                      height: 85%;
+                                      margin-right: auto;
+                                      margin-left: auto; border: 1px solid blue" 
+                                      @submit.prevent="onSubmit">
+                            <NewsEdition @news-change="newsChange" :title="title" :body="body"></NewsEdition>
+                            
+                            <div style="padding: 1em"></div>
+
+                            <PrimaryTagsEdition @primary-tags-change="primaryTagsEditionChange" :tags="tags"></PrimaryTagsEdition>
+                            
+                            <div style="padding: 1em"></div>
+
+                            <SecondaryTagsEdition @secondary-tags-change="secondaryTagsEditionChange" :secondaryTags="tags"></SecondaryTagsEdition>
+                            
+                            <div style="padding: 1em"></div>
+
+                            <BibliographyEdition @bibliography-change="bibliographyEditionChange" :bibliographyName="bibliographyName" :bibliographyLink="bibliographyLink"></BibliographyEdition>
+                            
+                            <div style="width: 100%; text-align:center;  margin-left:auto;margin-right:auto; padding:2em">
+                                      
+                                      <div class="button">
+                                                <b-button  lg="4" variant="primary" type="submit">Publicar</b-button>
+                                      </div>
+                            </div>
+                      
+                      </form>
                   
-                <form style="   width: 85%;
-                                height: 85%;
-                                margin-right: auto;
-                                margin-left: auto; border: 1px solid blue" 
-                                @submit.prevent="onSubmit">
-                    <div v-if="contentToggle">
-                       <NewsEdition @news-change="newsChange" :title="title" :body="body"></NewsEdition>
-                    </div>
-                      
-                      <div style="padding: 1em"></div>
-
-                      <PrimaryTagsEdition @primary-tags-change="primaryTagsEditionChange" :tags="tags"></PrimaryTagsEdition>
-                      
-                      <div style="padding: 1em"></div>
-
-                      <SecondaryTagsEdition @secondary-tags-change="secondaryTagsEditionChange" :secondaryTags="tags"></SecondaryTagsEdition>
-                      
-                      <div style="padding: 1em"></div>
-
-                      <BibliographyEdition @bibliography-change="bibliographyEditionChange" :bibliographyName="bibliographyName" :bibliographyLink="bibliographyLink"></BibliographyEdition>
-                      
-                      <div style="width: 100%; text-align:center;  margin-left:auto;margin-right:auto; padding:2em">
-                                
-                                <div class="button">
-                                          <b-button  lg="4" variant="primary" type="submit">Publicar</b-button>
-                                </div>
-                      </div>
-                
-                 </form>
+                  
+                  
+                  
+                </div>  
+            
 
                   
                   <!-- EDITION COMPONENT -->
@@ -66,7 +70,6 @@ export default {
   name: "Edition",
   props:{
       showPanel:Boolean,
-      editions:Array,
       slug:String
   },
   components: {
@@ -77,6 +80,19 @@ export default {
     SecondaryTagsEdition,
     BIconX
     
+  },
+  watch: {
+    // whenever question changes, this function will run
+    editions: function (newEditions, oldEditions) {
+      console.log('se cambiaron las ediciones adentro o.o')
+      console.log(newEditions[0])
+      console.log(oldEditions[0])
+      this.debouncedGetEditions()
+
+      
+      
+      
+    }
   },
 
   data: () => ({
@@ -89,103 +105,138 @@ export default {
     bibliographyName: '',
     bibliographyLink:'',
     newsTags:null,
-    contentToggle:false
+    editions:[],
+    updateEditions:0,
+    firstTime:false
   }),
 
   methods:{
-      toggleMenu(){
+      toggleMenu(bool){
           this.showSidepanel =  !this.showSidepanel
-          this.getnewsData(true)
-          console.log(this.newsTags)
+          if(bool){
+            this.$emit("hide-panel",this.bibliographyName,this.bibliographyLink,this.slug,this.tags)
+
+          }
+          else{
+            this.$emit("hide-panel",this.bibliographyName,this.bibliographyLink,"",this.tags)
+
+          }
+          //console.log(this.newsTags)
       },
       newsChange(title,body){
         this.title = title
         this.body= body
-        console.log(title)
-        console.log(body)
+        //console.log(title)
+        //console.log(body)
       },
       primaryTagsEditionChange(primaryTags){
         this.tags = primaryTags
-        console.log(primaryTags)
+        //console.log(primaryTags)
       },
       secondaryTagsEditionChange(secondaryTags){
         this.tags = secondaryTags
-        console.log(secondaryTags)
+        //console.log(secondaryTags)
       },
       bibliographyEditionChange(names,links){
         this.bibliographyName = names
         this.bibliographyLink = links
-        console.log(this.bibliographyName)
-        console.log(this.bibliographyLink)
+        //console.log(this.bibliographyName)
+        //console.log(this.bibliographyLink)
 
       },
 
-      getnewsData(option) {
+       getnewsData() {
         // get the details of a news instance from the REST API and call setPageTitle
         let endpoint = `/api/news/${this.slug}/`;
         apiService(endpoint).then(data => {
           if (data) {
-            console.log('yeppers')
-            console.log(data)
-            //Si se va a salir de la edicion por publicar, hay que guardar esta informacion en la noticia
-            if(option){
-                this.newsTags = data.tags;
-                this.$emit('hide-panel',this.bibliographyName,this.bibliographyLink,this.slug,this.newsTags)
-            }
-            //Si no existe edicion anterior a esta, se pone el titulo y contenido de la noticia
-            else{
-              console.log('paso por aqui')
-              console.log(data.title)
+              //console.log('paso por aqui')
+              //console.log(data.title)
               this.title = data.title
               this.body = data.content
-              this.contentToggle = true
+              
+              var method = "";
+            
+              method = "POST"
+              
+              let endpoint = `/api/news/${this.slug}/edition/`;
+              //console.log('estos son los resultados')
+              //console.log(this.bibliographyName)
+              //console.log(this.bibliographyLink)
+               var tagsAux = []
+               console.log(this.tags)
+               console.log(this.tags.length)
+                for(var i=0;i<this.tags.length;i++){
+                  this.$set(tagsAux, i, this.tags[i].text)
 
-            }
-
-          } else {
+                }
+              apiService(endpoint, method, { title: this.title,body: this.body, tags: tagsAux, bibliography_name: this.bibliographyName, bibliography_link: this.bibliographyLink}).then(
+                data => {
+                  console.log('este es la data que me entrego cuando creo una nueva edicion')
+                  console.log(data)
+                  this.editions.unshift(data);
+                  this.setEdition(true)
+                }
+              );
+                this.body = null;
+                this.userHasEditioned = true;
+                if (this.error) {
+                  this.error = null;
+                }
+              else {
+                this.error = "You can't send an empty edition!";
+              }
+          } 
+          else {
             this.newsTags = null;
             this.setPageTitle("404 - Page Not Found");
           }
         });
       },
+      
       onSubmit() {
         // Tell the REST API to create a new edition for this news based on the user input, then update some data properties
         
-        console.log('aqui voy a enviar una edition nueva')
-        console.log(this.slug)
-        console.log(this.tags)
-        console.log('aqui va los tags')
+        //console.log('aqui voy a enviar una edition nueva')
+        //console.log(this.slug)
+        //console.log(this.tags)
+        //console.log('aqui va los tags')
         var i = 0
         var tagsAux = []
-        if(this.tags[i].text !== undefined){
-           for(i=0;i<this.tags.length;i++){
-              this.$set(tagsAux, i, this.tags[i].text)
-
-           }
-        }
-        else{
-
+        console.log(this.tags)
+        if(this.tags !== undefined){
+          
+          if(this.tags[i].text !== undefined){
               for(i=0;i<this.tags.length;i++){
+                  this.$set(tagsAux, i, this.tags[i].text)
+
+               }
+          }
+          else{
+                 for(i=0;i<this.tags.length;i++){
                     this.$set(tagsAux, i, this.tags[i])
 
               }
+          }
+          
         }
-        console.log(tagsAux)
+        //console.log(tagsAux)
 
         var method = "";
        
         method = "POST"
          
         let endpoint = `/api/news/${this.slug}/edition/`;
-        console.log('estos son los resultados')
-        console.log(this.bibliographyName)
-        console.log(this.bibliographyLink)
+        //console.log('estos son los resultados')
+        //console.log(this.bibliographyName)
+        //console.log(this.bibliographyLink)
+        console.log(tagsAux)
         apiService(endpoint, method, { title: this.title,body: this.body, tags: tagsAux, bibliography_name: this.bibliographyName, bibliography_link: this.bibliographyLink}).then(
           data => {
             console.log('este es la data que me entrego al responder la pregunta')
             console.log(data)
             this.editions.unshift(data);
-            this.toggleMenu()
+            this.toggleMenu(true)
           }
         );
           this.body = null;
@@ -197,29 +248,78 @@ export default {
           this.error = "You can't send an empty edition!";
          }
       
-    }
-  },
-  created(){
-    console.log('se esta creando el drawer')
-    this.showSidepanel = this.showPanel
-    console.log(this.editions)
-    console.log(this.tags)
-    this.specificEdition = this.editions[0]
-    if(this.specificEdition !== undefined){
+      },
+      
+      comparingEditions(newEdition){
+        if(this.editions !== undefined){
+          if(this.editions.length === 0) return false
+          var actualEdition = this.editions[0]
+          console.log('Estos son los editions')
+          console.log(actualEdition)
+          console.log(newEdition)
+          if(!(_.isEqual(actualEdition,newEdition[0]))) return true
+               return false
 
+          }
+        
+        },
+        getnewsEditions() {
+          // get a page of editions for a single news from the REST API's paginated 'news Endpoint'
+          //console.log(this.slug)
+          console.log('trying')
+          let endpoint = `/api/news/${this.slug}/editions/`;
+          apiService(endpoint).then(data => {
+            if(data.results !== undefined){
+                if(data.results.length ===0){
+                        this.setEdition(false)
+                      return
+                }
+                else if(this.comparingEditions(data.results)){
+                    this.editions.splice(0)
+                                    this.editions.push(...data.results);
+                                                this.setEdition(true)
+            
+
+                  
+
+                }
+                else if(this.firstTime){
+                       this.editions.push(...data.results);
+                        this.setEdition(true)
+                        this.firstTime = false
+                }
+            }
+           
+
+          });
+        },
+      setEdition(bool){        
+        if(bool){
+          this.specificEdition = this.editions[0]    
           this.title = this.specificEdition.title
           this.body = this.specificEdition.body
           this.tags = this.specificEdition.tags
           this.bibliographyName = this.specificEdition.bibliography_name
           this.bibliographyLink = this.specificEdition.bibliography_link
-          this.contentToggle = true
-    }
-    //Se va sacar el titulo y contenido
-    else{
-      console.log('es muevp')
-        this.getnewsData(false)
-    }
-        console.log(this.tags)
+          this.updateEditions +=1
+        }
+        else{
+           this.getnewsData()
+
+        }
+
+       
+      }
+  },
+  created(){
+    this.showSidepanel = this.showPanel
+    this.firstTime = true
+    this.getnewsEditions()
+
+    //console.log('aqui va algo 2')
+    //console.log(this.$props)
+
+    this.debouncedGetEditions = _.debounce(this.getnewsEditions, 10000)
 
   }
 };

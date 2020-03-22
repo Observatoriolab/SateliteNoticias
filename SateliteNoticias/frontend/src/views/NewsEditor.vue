@@ -59,8 +59,8 @@ export default {
       } else {
         let endpoint = "/api/news/";
         let method = "POST";
-        console.log('este es el slug que EXISTE WN')
-        console.log(this.$route.params.slug)
+        //console.log('este es el slug que EXISTE WN')
+        //console.log(this.$route.params.slug)
         if (this.$route.params.slug !== undefined) {
           endpoint += `${this.$route.params.slug}/`;
           method = "PUT";
@@ -70,8 +70,8 @@ export default {
           content: this.news_body,
           tags: this.news_tags
         }).then(news_data => {
-          console.log("esta es la data que me dio en el front");
-          console.log(news_data);
+          //console.log("esta es la data que me dio en el front");
+          //console.log(news_data);
           this.$router.push({
             name: "news",
             params: { slug: news_data.slug }
@@ -85,7 +85,7 @@ export default {
     if (to.params.slug !== undefined) {
       let endpoint = `/api/news/${to.params.slug}/`;
       let data = await apiService(endpoint);
-      console.log(data);
+      //console.log(data);
       return next(
         vm => (
           (vm.news_title = data.title), (vm.news_body = data.content), (vm.news_tags = data.tags)

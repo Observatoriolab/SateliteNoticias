@@ -44,13 +44,13 @@ export default {
     };
   },
   created(){
-    console.log(this.$props.secondaryTags)
+    //console.log(this.$props.secondaryTags)
     var i = 0
     for(i=0;i<this.$props.secondaryTags.length;i++){
           this.$set(this.tags, i, {"text":this.$props.secondaryTags[i]})
 
     }
-    console.log(this.tags)
+    //console.log(this.tags)
   }
 };
 </script>

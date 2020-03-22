@@ -23,10 +23,11 @@ import 'vue-material/dist/vue-material.min.css'
 Vue.use(VueMaterial)
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
-
-
+import debounce from 'lodash/debounce';
+Vue.use(debounce)
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
+window._ = require('lodash');
 
 new Vue({
   router,

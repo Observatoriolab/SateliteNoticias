@@ -143,8 +143,8 @@ export default {
         if (data) {
           this.news = data;
           this.userHasEditioned = data.user_has_editioned;
-          console.log("esta es la data");
-          console.log(this.news.slug);
+          //console.log("esta es la data");
+          //console.log(this.news.slug);
           this.setPageTitle(data.content);
         } else {
           this.news = null;
@@ -161,8 +161,8 @@ export default {
       this.loadingEditions = true;
       apiService(endpoint).then(data => {
         this.editions.push(...data.results);
-        console.log('estos son las respuestas')
-        console.log(data.results)
+        //console.log('estos son las respuestas')
+        //console.log(data.results)
         this.loadingEditions = false;
         if (data.next) {
           this.next = data.next;
@@ -174,14 +174,14 @@ export default {
     onSubmit() {
       // Tell the REST API to create a new edition for this news based on the user input, then update some data properties
       
-      console.log('aqui voy a enviar una respuesta nueva')
-      console.log(this.slug)
+      //console.log('aqui voy a enviar una respuesta nueva')
+      //console.log(this.slug)
       if (this.newEditionBody) {
         let endpoint = `/api/news/${this.slug}/edition/`;
         apiService(endpoint, "POST", { title: this.newEditionTitle,body: this.newEditionBody, tags: this.editionTags }).then(
           data => {
-            console.log('este es la data que me entrego al responder la pregunta')
-            console.log(data)
+            //console.log('este es la data que me entrego al responder la pregunta')
+            //console.log(data)
             this.editions.unshift(data);
           }
         );
@@ -203,7 +203,7 @@ export default {
         this.$delete(this.editions, this.editions.indexOf(edition));
         this.userHasEditioned = false;
       } catch (err) {
-        console.log(err);
+        //console.log(err);
       }
     }
   },

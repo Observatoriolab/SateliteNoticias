@@ -23,14 +23,14 @@ export default {
   },
   methods: {
     async deletenews() {
-      console.log('aqui deberia estar el slug')
-      console.log(this.slug)
+      //console.log('aqui deberia estar el slug')
+      //console.log(this.slug)
       let endpoint = `/api/news/${this.slug}/`;
       try {
         await apiService(endpoint, "DELETE");
         this.$router.push("/");
       } catch (err) {
-        console.log(err);
+        //console.log(err);
       }
     }
   }

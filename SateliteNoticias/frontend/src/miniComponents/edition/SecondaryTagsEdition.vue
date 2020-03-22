@@ -54,14 +54,14 @@ export default {
 
   },
   created(){
-    console.log('aqui va los tags')
-    console.log(this.secondaryTags)
+    //console.log('aqui va los tags')
+    //console.log(this.secondaryTags)
     var i = 0
     for(i=0;i<this.secondaryTags.length;i++){
           this.$set(this.tags, i, {"text":this.secondaryTags[i]})
 
     }
-    console.log(this.tags)
+    //console.log(this.tags)
   }
 };
 </script>

@@ -95,22 +95,22 @@ export default {
       if(this.tags !== null){
         if(this.tags.length !== 0){
                    let listTags = this.tags.split(",")
-                  console.log('Estos son los tags a buscar')
-                  console.log(listTags)
+                  //console.log('Estos son los tags a buscar')
+                  //console.log(listTags)
                   var stringFormat = ""
                   for (var i=0;i<listTags.length;i++){
                     stringFormat = stringFormat+listTags[i]+"-"
                   }
                   stringFormat = stringFormat.substring(0, stringFormat.length-1);
-                  console.log('este es el stringformat de los tags que voy a usar')
-                  console.log(stringFormat)
+                  //console.log('este es el stringformat de los tags que voy a usar')
+                  //console.log(stringFormat)
 
                   let endpoint = `/api/news/tags/${stringFormat}/`;
                   let method = "GET"
                   apiService(endpoint,method)
                     .then(data => {
-                      console.log("este es el resultado de lo que me dio el back")
-                      console.log(data.results)
+                      //console.log("este es el resultado de lo que me dio el back")
+                      //console.log(data.results)
                       this.news = data.results
                       this.filterFlag = true
                       this.next = null
@@ -127,17 +127,17 @@ export default {
       
     },
     getnews() {
-      console.log('estos son las preguntas antes de consultar a la api')
-      console.log(this.news)
+      //console.log('estos son las preguntas antes de consultar a la api')
+      //console.log(this.news)
       let endpoint = "/api/news/";
       if (this.next) {
         endpoint = this.next;
       }
       this.loadingnews = true;
-      console.log(this.news)
+      //console.log(this.news)
       apiService(endpoint).then(data => {
         this.news.push(...data.results);
-        console.log(data)
+        //console.log(data)
         this.loadingnews = false;
         if (data.next) {
           this.next = data.next;
@@ -149,7 +149,7 @@ export default {
   },
   created() {
     this.getnews();
-    console.log(this.news);
+    //console.log(this.news);
     document.title = "Satelite de Noticias";
   }
 };

@@ -66,7 +66,7 @@ export default{
     }
   },
   created(){
-    console.log(this.relevance)
+    //console.log(this.relevance)
     this.localRelevance = this.$props.relevance
     this.localIrrelevance = this.$props.irrelevance
 
