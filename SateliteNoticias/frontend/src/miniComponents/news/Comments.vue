@@ -1,10 +1,21 @@
 <template>
-    <div style="border:1px solid blue; padding:0.8em 0.8em 0.8em 0.8em ">
-        <form  @submit.prevent="onSubmit">
-            <h4 class="text-primary p-2">Comentarios</h4>
-            <b-button type="submit" variant="success">
-                Postear
-              </b-button>
+    <div style="width:50%; margin-right:auto;margin-left:auto;padding:0.8em 0.8em 0.8em 0.8em ">
+      <b-row>
+              <b-col md="10">
+                  <h4 class="text-primary p-2">Comentarios</h4>
+
+             </b-col>
+
+             <b-col md="2">
+                  <b-button type="submit" variant="success" >
+                  Postear
+                </b-button>
+
+
+             </b-col>
+        
+      </b-row>
+         
             <b-form-textarea
                     id="textarea"
                     placeholder="Escribe tu comentario aqui!"
@@ -14,8 +25,7 @@
                   >
                   
             </b-form-textarea>
-            
-        </form>
+  
 
           <div style="padding: 1em"></div>
         <vue-custom-scrollbar class="scroll-area" v-bind:style="{position: 'relative',

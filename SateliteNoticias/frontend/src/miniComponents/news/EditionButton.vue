@@ -1,8 +1,7 @@
 <template>
   <div >
     <!-- EDITION COMPONENT -->
-      <b-button lg="4" variant="outline-primary" @click="Edition">Editar</b-button>
-
+    <b-button lg="4" variant="outline-primary" @click="Edition">Editar</b-button>
 
     <!-- EDITION COMPONENT -->
   </div>

@@ -28,7 +28,11 @@
                     <b-row>
 
                       <b-col>
-                          <b-button @click="fullNewsClicked" lg="4" variant="outline-primary" ref="readingButton">{{reading}}</b-button>
+                          <router-link
+                            :to="{ name: 'news-fullEditor', params: { slug: this.slug, fullContent:this.fullContent, newsPiece:this.newsPiece} }"
+                            class="btn btn-sm btn-outline-secondary mr-1"
+                            >Seguir leyendo
+                          </router-link>
 
 
                       </b-col>
@@ -68,7 +72,10 @@ export default {
     openOrClosed: Boolean,
     title:String,
     content:String,
-    link:String
+    link:String,
+    slug:String,
+    fullContent:String,
+    newsPiece:Object
   },
   data() {
     return {
@@ -83,24 +90,11 @@ export default {
 
   },
   created(){
-    //console.log("aqui va algo")
-    //console.log(this.props)
+    console.log(this.newsPiece)
+    console.log(this.slug)
   },
   methods:{
-    fullNewsClicked() {
-      if(this.openOrClosed){
-        this.openOrClosed = false
-      this.reading = "Seguir Leyendo"
-
-      }
-      else{
-        this.openOrClosed = true
-        this.reading = "Cerrar noticia"
-
-
-      }
-        this.$emit('clicked-fullNews', this.openOrClosed)    
-    }
+    
   }
 };
 </script>

@@ -6,84 +6,76 @@
 
             <b-row  style="width: 95%; text-align:center;  margin-left:auto;margin-right:auto;  color:blue" fluid>
 
-                   <b-col md="4 p-1" >
+                   <b-col md="2 p-2" >
                           <h6 >Nombre:</h6>
                           <div style="padding:0.5em"></div>
                           <h6 >Link:</h6>
 
-                      </b-col>
+                    </b-col>
 
-                      <b-col md="5" > 
+                    <b-col md="4" > 
 
-                               <vue-single-select
-                                      v-model="bibliographyNameModelSelect"
-                                      :options="bibliographyNameArray"
-                                      :getOptionValue="nameSelected"
-                                       :inputId="'asdsad'"
-                                ></vue-single-select>
-
-
-
-                                <b-form-input
-                                     v-model="bibliographyLinkModelSelect"
-
-                                  
-                                  >
-
-                                    
-                                </b-form-input>
-
-                      </b-col>
-
-                      <b-col md="3" >
-
-                      </b-col>
+                          <vue-single-select
+                                v-model="bibliographyNameModelSelect"
+                                :options="bibliographyNameArray"
+                                :getOptionValue="nameSelected"
+                                  :inputId="'asdsad'"
+                          ></vue-single-select>
 
 
-            </b-row>
-            <b-row style="width: 95%; text-align:center;  margin-left:auto;margin-right:auto;  color:blue" fluid>
-             
 
-                      <b-col md="4 p-1" >
-                          <h6 >Nombre:</h6>
-                          <div style="padding:0.5em"></div>
-                          <h6 >Link:</h6>
+                          <b-form-input
+                                v-model="bibliographyLinkModelSelect"
 
-                      </b-col>
-
-                      <b-col md="5" > 
-
-                                <b-form-input
-                                     v-model="bibliographyNameModel"
-
-                                  
-                                  >
-
-                                </b-form-input>
-
-
-                                <b-form-input
-                                     v-model="bibliographyLinkModel"
-
-                                  
-                                  >
-
-                                    
-                                </b-form-input>
-
-                      </b-col>
-
-                      <b-col md="3" >
-                           <div class="button" >
-                                    <b-button @click="addBibliography" squared lg="4" variant="primary">Agregar</b-button>
-                              </div>
                             
+                            >
 
-                      </b-col>
+                              
+                          </b-form-input>
+
+                    </b-col>
+
+
+                    <b-col md="2 p-2" >
+                        <h6 >Nombre:</h6>
+                        <div style="padding:0.5em"></div>
+                        <h6 >Link:</h6>
+
+                    </b-col>
+
+                    <b-col md="3" > 
+
+                              <b-form-input
+                                  v-model="bibliographyNameModel"
+
+                                
+                                >
+
+                              </b-form-input>
+                          <div style="padding:0.2em"></div>
+
+
+                              <b-form-input
+                                  v-model="bibliographyLinkModel"
+
+                                
+                                >
+
+                                  
+                              </b-form-input>
+
+                    </b-col>
+
+                    <b-col md="1" >
+                        <div class="button" >
+                                  <b-button @click="addBibliography" circled lg="4" variant="primary">+</b-button>
+                            </div>
+                          
+
+                    </b-col>
 
 
 
-             
             </b-row>
       </div>
 </template>

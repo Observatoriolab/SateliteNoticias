@@ -6,6 +6,7 @@ import NewsEditor from "../views/NewsEditor.vue";
 import EditionEditor from "../views/EditionEditor.vue";
 import NotFound from "../views/NotFound.vue";
 import MainPage from "../mainComponents/MainPage.vue";
+import fullNews from "../mainComponents/fullNews.vue";
 
 Vue.use(VueRouter);
 
@@ -25,6 +26,11 @@ const routes = [
     path: "/ask",
     name: "news-editor",
     component: NewsEditor
+  },
+  {
+    path: "/fullEdition",
+    name: "news-fullEditor",
+    component: fullNews
   },
   {
     path: "/edition/:id",

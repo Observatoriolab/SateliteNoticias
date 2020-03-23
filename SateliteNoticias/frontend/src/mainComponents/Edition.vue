@@ -1,9 +1,8 @@
 <template>
 
 <div >
-    
-
-          <md-drawer class="md-right" :md-active.sync="showSidepanel"  md-persistent="full" >
+      <div v-if="mode">
+            <md-drawer class="md-right" :md-active.sync="showSidepanel"  md-persistent="full">
       
              <!-- EDITION COMPONENT -->
                   <md-toolbar class="md-transparent" md-elevation="2">
@@ -13,13 +12,13 @@
                        </md-button>
                   </md-toolbar>
                     <div style="padding: 1em"></div>
-                <div :key="updateEditions">
+                <div :key="updateEditions" >
                         <form style="   width: 85%;
-                                      height: 85%;
+                                      height: 84%;
                                       margin-right: auto;
                                       margin-left: auto; border: 1px solid blue" 
-                                      @submit.prevent="onSubmit">
-                            <NewsEdition @news-change="newsChange" :title="title" :body="body"></NewsEdition>
+                                      @submit.prevent="onSubmit" >
+                            <NewsEdition @news-change="newsChange" :title="title" :body="body" ></NewsEdition>
                             
                             <div style="padding: 1em"></div>
 
@@ -52,6 +51,58 @@
                   <!-- EDITION COMPONENT -->
 
            </md-drawer>
+
+      </div>
+      <div v-else >           <div style="padding: 7px"></div>
+
+             <div :key="updateEditions"  >
+                        <form style=" border: 1px solid blue" 
+                                      @submit.prevent="onSubmit" >
+                          <b-row>
+                              <b-col md="5">
+                                      <NewsEdition @news-change="newsChange" :title="title" :body="body" ></NewsEdition>
+                                        
+
+                                </b-col>
+                              <b-col md="7">
+                                                                      <div style="padding: 1em"></div>
+
+                                        <PrimaryTagsEdition @primary-tags-change="primaryTagsEditionChange" :tags="tags"></PrimaryTagsEdition>
+
+                                      <div style="padding: 1em"></div>
+
+                                      <SecondaryTagsEdition @secondary-tags-change="secondaryTagsEditionChange" :secondaryTags="tags"></SecondaryTagsEdition>
+                                      
+                                      <div style="padding: 1em"></div>
+
+                                      <BibliographyEdition @bibliography-change="bibliographyEditionChange" :bibliographyName="bibliographyName" :bibliographyLink="bibliographyLink"></BibliographyEdition>
+                                      
+                                      <div style="width: 100%; text-align:center;  margin-left:auto;margin-right:auto; padding:1em">
+                                                
+                                                <div class="button">
+                                                          <b-button  lg="4" variant="primary" type="submit">Publicar</b-button>
+                                                </div>
+                                      </div>
+                                
+                              </b-col>
+
+                              <div style="padding: 1em"></div>
+
+
+                          </b-row>
+                        
+
+                      </form>
+                  
+                  
+                  
+                  
+                </div>  
+
+      </div>
+    
+   
+         
   </div>
  
 </template>
@@ -65,12 +116,14 @@ import SecondaryTagsEdition from "@/miniComponents/edition/SecondaryTagsEdition.
 import { BIconX } from 'bootstrap-vue'
 
 import { apiService } from "@/common/api.service.js";
+import _ from 'lodash'
 
 export default {
   name: "Edition",
   props:{
       showPanel:Boolean,
-      slug:String
+      slug:String,
+      mode:Boolean
   },
   components: {
     
@@ -78,7 +131,8 @@ export default {
     BibliographyEdition,
     PrimaryTagsEdition,
     SecondaryTagsEdition,
-    BIconX
+    BIconX,
+    
     
   },
   computed: {
@@ -119,7 +173,7 @@ export default {
     firstTime:false
   }),
 
-  methods:{
+  methods:{ 
       toggleMenu(bool){
           this.showSidepanel =  !this.showSidepanel
           if(bool){

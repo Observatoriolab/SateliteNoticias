@@ -2,18 +2,16 @@
   <!-- NEWS COMPONENT -->
 
  
-
-          <b-col md="10" style="margin-left:auto;margin-right:auto" >
-               
+    <b-col md="10" style="margin-left:auto; margin-right:auto" >
                   <div style="padding: 2em"></div>
                     <NewsSummary 
                               :title="title"
                               :content="content"
                               :link="link"
-                          :openOrClosed="openOrClosed" 
-                          
-                          
-                          @clicked-fullNews="fullNewsClicked"
+                              :openOrClosed="openOrClosed" 
+                              :slug="slug"
+                              :fullContent="fullContent"
+                              :newsPiece="newsPiece"
                     
                     ></NewsSummary>
 
@@ -44,34 +42,21 @@
                                @clicked-edition="clickedEdition"
                                 :relevance="relevance"
                                 :irrelevance="irrelevance"
-                               
+                                :slug="slug"
+                                :fullContent="fullContent"
+
                                >
                           
                     
                     </RelevanceEdition>
 
-                    <div v-if="fullNewsToggle">
-
-                        <NewsSummaryFull
-                           :fullContent="fullContent"
-                        >
-                        
-                        </NewsSummaryFull>
 
 
-                        <Comments
-                            :slug="slug"
 
-                        >
-                        
-                        
-                        </Comments>
-
-
-                    </div>
+    </b-col>
+               
 
             
-          </b-col>
           <!-- NEWS COMPONENT -->
 
 
@@ -83,8 +68,6 @@ import SecondaryTags from "@/miniComponents/news/SecondaryTags.vue";
 
 import Bibliography from "@/miniComponents/news/Bibliography.vue";
 import RelevanceEdition from "@/miniComponents/news/RelevanceEdition.vue";
-import Comments from "@/miniComponents/news/Comments.vue";
-import NewsSummaryFull from "@/miniComponents/news/NewsSummaryFull.vue";
 
 
 export default {
@@ -93,7 +76,6 @@ export default {
           title:String,
           content:String,
           visits:Number,
-          fullContent:String,
           primaryTags:Array,
           secondaryTags:Array,
           bibliography_name: String,
@@ -101,12 +83,15 @@ export default {
           relevance: Number,
           irrelevance:Number,
           link: String,
-          slug: String
+          slug: String,
+          fullNewsToggle: Boolean,
+          llave:Number,
+          fullContent: String,
+          newsPiece:Object
 
   },
   data() {
     return {
-      fullNewsToggle: false,
       openOrClosed: false,
       comments: [],
       next:null,
@@ -122,8 +107,6 @@ export default {
     Bibliography,
     RelevanceEdition,
     SecondaryTags,
-    Comments,
-    NewsSummaryFull
 
   },
   methods: {
@@ -131,23 +114,11 @@ export default {
       //console.log('estos son las ediciones')
       //console.log(this.editions)
         this.$emit('clicked-edition',this.slug)
-    },
-    fullNewsClicked(toggle) {
-      //console.log('aqui se apreto el seguir leyendo')
-      if(toggle){
-          this.fullNewsToggle = true
-          this.openOrClosed = true
-
-      }
-      else{
-          this.fullNewsToggle = false
-          this.openOrClosed = false
-
-      }
     }
     
   },
   created(){
+    console.log(this.newsPiece)
   },
 };
 </script>

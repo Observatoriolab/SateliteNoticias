@@ -20,6 +20,7 @@
       v-model="bodyInternal"
       style="height:18em"
       v-on:change="onChange"
+      
 
     ></b-form-textarea>
     <pre class="mt-3 mb-0"></pre>
@@ -44,7 +45,8 @@ export default {
       onChange(){
         //console.log('pase por aqui')
         this.$emit('news-change', this.titleInternal,this.bodyInternal)
-      }
+      },
+   
   },
 
   created(){

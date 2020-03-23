@@ -1,113 +1,101 @@
 <template>
   <b-container fluid >
     <!-- BANNER COMPONENT -->
-    <Banner></Banner>
+    
+         <Banner></Banner>
+
     <!-- BANNER COMPONENT -->
 
         <!-- WHOLE COMPONENT -->
-        <b-row>
-          <!-- CATEGORY COMPONENT -->
+    <b-row align-h="start" >
+      <!-- CATEGORY COMPONENT --> 
+      
+      <b-col md="2">
           <Categories  @clicked-category="categoryClicked"></Categories>
-          <!-- CATEGORY COMPONENT -->
 
-          <b-col md="7">
-            <!-- SEARCH BUTTONS COMPONENT -->
+
+      </b-col>
+      <!-- CATEGORY COMPONENT -->
+
+      <b-col md="7">
+        <!-- SEARCH BUTTONS COMPONENT -->
+
             <SearchButtons></SearchButtons>
-            <!-- SEARCH BUTTONS COMPONENT -->
-
-            <b-row >
-                <vue-custom-scrollbar class="scroll-area" :settings="settings" 
-                          v-bind:style="{position: 'relative',
-                                        margin: 'auto',                                                          
-                                        width: '120%',
-                                        height: '60em' }">
-
-                        <div :key="updateNews">
-                          
-                                <div v-for="newsPiece in news" v-bind:key="newsPiece.key">
-
-
-                                          <News   @clicked-edition="clickedEdition"
-                                                  @update-edition="UpdateEdition"
-                                                  :title="newsPiece.title"
-                                                  :link="newsPiece.link"
-                                                  :content="newsPiece.content"
-                                                  :fullContent="newsPiece.fullContent"
-                                                  :primaryTags="newsPiece.primaryTags"
-                                                  :secondaryTags="newsPiece.tags"
-                                                  :bibliography_name="newsPiece.bibliography_name"
-                                                  :bibliography_link="newsPiece.bibliography_link"
-                                                  :relevance="newsPiece.relevance"
-                                                  :irrelevance="newsPiece.irrelevance"
-                                                  :slug="newsPiece.slug"
-                                          
-                                          
-                                          >
-
-                                            
-
-
-
-                                          </News>
-
-                          
-
-                                    </div>
-
-                          
-                          
-                            </div>
-                      
 
 
 
 
-
-
-                </vue-custom-scrollbar>
-             
-
-            </b-row>
-
-          </b-col>
-
-
-          <div v-if="editionToggle"> 
-                   <Edition :slug="slug" :showPanel="editionToggle" @hide-panel="hidePanel"></Edition>
-
-          </div>
-
-
-        </b-row>
-        
-        <!-- WHOLE COMPONENT -->
-
-        <b-row >
-
-          <b-col md="5">
-
-           
-
-          </b-col>
-             <b-col md="4">
-                <div style="padding:1em"></div>
-                <b-button
-                v-show="next"
-                @click="getnewsLoadMore"
-                variant="success"
-                    >
-                  Load More
-                </b-button>
-
-          </b-col>
-             <b-col md="3">
-
-
-          </b-col>
-        
-
-        </b-row>
           
+                      
+                 
+
+        <!-- SEARCH BUTTONS COMPONENT -->
+                    <vue-custom-scrollbar class="scroll-area" :settings="settings" 
+                                        v-bind:style="{textAlign:'center',
+                                                      width: '100%',
+                                                      height: '40em' }">
+                                      <b-row :key="updateNews "  >
+
+                                                      <div  >
+                                                        
+                                                              <div v-for="(newsPiece,index) in news" v-bind:key="newsPiece.key" >
+
+
+                                                                        <News   @clicked-edition="clickedEdition"
+                                                                                :llave="index"
+                                                                                :title="newsPiece.title"
+                                                                                :link="newsPiece.link"
+                                                                                :content="newsPiece.content"
+                                                                                :primaryTags="newsPiece.primaryTags"
+                                                                                :secondaryTags="newsPiece.tags"
+                                                                                :bibliography_name="newsPiece.bibliography_name"
+                                                                                :bibliography_link="newsPiece.bibliography_link"
+                                                                                :relevance="newsPiece.relevance"
+                                                                                :irrelevance="newsPiece.irrelevance"
+                                                                                :slug="newsPiece.slug"
+                                                                                :fullContent="newsPiece.fullContent"
+                                                                                :newsPiece="newsPiece"
+                                                                        
+                                                                        
+                                                                        >
+                                                                      </News>
+
+                                                              </div>
+                                                      </div>
+                                            
+                                      </b-row>
+
+                              </vue-custom-scrollbar>
+                  
+                  <b-row align-h="center">
+                        <div class="button p-5">
+
+                            <b-button
+                                    v-show="next"
+                                    @click="getnewsLoadMore"
+                                    variant="success"
+                                        >
+                                      Load More
+                            </b-button>
+
+                        </div>
+
+                  </b-row>
+          
+
+      </b-col>
+
+         <div v-if="editionToggle"> 
+                <Edition :slug="slug" :showPanel="editionToggle" @hide-panel="hidePanel" :mode="true"></Edition>
+        </div>
+
+            
+    
+          
+    </b-row>
+    <!-- WHOLE COMPONENT -->
+
+       
   </b-container>
 </template>>
 <script>
@@ -115,10 +103,10 @@ import Banner from "@/miniComponents/main/Banner.vue";
 import Categories from "@/miniComponents/main/Categories.vue";
 import SearchButtons from "@/miniComponents/main/SearchButtons.vue";
 import News from "./News.vue";
-import Edition from "./Edition.vue";
 import vueCustomScrollbar from 'vue-custom-scrollbar'
 import { apiService } from "@/common/api.service.js";
-
+import Edition from "./Edition.vue";
+import _ from 'lodash'
 export default {
   name: "MainPage",
   components: {
@@ -127,7 +115,7 @@ export default {
     SearchButtons,
     News,
     Edition,
-    vueCustomScrollbar
+    vueCustomScrollbar,
   },
   data() {
     return {
@@ -146,7 +134,8 @@ export default {
       endpoint: "/api/news/",
       pageNumbers:[],
       updateNews: 0,
-      updateEditions: 0
+      updateFullNews:0,
+      updateEditions: 0,
     }
   },
    watch: {
@@ -185,14 +174,7 @@ export default {
         this.slug = slug
         this.editionToggle = true
     },
-    UpdateEdition(ediciones){
-        //console.log(ediciones)
-
-            for(var i=0;i<ediciones.length;i++){
-                this.$set(this.editions,i,ediciones[i])
-            }
-        
-    },
+ 
     hidePanel(bibliographyName,bibliographyLink,slug,tags){
        console.log(this.editionToggle)
 
@@ -247,12 +229,13 @@ export default {
       }
 
        apiService(this.endpoint).then(data => {
-        this.news.push(...data.results);
-        //console.log(data)
+        this.news.push(...data.results)
+        console.log(data)
         this.loadingnews = false;
         if (data.next) {
           this.next = data.next
           this.pageNumbers.push("/api/news/?page="+this.getLastDigit(this.next))
+          
         } else {
           this.next = null;
 
