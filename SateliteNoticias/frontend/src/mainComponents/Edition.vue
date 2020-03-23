@@ -59,12 +59,12 @@
                         <form style=" border: 1px solid blue" 
                                       @submit.prevent="onSubmit" >
                           <b-row>
-                              <b-col md="5">
+                              <b-col md="6">
                                       <NewsEdition @news-change="newsChange" :title="title" :body="body" ></NewsEdition>
                                         
 
                                 </b-col>
-                              <b-col md="7">
+                              <b-col md="6">
                                                                       <div style="padding: 1em"></div>
 
                                         <PrimaryTagsEdition @primary-tags-change="primaryTagsEditionChange" :tags="tags"></PrimaryTagsEdition>
