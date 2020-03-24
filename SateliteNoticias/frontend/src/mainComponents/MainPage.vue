@@ -26,7 +26,7 @@
                                               v-bind:style="{textAlign:'center',
                                                             width: '100%',
                                                             height: '40em' }">
-                                            <b-row :key="updateNews "  >
+                                            <b-row >
 
                                                             <div  >
                                                               
@@ -47,6 +47,7 @@
                                                                                       :slug="newsPiece.slug"
                                                                                       :fullContent="newsPiece.fullContent"
                                                                                       :newsPiece="newsPiece"
+                                                                                      :updateNews="updateNews"
                                                                               
                                                                               
                                                                               >
@@ -130,6 +131,7 @@ export default {
       updateFullNews:0,
       updateEditions: 0,
       disableFlag:false,
+      delayTime: 9700
     }
   },
    watch: {
@@ -141,6 +143,7 @@ export default {
   },
 
     beforeUpdate() {
+      console.log("El tiempo de delay ahora es de: "+this.delayTime.toString())
             this.debouncedGetNews()
 
     },
@@ -229,7 +232,8 @@ export default {
       if(this.next){
         this.endpoint = this.next
       }
-
+      var muchTime = window.performance.now()
+      var muchTimeDate = new Date().getTime();
        await apiService(this.endpoint).then(data => {
         this.news.push(...data.results)
         console.log(data)
@@ -242,7 +246,12 @@ export default {
           this.next = null;
 
         }
-                          this.disableFlag = false
+        var muchTime2 = window.performance.now()
+        var muchTimeDate2 = new Date().getTime();
+        console.log("Call to doSomething took " + (muchTime2 - muchTime) + " milliseconds.");
+        console.log("Call to doSomething took " + (muchTimeDate2 - muchTimeDate) + " milliseconds.");
+        this.delayTime += 300
+        this.disableFlag = false
 
       });
     },
@@ -255,8 +264,24 @@ export default {
         let method = "PUT"
         console.log('estos son los tags')
         console.log(tags)
+          var tagsAux = []
+        console.log(tags)
+        console.log(tags.length)
+        if(tags[0].text !== undefined){
+
+            for(var i=0;i<tags.length;i++){
+              this.$set(tagsAux, i, tags[i].text)
+
+            }
+        }
+        else {
+            for(var j=0;j<tags.length;j++){
+              this.$set(tagsAux, j, tags[j])
+
+            }
+        }
         apiService(endpoint, method, {
-           tags:tags,
+           tags:tagsAux,
            bibliography_name: bibliographyName, 
            bibliography_link: bibliographyLink
         }).then(news_data => {
@@ -271,7 +296,7 @@ export default {
 
     //console.log('estas son las news')
     //console.log(this.news);
-    this.debouncedGetNews = _.debounce(this.getnews, 10000)
+    this.debouncedGetNews = _.debounce(this.getnews,this.delayTime )
   }
 };
 </script>

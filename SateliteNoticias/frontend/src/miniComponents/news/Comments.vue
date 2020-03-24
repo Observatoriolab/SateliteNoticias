@@ -122,7 +122,8 @@ export default {
             updatedComments:[],
             disableFlag:false,
             lastPage:null,
-            count:0
+            count:0,
+            delayTime: 1000
 
           }
       },
@@ -190,6 +191,8 @@ export default {
           async getNewsComments() {
               // get a page of comments for a single news from the REST API's paginated 'news Endpoint'
               this.disableFlag = true
+               var muchTime = window.performance.now()
+                var muchTimeDate = new Date().getTime();
                 let endpoint = `/api/news/${this.slug}/comments/`;
                 if (this.next) {
                   endpoint = this.next;
@@ -210,6 +213,12 @@ export default {
                     this.count = data.count
 
                   }
+
+                  var muchTime2 = window.performance.now()
+                  var muchTimeDate2 = new Date().getTime();
+                  console.log("Call to doSomething took " + (muchTime2 - muchTime) + " milliseconds.");
+                  console.log("Call to doSomething took " + (muchTimeDate2 - muchTimeDate) + " milliseconds.");
+                  this.delayTime +=500
                   this.disableFlag = false
                 });
           },
@@ -245,7 +254,7 @@ export default {
       console.log(this.slug)
       this.getNewsComments();
       this.setRequestUser();
-      this.debouncedGetComments = _.debounce(this.getcomments, 1000)
+      this.debouncedGetComments = _.debounce(this.getcomments, this.delayTime)
 
   }
 }

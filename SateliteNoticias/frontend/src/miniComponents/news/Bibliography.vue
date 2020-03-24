@@ -1,5 +1,5 @@
 <template>
-  <b-row style="width: 100%; text-align:center;  margin-left:auto;margin-right:auto; border:1px solid blue; color:blue; " fluid>
+  <b-row style="width: 100%; text-align:center;  margin-left:auto;margin-right:auto; border:1px solid blue; color:blue; " fluid :key="updateNews">
     <b-row >
       <div style="padding-left:3em"></div>
           <h4 class="text-primary" style="text-align:center">Bibliografia</h4>
@@ -45,7 +45,8 @@ export default {
     bibliography_link: String,
     slug:String,
     content:String,
-    title:String
+    title:String,
+    updateNews:Number
   },
   data: () => ({
       bibliographyNameModelSelect: '',
@@ -86,7 +87,10 @@ export default {
     this.createArrays();
   },
   beforeUpdate(){
-    //console.log(this.bibliographyNameModelSelect)
+    console.log('llego algo')
+    console.log(this.updateNews)
+    console.log(this.bibliography_name)
+    this.createArrays()
     if(this.bibliographyNameModelSelect === null) {
       this.bibliographyLinkModelSelect = ''
     }

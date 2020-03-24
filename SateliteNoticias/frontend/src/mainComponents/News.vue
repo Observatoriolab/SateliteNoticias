@@ -33,6 +33,7 @@
                           :slug="slug"
                           :content="content"
                           :title="title"
+                          :updateNews="updateNews"
                     >
 
 
@@ -87,7 +88,8 @@ export default {
           fullNewsToggle: Boolean,
           llave:Number,
           fullContent: String,
-          newsPiece:Object
+          newsPiece:Object,
+          updateNews:Number
 
   },
   data() {
