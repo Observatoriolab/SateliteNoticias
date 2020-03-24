@@ -18,54 +18,46 @@
       <!-- CATEGORY COMPONENT -->
 
       <b-col md="7">
-        <!-- SEARCH BUTTONS COMPONENT -->
+              <!-- SEARCH BUTTONS COMPONENT -->
 
-            <SearchButtons></SearchButtons>
+                  <SearchButtons></SearchButtons>
+              <!-- SEARCH BUTTONS COMPONENT -->
+                  <vue-custom-scrollbar class="scroll-area" :settings="settings" 
+                                              v-bind:style="{textAlign:'center',
+                                                            width: '100%',
+                                                            height: '40em' }">
+                                            <b-row :key="updateNews "  >
 
-
-
-
-          
-                      
-                 
-
-        <!-- SEARCH BUTTONS COMPONENT -->
-                    <vue-custom-scrollbar class="scroll-area" :settings="settings" 
-                                        v-bind:style="{textAlign:'center',
-                                                      width: '100%',
-                                                      height: '40em' }">
-                                      <b-row :key="updateNews "  >
-
-                                                      <div  >
-                                                        
-                                                              <div v-for="(newsPiece,index) in news" v-bind:key="newsPiece.key" >
+                                                            <div  >
+                                                              
+                                                                    <div v-for="(newsPiece,index) in news" v-bind:key="newsPiece.key" >
 
 
-                                                                        <News   @clicked-edition="clickedEdition"
-                                                                                :llave="index"
-                                                                                :title="newsPiece.title"
-                                                                                :link="newsPiece.link"
-                                                                                :content="newsPiece.content"
-                                                                                :primaryTags="newsPiece.primaryTags"
-                                                                                :secondaryTags="newsPiece.tags"
-                                                                                :bibliography_name="newsPiece.bibliography_name"
-                                                                                :bibliography_link="newsPiece.bibliography_link"
-                                                                                :relevance="newsPiece.relevance"
-                                                                                :irrelevance="newsPiece.irrelevance"
-                                                                                :slug="newsPiece.slug"
-                                                                                :fullContent="newsPiece.fullContent"
-                                                                                :newsPiece="newsPiece"
-                                                                        
-                                                                        
-                                                                        >
-                                                                      </News>
+                                                                              <News   @clicked-edition="clickedEdition"
+                                                                                      :llave="index"
+                                                                                      :title="newsPiece.title"
+                                                                                      :link="newsPiece.link"
+                                                                                      :content="newsPiece.content"
+                                                                                      :primaryTags="newsPiece.primaryTags"
+                                                                                      :secondaryTags="newsPiece.tags"
+                                                                                      :bibliography_name="newsPiece.bibliography_name"
+                                                                                      :bibliography_link="newsPiece.bibliography_link"
+                                                                                      :relevance="newsPiece.relevance"
+                                                                                      :irrelevance="newsPiece.irrelevance"
+                                                                                      :slug="newsPiece.slug"
+                                                                                      :fullContent="newsPiece.fullContent"
+                                                                                      :newsPiece="newsPiece"
+                                                                              
+                                                                              
+                                                                              >
+                                                                            </News>
 
-                                                              </div>
-                                                      </div>
-                                            
-                                      </b-row>
+                                                                    </div>
+                                                            </div>
+                                                  
+                                            </b-row>
 
-                              </vue-custom-scrollbar>
+                  </vue-custom-scrollbar>
                   
                   <b-row align-h="center">
                         <div class="button p-5">
@@ -74,6 +66,7 @@
                                     v-show="next"
                                     @click="getnewsLoadMore"
                                     variant="success"
+                                    :disabled=disableButton()
                                         >
                                       Load More
                             </b-button>
@@ -136,6 +129,7 @@ export default {
       updateNews: 0,
       updateFullNews:0,
       updateEditions: 0,
+      disableFlag:false,
     }
   },
    watch: {
@@ -153,6 +147,9 @@ export default {
    
 
   methods:{
+        disableButton(){
+              return this.disableFlag
+          },
     categoryClicked(category){
         this.categoryToFilterWith = category
         //Llamada a la API para filtrar con este tag mas grande
@@ -186,7 +183,7 @@ export default {
     },
 
     async delayedNews(item) {        
-          apiService(item).then(data => {
+          await apiService(item).then(data => {
             //console.log('este es la data')
             //console.log(data.results)
             this.updatedNews.push(...data.results);
@@ -216,11 +213,16 @@ export default {
 
     },
     getLastDigit(pageString){
-        return parseInt(pageString.substr(pageString.length-1))-1
+      let regex = /=+\d*/.exec(pageString)
+      console.log(regex[0])
+      var nuevo = /\d+$/.exec(regex[0])
+      console.log(nuevo)
+      return parseInt(nuevo[0])-1
 
     },
-     getnewsLoadMore() {
-   
+    async getnewsLoadMore() {
+                 this.disableFlag = true
+
       this.loadingnews = true;
       //console.log(this.news)
 
@@ -228,7 +230,7 @@ export default {
         this.endpoint = this.next
       }
 
-       apiService(this.endpoint).then(data => {
+       await apiService(this.endpoint).then(data => {
         this.news.push(...data.results)
         console.log(data)
         this.loadingnews = false;
@@ -240,6 +242,8 @@ export default {
           this.next = null;
 
         }
+                          this.disableFlag = false
+
       });
     },
 

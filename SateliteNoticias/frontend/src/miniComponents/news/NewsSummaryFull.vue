@@ -4,7 +4,7 @@
           <div style="padding: 7px"></div>
           <div style="color: blue;border:1px solid blue;font-size: 15px; text-align:center">
                    
-                      <h2 style="color: blue">Cuerpo de la noticia</h2>
+                      <h3 style="color: blue">Cuerpo de la noticia</h3>
 
               <!--TODO: DISABLE DEL SCROLL DE LAS NOTICIAS PARA PODER SCROLLEAR EL CONTENIDO SIN PROBLEMAS 
                         CONDICIONES: ESTAR EN HOVER EN EL ELEMENTO
@@ -14,7 +14,7 @@
                                                           margin: 'auto',
                                                           
                                                           width: '100%',
-                                                          height: '30em' }"
+                                                          height: '25em' }"
                                                       :settings="settings" 
                                                      >
                           <p style="padding: 1em; 0em; 1em; 1em" >

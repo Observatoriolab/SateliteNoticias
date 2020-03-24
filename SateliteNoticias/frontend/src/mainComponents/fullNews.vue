@@ -6,23 +6,23 @@
         <!-- WHOLE COMPONENT -->
                                     <div style="padding-top: 1em"></div>
 
-          <h2 style="color: blue">        {{$route.params.newsPiece.title}}</h2>
+    <h3 style="color: blue">  {{$route.params.newsPiece.title}}</h3>
 
     <b-row>
         <b-col md="5" >
-            <NewsSummaryFull :fullContent="fullContent"></NewsSummaryFull>
+            <NewsSummaryFull :fullContent="$route.params.fullContent"></NewsSummaryFull>
         </b-col>
 
         <b-col md="7" >
 
-            <Edition :slug="slug" :showPanel="true" @hide-panel="hidePanel" :mode="false"></Edition>
+            <Edition :slug="$route.params.slug" :showPanel="true" @hide-panel="hidePanel" :mode="false"></Edition>
             
         </b-col>
             
     </b-row>
-    <b-row fluid>
+    <b-row >
 
-        <Comments></Comments>
+        <Comments :slug="$route.params.slug" ></Comments>
 
 
     </b-row>
