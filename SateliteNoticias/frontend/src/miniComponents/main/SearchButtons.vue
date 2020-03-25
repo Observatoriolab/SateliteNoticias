@@ -1,6 +1,5 @@
 <template>
-
-<b-row>
+  <b-row>
     <b-col md="4">
       <div class="button p-4">
         <b-button squared lg="4" variant="primary">Trending</b-button>
@@ -12,10 +11,7 @@
         <b-button squared lg="4" variant="primary">Buscar</b-button>
       </div>
     </b-col>
-
-
-</b-row>
-
+  </b-row>
 </template>
 <script>
 export default {

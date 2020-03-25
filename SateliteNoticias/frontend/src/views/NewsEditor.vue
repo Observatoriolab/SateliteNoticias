@@ -88,7 +88,9 @@ export default {
       //console.log(data);
       return next(
         vm => (
-          (vm.news_title = data.title), (vm.news_body = data.content), (vm.news_tags = data.tags)
+          (vm.news_title = data.title),
+          (vm.news_body = data.content),
+          (vm.news_tags = data.tags)
         )
       );
     } else {

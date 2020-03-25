@@ -1,25 +1,21 @@
 <template>
   <div class="home">
     <div class="container mt-4">
-
       <div class="my-4">
         <h2>Tags a buscar:</h2>
-          <input
-            v-model="tags"
-            class="form-control"
-            placeholder="Any tags to search for? (separate them by commas by the meantime)"
-          />
-          <br />
+        <input
+          v-model="tags"
+          class="form-control"
+          placeholder="Any tags to search for? (separate them by commas by the meantime)"
+        />
+        <br />
         <button
           @click="FilterbyTagsSearch()"
           class="btn btn-sm btn-outline-success"
         >
           Filter news by tags
         </button>
-        <button
-          @click="cancelFilter"
-          class="btn btn-sm btn-outline-danger"
-        >
+        <button @click="cancelFilter" class="btn btn-sm btn-outline-danger">
           Cancel Filter
         </button>
       </div>
@@ -44,7 +40,7 @@
         </p>
         <p>Editions: {{ news.editions_count }}</p>
         <hr />
-          <br />
+        <br />
         <p class="mb-0">
           Tags:
           <span class="news-author">{{ news.tags }}</span>
@@ -83,48 +79,42 @@ export default {
     };
   },
   methods: {
-    cancelFilter(){
+    cancelFilter() {
       //vaciar las preguntas para poderlas preguntar denuevo
-      this.news.splice(0)
-      this.filterFlag = false
-      this.tags = null
-      this.getnews()
-
+      this.news.splice(0);
+      this.filterFlag = false;
+      this.tags = null;
+      this.getnews();
     },
-    FilterbyTagsSearch(){
-      if(this.tags !== null){
-        if(this.tags.length !== 0){
-                   let listTags = this.tags.split(",")
-                  //console.log('Estos son los tags a buscar')
-                  //console.log(listTags)
-                  var stringFormat = ""
-                  for (var i=0;i<listTags.length;i++){
-                    stringFormat = stringFormat+listTags[i]+"-"
-                  }
-                  stringFormat = stringFormat.substring(0, stringFormat.length-1);
-                  //console.log('este es el stringformat de los tags que voy a usar')
-                  //console.log(stringFormat)
+    FilterbyTagsSearch() {
+      if (this.tags !== null) {
+        if (this.tags.length !== 0) {
+          let listTags = this.tags.split(",");
+          //console.log('Estos son los tags a buscar')
+          //console.log(listTags)
+          var stringFormat = "";
+          for (var i = 0; i < listTags.length; i++) {
+            stringFormat = stringFormat + listTags[i] + "-";
+          }
+          stringFormat = stringFormat.substring(0, stringFormat.length - 1);
+          //console.log('este es el stringformat de los tags que voy a usar')
+          //console.log(stringFormat)
 
-                  let endpoint = `/api/news/tags/${stringFormat}/`;
-                  let method = "GET"
-                  apiService(endpoint,method)
-                    .then(data => {
-                      //console.log("este es el resultado de lo que me dio el back")
-                      //console.log(data.results)
-                      this.news = data.results
-                      this.filterFlag = true
-                      this.next = null
-                  });
+          let endpoint = `/api/news/tags/${stringFormat}/`;
+          let method = "GET";
+          apiService(endpoint, method).then(data => {
+            //console.log("este es el resultado de lo que me dio el back")
+            //console.log(data.results)
+            this.news = data.results;
+            this.filterFlag = true;
+            this.next = null;
+          });
+        } else {
+          alert("esta vacio");
         }
-        else{
-             alert('esta vacio')
-        }
-         
+      } else {
+        alert("esta vacio");
       }
-      else{
-        alert('esta vacio')
-      }
-      
     },
     getnews() {
       //console.log('estos son las preguntas antes de consultar a la api')

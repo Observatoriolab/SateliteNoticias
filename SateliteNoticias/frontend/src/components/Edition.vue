@@ -4,10 +4,10 @@
       <strong> {{ edition.author }}</strong> &#8901; {{ edition.created_at }}
     </p>
     <p>{{ edition.body }}</p>
-     <p class="mb-0">
-        Tags:
-        <span >{{ edition.tags }}</span>
-      </p>
+    <p class="mb-0">
+      Tags:
+      <span>{{ edition.tags }}</span>
+    </p>
     <div v-if="isEditionAuthor">
       <router-link
         :to="{ name: 'edition-editor', params: { id: edition.id } }"
@@ -68,7 +68,9 @@ export default {
   },
   methods: {
     toggleLike() {
-      this.userLikedEdition === false ? this.likeEdition() : this.unLikeEdition();
+      this.userLikedEdition === false
+        ? this.likeEdition()
+        : this.unLikeEdition();
     },
     likeEdition() {
       this.userLikedEdition = true;

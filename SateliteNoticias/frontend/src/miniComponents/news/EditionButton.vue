@@ -1,7 +1,9 @@
 <template>
-  <div >
+  <div>
     <!-- EDITION COMPONENT -->
-    <b-button lg="4" variant="outline-primary" @click="Edition">Editar</b-button>
+    <b-button lg="4" variant="outline-primary" @click="Edition"
+      >Editar</b-button
+    >
 
     <!-- EDITION COMPONENT -->
   </div>
@@ -11,7 +13,7 @@ export default {
   name: "EditionButton",
   methods: {
     Edition(item) {
-      this.$emit('clicked-edition', item)
+      this.$emit("clicked-edition", item);
     }
   }
 };

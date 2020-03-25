@@ -23,17 +23,17 @@
       </div>
       <div v-else-if="showForm">
         <form class="card" @submit.prevent="onSubmit">
-                  <div style="padding-bottom: 50px"></div>
+          <div style="padding-bottom: 50px"></div>
 
-            <h1>Edit the news</h1>
-          
+          <h1>Edit the news</h1>
+
           <h3>Title:</h3>
           <input
             v-model="newEditionTitle"
             class="form-control"
             placeholder="Whats the title of this edition?"
           />
-          <br>
+          <br />
           <h3>Content:</h3>
           <div class="card-block">
             <textarea
@@ -43,13 +43,13 @@
               rows="5"
             ></textarea>
           </div>
-           <h2>Tags:</h2>
+          <h2>Tags:</h2>
           <input
             v-model="editionTags"
             class="form-control"
             placeholder="Any tags? (separate them by commas)"
           />
-          <br>
+          <br />
           <div class="card-footer px-3">
             <button type="submit" class="btn btn-sm btn-success">
               Submit Your Edition
@@ -173,18 +173,20 @@ export default {
     },
     onSubmit() {
       // Tell the REST API to create a new edition for this news based on the user input, then update some data properties
-      
+
       //console.log('aqui voy a enviar una respuesta nueva')
       //console.log(this.slug)
       if (this.newEditionBody) {
         let endpoint = `/api/news/${this.slug}/edition/`;
-        apiService(endpoint, "POST", { title: this.newEditionTitle,body: this.newEditionBody, tags: this.editionTags }).then(
-          data => {
-            //console.log('este es la data que me entrego al responder la pregunta')
-            //console.log(data)
-            this.editions.unshift(data);
-          }
-        );
+        apiService(endpoint, "POST", {
+          title: this.newEditionTitle,
+          body: this.newEditionBody,
+          tags: this.editionTags
+        }).then(data => {
+          //console.log('este es la data que me entrego al responder la pregunta')
+          //console.log(data)
+          this.editions.unshift(data);
+        });
         this.newEditionBody = null;
         this.showForm = false;
         this.userHasEditioned = true;

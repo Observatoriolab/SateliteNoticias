@@ -1,25 +1,32 @@
 <template>
-  <div style="width: 100%; text-align:center;   border:1px solid blue; color:blue; padding: 1em 0px 1em" fluid>
-    <Relevance :relevance="relevance" :irrelevance="irrelevance" @clicked-edition="clickedEdition"></Relevance>
+  <div
+    style="width: 100%; text-align:center;   border:1px solid blue; color:blue; padding: 1em 0px 1em"
+    fluid
+  >
+    <Relevance
+      :relevance="relevance"
+      :irrelevance="irrelevance"
+      @clicked-edition="clickedEdition"
+    ></Relevance>
   </div>
 </template>
 <script>
 import Relevance from "./Relevance.vue";
 export default {
   name: "RelevanceEdition",
-  props:{
-    relevance:Number,
-    irrelevance:Number
+  props: {
+    relevance: Number,
+    irrelevance: Number
   },
   components: {
-    Relevance,
+    Relevance
   },
-  methods:{
+  methods: {
     clickedEdition() {
-        this.$emit('clicked-edition')
+      this.$emit("clicked-edition");
     }
   },
-  created(){
+  created() {
     //console.log(this)
   }
 };

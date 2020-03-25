@@ -8,18 +8,20 @@
         class="form-control"
         placeholder="Whats the title of this edition?"
       />
-      <br>
+      <br />
       <h3>Content::</h3>
       <textarea v-model="editionBody" class="form-control" rows="3"></textarea>
       <br />
       <h2>Tags:</h2>
-          <input
-            v-model="editionTags"
-            class="form-control"
-            placeholder="Any tags? (separate them by commas)"
-          />
-      <br>
-      <button type="submit" class="btn btn-success">Publish your edition</button>
+      <input
+        v-model="editionTags"
+        class="form-control"
+        placeholder="Any tags? (separate them by commas)"
+      />
+      <br />
+      <button type="submit" class="btn btn-success">
+        Publish your edition
+      </button>
     </form>
     <p v-if="error" class="muted mt-2">{{ error }}</p>
   </div>
@@ -38,7 +40,7 @@ export default {
   data() {
     return {
       newslug: null,
-      editionTitle:null,
+      editionTitle: null,
       editionBody: null,
       editionTags: [],
       error: null
@@ -48,7 +50,11 @@ export default {
     onSubmit() {
       if (this.editionBody) {
         let endpoint = `/api/editions/${this.id}/`;
-        apiService(endpoint, "PUT", { title: this.editionTitle, body: this.editionBody, tags: this.editionTags }).then(() => {
+        apiService(endpoint, "PUT", {
+          title: this.editionTitle,
+          body: this.editionBody,
+          tags: this.editionTags
+        }).then(() => {
           this.$router.push({
             name: "news",
             params: { slug: this.newslug }
@@ -67,7 +73,10 @@ export default {
     //console.log(data)
     return next(
       vm => (
-        (vm.editionBody = data.body), (vm.newslug = data.news_slug), (vm.editionTags = data.tags), (vm.editionTitle = data.title)
+        (vm.editionBody = data.body),
+        (vm.newslug = data.news_slug),
+        (vm.editionTags = data.tags),
+        (vm.editionTitle = data.title)
       )
     );
   }

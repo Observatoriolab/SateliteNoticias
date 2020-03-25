@@ -10,7 +10,7 @@ module.exports = {
       .use(BundleTracker, [{ filename: "./webpack-stats.json" }]);
 
     config.output.filename("bundle.js");
-    devtool: 'source-map';
+    ("source-map");
 
     config.optimization.splitChunks(false);
 

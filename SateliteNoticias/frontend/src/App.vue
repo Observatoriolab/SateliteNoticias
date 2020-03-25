@@ -14,7 +14,7 @@ import { apiService } from "@/common/api.service.js";
 export default {
   name: "App",
   components: {
-  //  NavbarComponent
+    //  NavbarComponent
   },
 
   methods: {
