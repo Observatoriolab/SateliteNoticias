@@ -25,6 +25,13 @@ class News(models.Model):
                                 related_name="news")
     tags = TaggableManager(blank = True) 
 
+
+    relevanceData = models.TextField(blank=True)
+    irrelevanceData = models.TextField(blank=True)
+
+    relevanceAccumulated = models.DecimalField(blank=True,max_digits=18 ,decimal_places=5, null=True)
+    irrelevanceAccumulated = models.DecimalField(blank=True, max_digits=18,decimal_places=5,null=True)
+
     def __str__(self):
         return self.title
 

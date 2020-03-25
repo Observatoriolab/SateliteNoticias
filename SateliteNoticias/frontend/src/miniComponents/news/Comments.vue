@@ -184,8 +184,9 @@ export default {
                 let regex = /=+\d*/.exec(pageString)
                 console.log(regex[0])
                 var nuevo = /\d+$/.exec(regex[0])
-                console.log(nuevo)
-                return parseInt(nuevo[0])-1+optional
+                console.log(nuevo[0])
+                console.log(parseInt(nuevo[0])-1+optional)
+                return (parseInt(nuevo[0])-1+optional).toString()
 
           },
           async getNewsComments() {
@@ -193,26 +194,38 @@ export default {
               this.disableFlag = true
                var muchTime = window.performance.now()
                 var muchTimeDate = new Date().getTime();
-                let endpoint = `/api/news/${this.slug}/comments/`;
+                var endpoint = `/api/news/${this.slug}/comments/`;
                 if (this.next) {
                   endpoint = this.next;
                 }
+                console.log(this.next)
                 await apiService(endpoint).then(data => {data
                   this.comments.push(...data.results);
-                  if (data.next) {
+                  console.log('esto es lo que salio')
+                  console.log(data)
+                  console.log(this.next)
+
+                  if(data.results.length === 0){
+                    this.pageNumbers.push("/api/news/"+this.slug+"/comments/?page=1")
+
+                  }
+                  else if (data.next) {
                     this.next = data.next;
                     console.log('este es el next')
                     console.log(this.next)
                     this.pageNumbers.push("/api/news/"+this.slug+"/comments/?page="+this.getLastDigit(this.next,0))
 
-                  } else {
+                  }
+                  else {
+                    console.log(this.next)
+                    console.log("sadness ensuess")
+                    this.next = endpoint
+                    this.pageNumbers.push("/api/news/"+this.slug+"/comments/?page="+this.getLastDigit(endpoint,1))
                     this.next = null
-                    console.log(data.previous)
-                    this.pageNumbers.push("/api/news/"+this.slug+"/comments/?page="+this.getLastDigit(data.previous,1))
-                    this.lastPage = this.getLastDigit(data.previous,1)
                     this.count = data.count
 
                   }
+                    console.log(this.pageNumbers)
 
                   var muchTime2 = window.performance.now()
                   var muchTimeDate2 = new Date().getTime();
@@ -235,6 +248,7 @@ export default {
                     if(this.count % 4 === 1 && this.count > 4){
                       console.log('pase por aca pue')
                          this.pageNumbers.push("/api/news/"+this.slug+"/comments/?page="+parseInt(Math.floor(this.count/4)+1))
+                         this.delayTime +=500
 
                     }
                   
