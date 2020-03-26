@@ -78,8 +78,9 @@
       </div>
     </b-row>
     <!-- WHOLE COMPONENT -->
-  </b-container> </template
->>
+  </b-container> 
+  
+</template>
 <script>
 import Banner from "@/miniComponents/main/Banner.vue";
 import Categories from "@/miniComponents/main/Categories.vue";

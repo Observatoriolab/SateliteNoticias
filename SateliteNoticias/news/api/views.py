@@ -44,7 +44,38 @@ class NewsListAPIView(generics.ListAPIView):
 
 
         return results.order_by("-created_at")
-        
+
+class NewsRatingAPIView(APIView):
+    serializer_class = Newserializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self,request,pk):
+        newsPiece = get_object_or_404(News, pk=pk)
+        user = request.user
+
+    
+
+
+        if request.data['type']:
+            newsPiece.relevance.add(user)
+            newsPiece.relevanceData = newsPiece.relevanceData + str(request.data['localRelevance']) + ";"
+            newsPiece.relevanceAccumulated += request.data['localRelevance']
+
+
+
+        else:
+            newsPiece.irrelevance.add(user)
+            newsPiece.irrelevanceData = newsPiece.irrelevanceData + str(request.data['localIrrelevance'])  + ";"
+            newsPiece.irrelevanceAccumulated += request.data['localIrrelevance']
+
+        #Agregar el rating en el data respectiva 
+        #Sumar el resultado en el accumulated respectivo
+        newsPiece.save()
+
+        serializer_context= {"request":request}
+        serializer = self.serializer_class(newsPiece, context = serializer_context)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)      
 #VIEWS PARA COMENTARIOS
 
 

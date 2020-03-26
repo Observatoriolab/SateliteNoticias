@@ -43,10 +43,12 @@ class Newserializer(TaggitSerializer,serializers.ModelSerializer):
     #Parte de relevancias
     relevance_count = serializers.SerializerMethodField(read_only=True)
     user_has_relevanced = serializers.SerializerMethodField(read_only=True)
+    relevance_average = serializers.SerializerMethodField(read_only=True)
 
     #Parte de irrelevancias
     irrelevance_count = serializers.SerializerMethodField(read_only=True)
     user_has_irrelevanced = serializers.SerializerMethodField(read_only=True)
+    irrelevance_average = serializers.SerializerMethodField(read_only=True)
 
     tags = NewTagListSerializerField()
 
@@ -54,7 +56,7 @@ class Newserializer(TaggitSerializer,serializers.ModelSerializer):
         model = News
         #Se excluye ya que al crear una "noticia", no tiene relevancia ni irrelevancia
         #Se lo dan los usuarios
-        exclude = ["updated_at", "relevance","irrelevance"]
+        exclude = ["updated_at", "relevance","irrelevance","relevanceData","irrelevanceData","relevanceAccumulated","irrelevanceAccumulated"]
 
     def get_created_at(self, instance):
         return instance.created_at.strftime("%B %d, %Y")
@@ -62,13 +64,63 @@ class Newserializer(TaggitSerializer,serializers.ModelSerializer):
     def get_editions_count(self, instance):
         return instance.editions.count()
         
+    def get_relevance_average(self, instance):
+        logging.debug(instance)
+      
+        strList = instance.relevanceData.split(";")
+        strListFinal = strList[0:len(strList)-1]
+        intList = []
+        logging.debug(strListFinal)
+        if len(strListFinal) != 0:
+            for strRating in strListFinal:             
+                intList.append(float(strRating))
+        else:
+            intList.append(0)
+
+        sumList = sum(intList)
+
+        try:
+            average = sumList/len(intList)
+        except ZeroDivisionError:
+            average = 0
+
+        
+        return average
+
+
     def get_relevance_count(self, instance):
-        #Modificar para sacar el promedio despues
+        logging.debug(instance)
         return instance.relevance.count()
 
+
+    def get_irrelevance_average(self, instance):
+        logging.debug(instance)
+      
+        strList = instance.irrelevanceData.split(";")
+        strListFinal = strList[0:len(strList)-1]
+        intList = []
+        logging.debug(strListFinal)
+        if len(strListFinal) != 0:
+            for strRating in strListFinal:             
+                intList.append(float(strRating))
+        else:
+            intList.append(0)
+
+        sumList = sum(intList)
+
+        try:
+            average = sumList/len(intList)
+        except ZeroDivisionError:
+            average = 0
+
+        
+        return average
+
+
     def get_irrelevance_count(self, instance):
-        #Modificar para sacar el promedio despues
+        logging.debug(instance)
         return instance.irrelevance.count()
+
 
     def get_user_has_relevanced(self, instance):
         request = self.context.get("request")
@@ -107,6 +159,7 @@ class EditionSerializer(TaggitSerializer,serializers.ModelSerializer):
         return instance.voters.filter(pk=request.user.pk).exists()
 
     def get_news_slug(self, instance):
+     
         return instance.news.slug
 
 

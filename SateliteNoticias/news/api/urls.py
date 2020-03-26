@@ -14,6 +14,9 @@ urlpatterns = [
         qv.NewsListAPIView.as_view(),
         name="news-list"),
 
+    path("news/<int:pk>/rating/",
+        qv.NewsRatingAPIView.as_view(),
+        name="news-rating"),
 
     #API ENDPOINTS COMMENT
     path("news/<slug:slug>/comments/",

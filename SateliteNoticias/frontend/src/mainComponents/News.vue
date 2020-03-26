@@ -28,10 +28,9 @@
 
     <RelevanceEdition
       @clicked-edition="clickedEdition"
-      :relevance="relevance"
-      :irrelevance="irrelevance"
+      :newsPiece="newsPiece"
       :slug="slug"
-      :fullContent="fullContent"
+      :updateNews="updateNews"
     >
     </RelevanceEdition>
   </b-col>

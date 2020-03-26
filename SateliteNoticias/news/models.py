@@ -29,8 +29,8 @@ class News(models.Model):
     relevanceData = models.TextField(blank=True)
     irrelevanceData = models.TextField(blank=True)
 
-    relevanceAccumulated = models.DecimalField(blank=True,max_digits=18 ,decimal_places=5, null=True)
-    irrelevanceAccumulated = models.DecimalField(blank=True, max_digits=18,decimal_places=5,null=True)
+    relevanceAccumulated = models.BigIntegerField(default=0)
+    irrelevanceAccumulated = models.BigIntegerField(default=0)
 
     def __str__(self):
         return self.title
