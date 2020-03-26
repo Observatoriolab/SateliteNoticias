@@ -120,7 +120,7 @@ export default {
       updateFullNews: 0,
       updateEditions: 0,
       disableFlag: false,
-      delayTime: 9700
+      delayTime: 5000
     };
   },
   watch: {

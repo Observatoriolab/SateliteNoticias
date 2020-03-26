@@ -399,7 +399,7 @@ export default {
     //console.log('aqui va algo 2')
     //console.log(this.$props)
 
-    this.debouncedGetEditions = _.debounce(this.getnewsEditions, 10000);
+    this.debouncedGetEditions = _.debounce(this.getnewsEditions, 500);
   }
 };
 </script>
