@@ -221,7 +221,8 @@ export default {
       //console.log(primaryTags)
     },
     secondaryTagsEditionChange(secondaryTags) {
-      this.tags = secondaryTags;
+      console.log('estos son los secondary tags')
+      this.tags = secondaryTags
       //console.log(secondaryTags)
     },
     bibliographyEditionChange(names, links) {
@@ -253,8 +254,9 @@ export default {
           console.log(this.tags);
           console.log(this.tags.length);
           for (var i = 0; i < this.tags.length; i++) {
-            this.$set(tagsAux, i, this.tags[i].text);
+            this.$set(tagsAux, i, this.tags[i].name);
           }
+          console.log(tagsAux)
           apiService(endpoint, method, {
             title: this.title,
             body: this.body,
@@ -286,40 +288,19 @@ export default {
     onSubmit() {
       // Tell the REST API to create a new edition for this news based on the user input, then update some data properties
 
-      //console.log('aqui voy a enviar una edition nueva')
-      //console.log(this.slug)
-      //console.log(this.tags)
-      //console.log('aqui va los tags')
-      var i = 0;
-      var tagsAux = [];
-      console.log(this.tags);
-      if (this.tags !== undefined) {
-        if (this.tags[i].text !== undefined) {
-          for (i = 0; i < this.tags.length; i++) {
-            this.$set(tagsAux, i, this.tags[i].text);
-          }
-        } else {
-          for (i = 0; i < this.tags.length; i++) {
-            this.$set(tagsAux, i, this.tags[i]);
-          }
-        }
-      }
-      //console.log(tagsAux)
+    
 
       var method = "";
 
       method = "POST";
 
       let endpoint = `/api/news/${this.slug}/edition/`;
-      //console.log('estos son los resultados')
-      //console.log(this.bibliographyName)
-      //console.log(this.bibliographyLink)
-      console.log(this.body)
-      console.log(tagsAux);
+      console.log('estos son los tags')
+      console.log(this.tags)
       apiService(endpoint, method, {
         title: this.title,
         body: this.body,
-        tags: tagsAux,
+        tags: this.tags,
         bibliography_name: this.bibliographyName,
         bibliography_link: this.bibliographyLink
       }).then(data => {

@@ -162,7 +162,8 @@ export default {
 
     hidePanel(bibliographyName, bibliographyLink, slug, tags) {
       console.log(this.editionToggle);
-
+      console.log('asi quedaron los tags')
+      console.log(tags)
       this.editionToggle = false;
       if (slug.length !== 0) {
         this.editnews(bibliographyName, bibliographyLink, slug, tags);
@@ -244,25 +245,11 @@ export default {
 
     editnews(bibliographyName, bibliographyLink, slug, tags) {
       let endpoint = "/api/news/" + slug + "/";
-      //console.log('este son los tags')
-      //console.log(tags)
+
       let method = "PUT";
-      console.log("estos son los tags");
-      console.log(tags);
-      var tagsAux = [];
-      console.log(tags);
-      console.log(tags.length);
-      if (tags[0].text !== undefined) {
-        for (var i = 0; i < tags.length; i++) {
-          this.$set(tagsAux, i, tags[i].text);
-        }
-      } else {
-        for (var j = 0; j < tags.length; j++) {
-          this.$set(tagsAux, j, tags[j]);
-        }
-      }
+     
       apiService(endpoint, method, {
-        tags: tagsAux,
+        tags: tags,
         bibliography_name: bibliographyName,
         bibliography_link: bibliographyLink
       }).then(news_data => {

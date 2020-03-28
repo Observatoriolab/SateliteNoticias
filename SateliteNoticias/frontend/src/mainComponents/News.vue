@@ -11,10 +11,12 @@
       :slug="slug"
       :fullContent="fullContent"
       :newsPiece="newsPiece"
+      
     ></NewsSummary>
 
     <PrimaryTags :primaryTags="primaryTags"> </PrimaryTags>
-    <SecondaryTags :secondaryTags="secondaryTags"> </SecondaryTags>
+    <SecondaryTags :secondaryTags="secondaryTags" 
+      :updateNews="updateNews"> </SecondaryTags>
 
     <Bibliography
       :bibliography_name="bibliography_name"
