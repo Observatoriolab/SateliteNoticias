@@ -155,15 +155,13 @@ export default {
     this.localIrrelevance = this.$props.newsPiece.irrelevance_average;
     this.localRelevanceFlag = this.$props.newsPiece.user_has_relevanced;
     this.localIrrelevanceFlag = this.$props.newsPiece.user_has_irrelevanced;
-    console.log(this)
   },
   created() {
-    //console.log(this.relevance)
+    //(this.relevance)
     this.localRelevance = this.$props.newsPiece.relevance_average;
     this.localIrrelevance = this.$props.newsPiece.irrelevance_average;
     this.localRelevanceFlag = this.$props.newsPiece.user_has_relevanced;
     this.localIrrelevanceFlag = this.$props.newsPiece.user_has_irrelevanced;
-    console.log(this.localIrrelevanceFlag )
   }
 };
 </script>

@@ -10,11 +10,9 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 
-//import NavbarComponent from "@/components/NavBar.vue";
 export default {
   name: "App",
   components: {
-    //  NavbarComponent
   },
 
   methods: {
@@ -24,8 +22,6 @@ export default {
       const requestUser = data["username"];
       //Lo deje en el local storage del browser para ser usado y corroborar que es el usuario
       window.localStorage.setItem("username", requestUser);
-      ////console.log(data)
-      ////console.log(requestUser)
     }
   },
   created() {

@@ -69,8 +69,6 @@ export default {
     // get the edition's data from the REST API and set two data properties for the component
     let endpoint = `/api/editions/${to.params.id}/`;
     let data = await apiService(endpoint);
-    //console.log('esta es la data cuando voy a editar una pregunta')
-    //console.log(data)
     return next(
       vm => (
         (vm.editionBody = data.body),

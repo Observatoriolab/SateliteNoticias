@@ -93,8 +93,6 @@ export default {
     vueCustomScrollbar
   },
   created() {
-    console.log(this.newsPiece);
-    console.log(this.slug);
   },
   methods: {}
 };

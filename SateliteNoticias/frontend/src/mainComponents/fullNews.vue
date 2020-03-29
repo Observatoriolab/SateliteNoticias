@@ -67,14 +67,9 @@ export default {
 
     editnews(bibliographyName, bibliographyLink, slug, tags) {
       let endpoint = "/api/news/" + slug + "/";
-      //console.log('este son los tags')
-      //console.log(tags)
+     
       let method = "PUT";
-      console.log("estos son los tags");
-      console.log(tags);
       var tagsAux = [];
-      console.log(tags);
-      console.log(tags.length);
       if (tags[0].text !== undefined) {
         for (var i = 0; i < tags.length; i++) {
           this.$set(tagsAux, i, tags[i].text);
@@ -88,14 +83,10 @@ export default {
         tags: tagsAux,
         bibliography_name: bibliographyName,
         bibliography_link: bibliographyLink
-      }).then(news_data => {
-        console.log("esta es la data que me dio en el front");
-        console.log(news_data);
       });
     }
   },
   created() {
-    console.log(this.$route.params.newsPiece.title);
   }
 };
 </script>

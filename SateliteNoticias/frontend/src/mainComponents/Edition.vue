@@ -162,8 +162,7 @@ export default {
   watch: {
     // whenever question changes, this function will run
     changeData: {
-      handler: function(val) {
-        console.log("value change: ", val);
+      handler: function() {
         this.debouncedGetEditions();
       },
       deep: true
@@ -188,10 +187,7 @@ export default {
   methods: {
     toggleMenu(bool) {
       this.showSidepanel = !this.showSidepanel;
-      console.log('la emision')
       if (bool) {
-        console.log('entre aqui')
-        console.log(this.slug)
         this.$emit(
           "hide-panel",
           this.bibliographyName,
@@ -208,28 +204,20 @@ export default {
           this.tags
         );
       }
-      //console.log(this.newsTags)
     },
     newsChange(title, body) {
       this.title = title;
       this.body = body;
-      //console.log(title)
-      //console.log(body)
     },
     primaryTagsEditionChange(primaryTags) {
       this.tags = primaryTags;
-      //console.log(primaryTags)
     },
     secondaryTagsEditionChange(secondaryTags) {
-      console.log('estos son los secondary tags')
       this.tags = secondaryTags
-      //console.log(secondaryTags)
     },
     bibliographyEditionChange(names, links) {
       this.bibliographyName = names;
       this.bibliographyLink = links;
-      //console.log(this.bibliographyName)
-      //console.log(this.bibliographyLink)
     },
 
     getnewsData() {
@@ -237,8 +225,6 @@ export default {
       let endpoint = `/api/news/${this.slug}/`;
       apiService(endpoint).then(data => {
         if (data) {
-          //console.log('paso por aqui')
-          //console.log(data.title)
           this.title = data.title;
           this.body = data.content;
 
@@ -247,16 +233,10 @@ export default {
           method = "POST";
 
           let endpoint = `/api/news/${this.slug}/edition/`;
-          //console.log('estos son los resultados')
-          //console.log(this.bibliographyName)
-          //console.log(this.bibliographyLink)
           var tagsAux = [];
-          console.log(this.tags);
-          console.log(this.tags.length);
           for (var i = 0; i < this.tags.length; i++) {
             this.$set(tagsAux, i, this.tags[i].name);
           }
-          console.log(tagsAux)
           apiService(endpoint, method, {
             title: this.title,
             body: this.body,
@@ -264,10 +244,6 @@ export default {
             bibliography_name: this.bibliographyName,
             bibliography_link: this.bibliographyLink
           }).then(data => {
-            console.log(
-              "este es la data que me entrego cuando creo una nueva edicion"
-            );
-            console.log(data);
             this.editions.unshift(data);
             this.setEdition(true);
           });
@@ -295,8 +271,6 @@ export default {
       method = "POST";
 
       let endpoint = `/api/news/${this.slug}/edition/`;
-      console.log('estos son los tags')
-      console.log(this.tags)
       apiService(endpoint, method, {
         title: this.title,
         body: this.body,
@@ -304,8 +278,6 @@ export default {
         bibliography_name: this.bibliographyName,
         bibliography_link: this.bibliographyLink
       }).then(data => {
-        console.log("este es la data que me entrego al responder la pregunta");
-        console.log(data);
         this.editions.unshift(data);
         this.toggleMenu(true);
       });
@@ -322,17 +294,12 @@ export default {
       if (this.editions !== undefined) {
         if (this.editions.length === 0) return false;
         var actualEdition = this.editions[0];
-        console.log("Estos son los editions");
-        console.log(actualEdition);
-        console.log(newEdition);
         if (!_.isEqual(actualEdition, newEdition[0])) return true;
         return false;
       }
     },
     getnewsEditions() {
       // get a page of editions for a single news from the REST API's paginated 'news Endpoint'
-      //console.log(this.slug)
-      console.log("trying");
       let endpoint = `/api/news/${this.slug}/editions/`;
       apiService(endpoint).then(data => {
         if (data.results !== undefined) {
@@ -342,7 +309,7 @@ export default {
           } else if (this.comparingEditions(data.results)) {
             this.editions.splice(0);
             this.editions.push(...data.results);
-            console.log(data.results);
+   
             alert(
               "ALGUIEN HA MODIFICADO LA NOTICIA, SU NOMBRE ES: ",
               data.results[0].author
@@ -377,8 +344,6 @@ export default {
     this.firstTime = true;
     this.getnewsEditions();
 
-    //console.log('aqui va algo 2')
-    //console.log(this.$props)
 
     this.debouncedGetEditions = _.debounce(this.getnewsEditions, 500);
   }

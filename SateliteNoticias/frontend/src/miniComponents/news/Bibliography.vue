@@ -46,16 +46,9 @@ export default {
   }),
   methods: {
     createArrays() {
-      //console.log('esto es lo que me entro')
-      //console.log(this.bibliography_name)
-      //console.log(this.bibliography_link)
       if (this.bibliography_name.length !== 0) {
         var nameArray = this.bibliography_name.split(";");
         var linkArray = this.bibliography_link.split(";");
-        //console.log(nameArray)
-        //console.log(linkArray)
-        //console.log(nameArray.length-1)
-        //console.log(linkArray.length)
         for (var i = 0; i < nameArray.length - 1; i++) {
           this.$set(this.bibliographyNameArray, i, nameArray[i]);
           this.$set(this.bibliographyLinkArray, i, linkArray[i]);
@@ -63,8 +56,6 @@ export default {
       }
     },
     nameSelected(parameter) {
-      //console.log('paso por aqui2')
-      //console.log(parameter)
 
       var pos = this.bibliographyNameArray.lastIndexOf(parameter);
       this.bibliographyLinkModelSelect = this.bibliographyLinkArray[pos];
@@ -74,9 +65,6 @@ export default {
     this.createArrays();
   },
   beforeUpdate() {
-    console.log("llego algo");
-    console.log(this.updateNews);
-    console.log(this.bibliography_name);
     this.createArrays();
     if (this.bibliographyNameModelSelect === null) {
       this.bibliographyLinkModelSelect = "";

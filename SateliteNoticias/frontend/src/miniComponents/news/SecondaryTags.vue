@@ -18,7 +18,6 @@
   <!-- PRIMARY TAGS COMPONENT -->
 </template>
 <script>
-//import VueTagsInput from "@johmun/vue-tags-input";
 import Multiselect from 'vue-multiselect'
 
 export default {
@@ -28,7 +27,6 @@ export default {
     updateNews: Number
   },
   components: {
- //   VueTagsInput,
     Multiselect
   
   },
@@ -74,17 +72,12 @@ export default {
     }
   },
   created() {
-    console.log(this.$props.secondaryTags)
     var i = 0;
     for (i = 0; i < this.$props.secondaryTags.length; i++) {
       this.$set(this.value, i, { name: this.$props.secondaryTags[i], code:this.$props.secondaryTags[i]});
     }
-    //console.log(this.tags)
   },
    beforeUpdate() {
-    console.log("llego algo");
-    console.log(this.updateNews);
-    console.log(this.secondaryTags);
     for (var i = 0; i < this.$props.secondaryTags.length; i++) {
       this.$set(this.value, i, { name: this.$props.secondaryTags[i], code:this.$props.secondaryTags[i]});
     }

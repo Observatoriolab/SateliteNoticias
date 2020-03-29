@@ -85,13 +85,11 @@ export default {
   },
   methods: {
     clickedEdition() {
-      //console.log('estos son las ediciones')
-      //console.log(this.editions)
       this.$emit("clicked-edition", this.slug);
     }
   },
   created() {
-    console.log(this.newsPiece);
+    (this.newsPiece);
   }
 };
 </script>

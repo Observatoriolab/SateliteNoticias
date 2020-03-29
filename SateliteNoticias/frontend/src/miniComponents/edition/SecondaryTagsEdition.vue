@@ -21,7 +21,6 @@
   <!-- PRIMARY TAGS COMPONENT -->
 </template>
 <script>
-//import VueTagsInput from "@johmun/vue-tags-input";
 import Multiselect from 'vue-multiselect'
 
 export default {
@@ -30,7 +29,6 @@ export default {
     secondaryTags: Array
   },
   components: {
-      //  VueTagsInput
       Multiselect
   },
   data() {
@@ -74,7 +72,6 @@ export default {
         for(var i=0;i<this.value.length;i++){
             aux.push(this.value[i].name)
         }
-        console.log(aux)
         this.$emit("secondary-tags-change", aux);
 
     },
@@ -89,19 +86,15 @@ export default {
         for(var i=0;i<this.value.length;i++){
             aux.push(this.value.name)
         }
-        console.log(aux)
         this.$emit("secondary-tags-change", aux);
 
     }
   },
   created() {
-    console.log('aqui va los tags')
-    console.log(this.secondaryTags)
     var i = 0;
     for (i = 0; i < this.secondaryTags.length; i++) {
       this.$set(this.value, i, { name: this.$props.secondaryTags[i], code:this.$props.secondaryTags[i]});
     }
-    //console.log(this.tags)
   }
 };
 </script>

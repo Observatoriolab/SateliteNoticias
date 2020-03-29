@@ -41,15 +41,11 @@ export default {
   }),
   methods: {
     onChange() {
-      //console.log('pase por aqui')
       this.$emit("news-change", this.titleInternal, this.bodyInternal);
     }
   },
 
   created() {
-    //console.log('los props')
-    //console.log(this.title)
-    //console.log(this.body)
     this.titleInternal = this.title;
     this.bodyInternal = this.body;
   }

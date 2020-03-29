@@ -112,8 +112,7 @@ export default {
   watch: {
     // whenever comments changes, this function will run
     comments: function(newComments, oldComments) {
-      //console.log('se cambiaron las noticias o.o')
-      console.log(newComments, oldComments);
+      (newComments, oldComments);
     }
   },
   beforeUpdate() {
@@ -129,36 +128,32 @@ export default {
     },
     async delayedComments(item) {
       await apiService(item).then(data => {
-        //console.log('este es la data')
-        //console.log(data.results)
         this.updatedComments.push(...data.results);
         return data.results;
       });
     },
     async getcomments() {
-      //console.log(this.pageNumbers)
-
       for (const [idx, url] of this.pageNumbers.entries()) {
-        console.log(url);
+        (url);
         const todo = await this.delayedComments(url);
-        console.log(`Received Todo ${idx + 1}:`, todo);
+        (`Received Todo ${idx + 1}:`, todo);
       }
-      console.log(this.updatedComments);
+      (this.updatedComments);
       for (var i = 0; i < this.updatedComments.length; i++) {
-        console.log(this.updatedComments[i]);
+        (this.updatedComments[i]);
         this.$set(this.comments, i, this.updatedComments[i]);
       }
       this.updatedComments.splice(0);
 
       this.updateComments += 1;
-      console.log("Done updating the comments!");
+      ("Done updating the comments!");
     },
     getLastDigit(pageString, optional) {
       let regex = /=+\d*/.exec(pageString);
-      console.log(regex[0]);
+      (regex[0]);
       var nuevo = /\d+$/.exec(regex[0]);
-      console.log(nuevo[0]);
-      console.log(parseInt(nuevo[0]) - 1 + optional);
+      (nuevo[0]);
+      (parseInt(nuevo[0]) - 1 + optional);
       return (parseInt(nuevo[0]) - 1 + optional).toString();
     },
     async getNewsComments() {
@@ -170,20 +165,16 @@ export default {
       if (this.next) {
         endpoint = this.next;
       }
-      console.log(this.next);
+      (this.next);
       await apiService(endpoint).then(data => {
         data;
         this.comments.push(...data.results);
-        console.log("esto es lo que salio");
-        console.log(data);
-        console.log(this.next);
 
         if (data.results.length === 0) {
           this.pageNumbers.push("/api/news/" + this.slug + "/comments/?page=1");
         } else if (data.next) {
           this.next = data.next;
-          console.log("este es el next");
-          console.log(this.next);
+          ("este es el next");
           this.pageNumbers.push(
             "/api/news/" +
               this.slug +
@@ -191,8 +182,8 @@ export default {
               this.getLastDigit(this.next, 0)
           );
         } else {
-          console.log(this.next);
-          console.log("sadness ensuess");
+          (this.next);
+          ("sadness ensuess");
           this.next = endpoint;
           this.pageNumbers.push(
             "/api/news/" +
@@ -203,16 +194,16 @@ export default {
           this.next = null;
           this.count = data.count;
         }
-        console.log(this.pageNumbers);
+        (this.pageNumbers);
 
         var muchTime2 = window.performance.now();
         var muchTimeDate2 = new Date().getTime();
-        console.log(
+        (
           "Call to doSomething took " +
             (muchTime2 - muchTime) +
             " milliseconds."
         );
-        console.log(
+        (
           "Call to doSomething took " +
             (muchTimeDate2 - muchTimeDate) +
             " milliseconds."
@@ -226,15 +217,9 @@ export default {
         let endpoint = `/api/news/${this.slug}/comment/`;
         await apiService(endpoint, "POST", { body: this.newCommentBody }).then(
           data => {
-            console.log(
-              "este es la data que me entrego al responder la pregunta"
-            );
-            console.log(data);
-            //Hay que ver si se tiene que agregar una pagina mas
-            console.log(this.count);
+            (data)
             this.count += 1;
             if (this.count % 4 === 1 && this.count > 4) {
-              console.log("pase por aca pue");
               this.pageNumbers.push(
                 "/api/news/" +
                   this.slug +
@@ -255,7 +240,6 @@ export default {
     }
   },
   created() {
-    console.log(this.slug);
     this.getNewsComments();
     this.setRequestUser();
     this.debouncedGetComments = _.debounce(this.getcomments, this.delayTime);

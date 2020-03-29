@@ -13,12 +13,14 @@
       </b-col>
 
       <b-col md="4">
-        <vue-single-select
+      <!--  <vue-single-select
           v-model="bibliographyNameModelSelect"
           :options="bibliographyNameArray"
           :getOptionValue="nameSelected"
           :inputId="'asdsad'"
         ></vue-single-select>
+      -->
+        <multiselect   :taggable="true" @tag="addTag" v-model="value" :options="options" :custom-label="nameWithLang" placeholder="Select one" label="name" track-by="name"></multiselect>
 
         <b-form-input v-model="bibliographyLinkModelSelect"> </b-form-input>
       </b-col>
@@ -47,8 +49,13 @@
   </div>
 </template>
 <script>
+import Multiselect from 'vue-multiselect'
+
 export default {
   name: "Bibliography",
+  components: {
+    Multiselect
+  },
   props: {
     bibliographyName: String,
     bibliographyLink: String
@@ -61,11 +68,21 @@ export default {
     bibliographyNameArray: [],
     bibliographyLinkModel: "",
     bibliographyLinkModelSelect: "",
-    bibliographyLinkArray: []
+    bibliographyLinkArray: [],
+    value: { name: 'Vue.js', language: 'JavaScript' },
+    options: [
+      { name: 'Vue.js', language: 'JavaScript' },
+      { name: 'Rails', language: 'Ruby' },
+      { name: 'Sinatra', language: 'Ruby' },
+      { name: 'Laravel', language: 'PHP' },
+      { name: 'Phoenix', language: 'Elixir' }
+    ]
   }),
   methods: {
+    nameWithLang ({ name }) {
+      return `${name}`
+    },
     addBibliography() {
-      //console.log('paso por aqui')
       this.$set(
         this.bibliographyNameArray,
         this.bibliographyNameArray.length,
@@ -76,12 +93,14 @@ export default {
         this.bibliographyLinkArray.length,
         this.bibliographyLinkModel
       );
-      //console.log(this.bibliographyNameArray)
-      //console.log(this.bibliographyLinkArray)
+      console.log('paso para aqui')
+      console.log(this.bibliographyNameInternal)
+      console.log(this.bibliographyLinkInternal)
 
       this.createStrings();
       this.bibliographyLinkModel = "";
       this.bibliographyNameModel = "";
+      
       this.$emit(
         "bibliography-change",
         this.bibliographyNameInternal,
@@ -89,16 +108,10 @@ export default {
       );
     },
     createArrays() {
-      //console.log('esto es lo que me entro')
-      //console.log(this.bibliographyName)
-      //console.log(this.bibliographyLink)
       if (this.bibliographyName.length !== 0) {
         var nameArray = this.bibliographyName.split(";");
         var linkArray = this.bibliographyLink.split(";");
-        //console.log(nameArray)
-        //console.log(linkArray)
-        //console.log(nameArray.length-1)
-        //console.log(linkArray.length)
+ 
         for (var i = 0; i < nameArray.length - 1; i++) {
           this.$set(this.bibliographyNameArray, i, nameArray[i]);
           this.$set(this.bibliographyLinkArray, i, linkArray[i]);
@@ -106,37 +119,41 @@ export default {
       }
     },
     createStrings() {
-      //console.log('estos son los arrays para irme')
-      //console.log(this.bibliographyNameArray[0])
-      //console.log(this.bibliographyLinkArray)
       for (var i = 0; i < this.bibliographyNameArray.length; i++) {
         this.bibliographyNameInternal =
           this.bibliographyNameInternal + this.bibliographyNameArray[i] + ";";
-        //console.log(this.bibliographyNameInternal)
         this.bibliographyLinkInternal =
           this.bibliographyLinkInternal + this.bibliographyLinkArray[i] + ";";
       }
-      //console.log('ASI SALIERON')
-      //console.log(this.bibliographyNameInternal)
-      //console.log(this.bibliographyLinkInternal)
     },
     nameSelected(parameter) {
-      //console.log('paso por aqui2')
-      //console.log(parameter)
 
       var pos = this.bibliographyNameArray.lastIndexOf(parameter);
       this.bibliographyLinkModelSelect = this.bibliographyLinkArray[pos];
+    },
+    addTag (newTag) {
+        const tag = {
+          name: newTag,
+          language: newTag
+        }
+        this.options.push(tag)
+        this.value.push(tag)
+        var aux = []
+        for(var i=0;i<this.value.length;i++){
+            aux.push(this.value.name)
+        }
+
     }
   },
   created() {
     this.createArrays();
   },
   beforeUpdate() {
-    //console.log(this.bibliographyNameModelSelect)
     if (this.bibliographyNameModelSelect === null) {
       this.bibliographyLinkModelSelect = "";
     }
   }
+
 };
 </script>
 <style lang="stylus"></style>

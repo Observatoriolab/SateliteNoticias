@@ -125,14 +125,13 @@ export default {
   },
   watch: {
     // whenever question changes, this function will run
-    news: function(newNews, oldNews) {
-      //console.log('se cambiaron las noticias o.o')
-      console.log(newNews, oldNews);
+    news: function() {
+      //console.log(newNews)
+      //console.log(oldNews)
     }
   },
 
   beforeUpdate() {
-    console.log("El tiempo de delay ahora es de: " + this.delayTime.toString());
     this.debouncedGetNews();
   },
 
@@ -147,8 +146,6 @@ export default {
       let endpoint = `/api/news/tags/${this.categoryToFilterWith}/`;
       let method = "GET";
       apiService(endpoint, method).then(data => {
-        //console.log("este es el resultado de lo que me dio el back")
-        //console.log(data.results)
         this.news = data.results;
         this.filterFlag = true;
         this.next = null;
@@ -161,9 +158,6 @@ export default {
     },
 
     hidePanel(bibliographyName, bibliographyLink, slug, tags) {
-      console.log(this.editionToggle);
-      console.log('asi quedaron los tags')
-      console.log(tags)
       this.editionToggle = false;
       if (slug.length !== 0) {
         this.editnews(bibliographyName, bibliographyLink, slug, tags);
@@ -171,52 +165,40 @@ export default {
     },
 
     async delayedNews(item) {
-      await apiService(item).then(data => {
-        //console.log('este es la data')
-        //console.log(data.results)
-        this.updatedNews.push(...data.results);
-        return data.results;
+      await apiService(item).then(data => {    
+          this.updatedNews.push(...data.results);
       });
     },
     async getnews() {
-      //console.log(this.pageNumbers)
+     
 
       for (const [idx, url] of this.pageNumbers.entries()) {
-        console.log(url);
-        const todo = await this.delayedNews(url);
-        console.log(`Received Todo ${idx + 1}:`, todo);
+        console.log(idx)
+        await this.delayedNews(url);
       }
-      console.log(this.updatedNews);
       for (var i = 0; i < this.updatedNews.length; i++) {
-        console.log(this.updatedNews[i]);
         this.$set(this.news, i, this.updatedNews[i]);
       }
       this.updatedNews.splice(0);
 
       this.updateNews += 1;
-      console.log("Done updating the news!");
     },
     getLastDigit(pageString) {
       let regex = /=+\d*/.exec(pageString);
-      console.log(regex[0]);
       var nuevo = /\d+$/.exec(regex[0]);
-      console.log(nuevo);
       return parseInt(nuevo[0]) - 1;
     },
     async getnewsLoadMore() {
       this.disableFlag = true;
 
       this.loadingnews = true;
-      //console.log(this.news)
+  
 
       if (this.next) {
         this.endpoint = this.next;
       }
-      var muchTime = window.performance.now();
-      var muchTimeDate = new Date().getTime();
       await apiService(this.endpoint).then(data => {
         this.news.push(...data.results);
-        console.log(data);
         this.loadingnews = false;
         if (data.next) {
           this.next = data.next;
@@ -226,18 +208,7 @@ export default {
         } else {
           this.next = null;
         }
-        var muchTime2 = window.performance.now();
-        var muchTimeDate2 = new Date().getTime();
-        console.log(
-          "Call to doSomething took " +
-            (muchTime2 - muchTime) +
-            " milliseconds."
-        );
-        console.log(
-          "Call to doSomething took " +
-            (muchTimeDate2 - muchTimeDate) +
-            " milliseconds."
-        );
+     
         this.delayTime += 300;
         this.disableFlag = false;
       });
@@ -253,7 +224,6 @@ export default {
         bibliography_name: bibliographyName,
         bibliography_link: bibliographyLink
       }).then(news_data => {
-        console.log("esta es la data que me dio en el front");
         console.log(news_data);
       });
     }
@@ -262,8 +232,6 @@ export default {
     this.getnewsLoadMore();
     document.title = "Satelite de Noticias";
 
-    //console.log('estas son las news')
-    //console.log(this.news);
     this.debouncedGetNews = _.debounce(this.getnews, this.delayTime);
   }
 };
