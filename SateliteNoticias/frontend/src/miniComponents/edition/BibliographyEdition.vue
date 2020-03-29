@@ -6,45 +6,21 @@
       style="width: 95%; text-align:center;  margin-left:auto;margin-right:auto;  color:blue"
       fluid
     >
-      <b-col md="2 p-2">
-        <h6>Nombre:</h6>
-        <div style="padding:0.5em"></div>
-        <h6>Link:</h6>
-      </b-col>
-
-      <b-col md="4">
-      <!--  <vue-single-select
-          v-model="bibliographyNameModelSelect"
-          :options="bibliographyNameArray"
-          :getOptionValue="nameSelected"
-          :inputId="'asdsad'"
-        ></vue-single-select>
-      -->
-        <multiselect   :taggable="true" @tag="addTag" v-model="value" :options="options" :custom-label="nameWithLang" placeholder="Select one" label="name" track-by="name"></multiselect>
-
-        <b-form-input v-model="bibliographyLinkModelSelect"> </b-form-input>
-      </b-col>
-
-      <b-col md="2 p-2">
-        <h6>Nombre:</h6>
-        <div style="padding:0.5em"></div>
-        <h6>Link:</h6>
-      </b-col>
 
       <b-col md="3">
-        <b-form-input v-model="bibliographyNameModel"> </b-form-input>
+        <h6>Nombre:</h6>
+        <div style="padding:0.5em"></div>
+        <h6>Link:</h6>
+      </b-col>
+
+      <b-col md="9">
+        <multiselect  :tagPlaceholder="'Enter agrega'" @input="nameSelected" :taggable="true" @tag="addTag" v-model="value" :selectLabel="'Enter selecciona'" :options="options" placeholder="Selecciona o agrega uno" label="name" track-by="name"></multiselect>
         <div style="padding:0.2em"></div>
 
-        <b-form-input v-model="bibliographyLinkModel"> </b-form-input>
+        <b-form-input @update="updateWarning" v-model="bibliographyLinkModelSelect"> </b-form-input>
+        <h6 v-show="warning" style="color:red">Porfavor agrege el link correspondiente</h6>
       </b-col>
 
-      <b-col md="1">
-        <div class="button">
-          <b-button @click="addBibliography" circled lg="4" variant="primary"
-            >+</b-button
-          >
-        </div>
-      </b-col>
     </b-row>
   </div>
 </template>
@@ -69,38 +45,18 @@ export default {
     bibliographyLinkModel: "",
     bibliographyLinkModelSelect: "",
     bibliographyLinkArray: [],
-    value: { name: 'Vue.js', language: 'JavaScript' },
+    value: { name: '', code: ''},
     options: [
-      { name: 'Vue.js', language: 'JavaScript' },
-      { name: 'Rails', language: 'Ruby' },
-      { name: 'Sinatra', language: 'Ruby' },
-      { name: 'Laravel', language: 'PHP' },
-      { name: 'Phoenix', language: 'Elixir' }
-    ]
+
+    ],
+    warning:false
   }),
-  methods: {
-    nameWithLang ({ name }) {
-      return `${name}`
+  methods: {   
+    updateWarning(value){
+      if (value.length !== 0) this.warning=false
     },
     addBibliography() {
-      this.$set(
-        this.bibliographyNameArray,
-        this.bibliographyNameArray.length,
-        this.bibliographyNameModel
-      );
-      this.$set(
-        this.bibliographyLinkArray,
-        this.bibliographyLinkArray.length,
-        this.bibliographyLinkModel
-      );
-      console.log('paso para aqui')
-      console.log(this.bibliographyNameInternal)
-      console.log(this.bibliographyLinkInternal)
-
-      this.createStrings();
-      this.bibliographyLinkModel = "";
-      this.bibliographyNameModel = "";
-      
+      this.createStrings()
       this.$emit(
         "bibliography-change",
         this.bibliographyNameInternal,
@@ -113,34 +69,48 @@ export default {
         var linkArray = this.bibliographyLink.split(";");
  
         for (var i = 0; i < nameArray.length - 1; i++) {
-          this.$set(this.bibliographyNameArray, i, nameArray[i]);
+          this.$set(this.options, i, {name:nameArray[i], code:nameArray[i]});
           this.$set(this.bibliographyLinkArray, i, linkArray[i]);
         }
       }
     },
     createStrings() {
-      for (var i = 0; i < this.bibliographyNameArray.length; i++) {
+      for (var i = 0; i < this.options.length; i++) {
         this.bibliographyNameInternal =
-          this.bibliographyNameInternal + this.bibliographyNameArray[i] + ";";
+          this.bibliographyNameInternal + this.options[i].name + ";";
         this.bibliographyLinkInternal =
           this.bibliographyLinkInternal + this.bibliographyLinkArray[i] + ";";
       }
     },
     nameSelected(parameter) {
-
-      var pos = this.bibliographyNameArray.lastIndexOf(parameter);
-      this.bibliographyLinkModelSelect = this.bibliographyLinkArray[pos];
+      console.log('hola como va')
+      console.log(parameter)
+      if(parameter !== null){
+        var arrNames = this.options.map(el => el.name);
+        var pos = arrNames.lastIndexOf(parameter.name);
+        this.bibliographyLinkModelSelect = this.bibliographyLinkArray[pos];
+      }
+      else{
+        this.bibliographyLinkModelSelect = ''
+      }
     },
     addTag (newTag) {
         const tag = {
           name: newTag,
-          language: newTag
+          code: newTag
         }
-        this.options.push(tag)
-        this.value.push(tag)
-        var aux = []
-        for(var i=0;i<this.value.length;i++){
-            aux.push(this.value.name)
+        console.log('Este es el nuevo tag')
+        console.log(newTag)
+        console.log(tag)
+        if(this.bibliographyLinkModelSelect.length !== 0){
+
+            this.options.push(tag)
+            this.bibliographyLinkArray.push(this.bibliographyLinkModelSelect)
+            this.bibliographyLinkModelSelect = ''
+            this.addBibliography()
+        }
+        else{
+          this.warning = true
         }
 
     }

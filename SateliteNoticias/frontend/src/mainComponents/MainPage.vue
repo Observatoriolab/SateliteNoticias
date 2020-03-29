@@ -171,7 +171,7 @@ export default {
     },
     async getnews() {
      
-
+      
       for (const [idx, url] of this.pageNumbers.entries()) {
         console.log(idx)
         await this.delayedNews(url);

@@ -11,7 +11,8 @@ import {
   MdToolbar,
   MdIcon,
   MdList,
-  MdMenu
+  MdMenu,
+  MdTooltip
 } from "vue-material/dist/components";
 import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
@@ -23,6 +24,8 @@ Vue.use(MdToolbar);
 Vue.use(MdIcon);
 Vue.use(MdList);
 Vue.use(MdMenu);
+Vue.use(MdTooltip);
+
 import VueSingleSelect from "vue-single-select";
 Vue.component("vue-single-select", VueSingleSelect);
 
