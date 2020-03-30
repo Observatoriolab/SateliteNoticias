@@ -19,6 +19,20 @@
         <!-- SEARCH BUTTONS COMPONENT -->
 
         <SearchButtons></SearchButtons>
+           <b-row align-h="center">
+              <div class="button p-2">
+                <b-button
+                  v-show="next"
+                  @click="getnewsLoadMore"
+                  variant="success"
+                  :disabled="disableButton()"
+                >
+                  Load More
+                </b-button>
+              </div>
+            </b-row>
+                      <div style="padding-top:2em"></div>
+
         <!-- SEARCH BUTTONS COMPONENT -->
         <vue-custom-scrollbar
           class="scroll-area"
@@ -54,18 +68,7 @@
           </b-row>
         </vue-custom-scrollbar>
 
-        <b-row align-h="center">
-          <div class="button p-5">
-            <b-button
-              v-show="next"
-              @click="getnewsLoadMore"
-              variant="success"
-              :disabled="disableButton()"
-            >
-              Load More
-            </b-button>
-          </div>
-        </b-row>
+     
       </b-col>
 
       <div v-if="editionToggle">

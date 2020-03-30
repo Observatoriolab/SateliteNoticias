@@ -269,6 +269,11 @@ export default {
       var method = "";
 
       method = "POST";
+      console.log(this.title)
+      console.log(this.body)
+      console.log(this.tags)
+      console.log(this.bibliographyName)
+      console.log(this.bibliographyLink)
 
       let endpoint = `/api/news/${this.slug}/edition/`;
       apiService(endpoint, method, {
@@ -281,7 +286,6 @@ export default {
         this.editions.unshift(data);
         this.toggleMenu(true);
       });
-      this.body = null;
       this.userHasEditioned = true;
       if (this.error) {
         this.error = null;

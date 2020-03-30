@@ -3,16 +3,34 @@
     style="width:50%; margin-right:auto;margin-left:auto;padding:0.8em 0.8em 0.8em 0.8em "
   >
     <form @submit.prevent="onSubmit">
-      <b-row>
-        <div class="float:left">
-          <h4 class="text-primary p-2">Comentarios</h4>
-        </div>
-
-        <div class="float:right">
+      <b-row align-h="center">
+     
+        <b-col> 
           <b-button type="submit" variant="success">
             Postear
           </b-button>
-        </div>
+        </b-col>
+        <b-col>
+           <div class="float:left">
+              <h4 class="text-primary p-2">Comentarios</h4>
+          </div>
+
+        </b-col>
+        <b-col>
+            <div class="button p-2">
+              <b-button
+                v-show="next"
+                @click="getNewsComments"
+                variant="success"
+                :disabled="disableButton()"
+              >
+                Load More
+              </b-button>
+          </div>
+        </b-col>
+          
+      
+    <div style="padding-top:2em"></div>
       </b-row>
 
       <b-form-textarea
@@ -24,8 +42,8 @@
       >
       </b-form-textarea>
     </form>
-
-    <div style="padding: 1em"></div>
+    
+            <div style="padding: 1em"></div>
 
     <vue-custom-scrollbar
       class="scroll-area"
@@ -61,21 +79,6 @@
       </div>
     </vue-custom-scrollbar>
 
-    <b-row>
-      <b-col md="5"> </b-col>
-      <b-col md="4">
-        <div style="padding:1em"></div>
-        <b-button
-          v-show="next"
-          @click="getNewsComments"
-          variant="success"
-          :disabled="disableButton()"
-        >
-          Load More
-        </b-button>
-      </b-col>
-      <b-col md="3"> </b-col>
-    </b-row>
   </div>
 </template>
 <script>
