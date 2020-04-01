@@ -177,7 +177,9 @@ REST_FRAMEWORK = {
 
 WEBPACK_LOADER = {
     'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'dist/',
+        'CACHE': DEBUG,
+
+        'BUNDLE_DIR_NAME': '/bundles/',
         'STATS_FILE': os.path.join(BASE_DIR, 'frontend', 'webpack-stats.json')
     }
 
