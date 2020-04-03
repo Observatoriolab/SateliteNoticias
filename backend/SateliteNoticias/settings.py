@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['satelite-noticias.herokuapp.com']
 
 # Application definition
 
+# django.contrib.sites
+SITE_ID = 1
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -152,8 +154,6 @@ AUTH_USER_MODEL = "users.CustomUser"
 # django crispy forms
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
-# django.contrib.sites
-SITE_ID = 1
 
 #django allauth
 ACCOUNT_EMAIL_VERIFICATION = "none"
