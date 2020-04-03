@@ -107,11 +107,9 @@ venv.bak/
 
 webpack-stats.json
 
-backend/news/migrations/
 
 .DS_Store
 
-backend/users/migrations/
 
 
 package-lock.json
