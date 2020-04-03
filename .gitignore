@@ -105,18 +105,16 @@ venv.bak/
 
 .vscode/
 
-SateliteNoticias/frontend/webpack-stats.json
+webpack-stats.json
 
-SateliteNoticias/news/migrations/
+backend/news/migrations/
 
 .DS_Store
 
-SateliteNoticias/users/migrations/
+backend/users/migrations/
 
-SateliteNoticias/frontend/package-lock.json
 
-SateliteNoticias/package-lock.json
+package-lock.json
 
-SateliteNoticias/questions/migrations/0001_initial.py
-
-SateliteNoticias/questions/migrations/__init__.py
+#node_modules of npm install
+/node_modules

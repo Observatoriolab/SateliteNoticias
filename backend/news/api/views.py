@@ -5,9 +5,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from news.api.permissions import IsAuthorOrReadOnly
-from news.api.serializers import EditionSerializer, Newserializer, CommentSerializer
-from news.models import Edition, News, Comment
+from backend.news.api.permissions import IsAuthorOrReadOnly
+from backend.news.api.serializers import EditionSerializer, Newserializer, CommentSerializer
+from backend.news.models import Edition, News, Comment
 
 
 import logging

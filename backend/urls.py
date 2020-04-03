@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django_registration.backends.one_step.views import RegistrationView
 
-from core.views import IndexTemplateView
-from users.forms import CustomUserForm
+from backend.core.views import IndexTemplateView
+from backend.users.forms import CustomUserForm
 
 
 urlpatterns = [
@@ -40,11 +40,11 @@ urlpatterns = [
 
 
     path('api/', 
-        include("users.api.urls")),
+        include("backend.users.api.urls")),
 
 
     path('api/', 
-        include("news.api.urls")),
+        include("backend.news.api.urls")),
 
 
     path('api-auth/', 

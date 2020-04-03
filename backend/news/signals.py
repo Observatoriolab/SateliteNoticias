@@ -2,8 +2,8 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils.text import slugify
 
-from core.utils import generate_random_string
-from news.models import News
+from backend.core.utils import generate_random_string
+from backend.news.models import News
 
 @receiver(pre_save, sender=News)
 def add_slug_to_news(sender,instance,*args, **kwargs):

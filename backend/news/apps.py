@@ -2,7 +2,8 @@ from django.apps import AppConfig
 
 
 class NewsConfig(AppConfig):
-    name = 'news'
+    name = 'backend.news'
+    verbose_name= 'News'
     
     def ready(self):
-        import news.signals
+        import backend.news.signals

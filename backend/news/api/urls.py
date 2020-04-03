@@ -1,6 +1,6 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from news.api import views as qv
+from backend.news.api import views as qv
 
 router = DefaultRouter()
 #API ENDPOINTS NEWS GENERAL (CRUD)

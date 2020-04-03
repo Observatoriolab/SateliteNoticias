@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from news.models import Edition, News, Comment
+from backend.news.models import Edition, News, Comment
 from taggit_serializer.serializers import TaggitSerializer, TagListSerializerField
 import json
 import logging
