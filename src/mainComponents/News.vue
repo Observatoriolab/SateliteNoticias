@@ -19,8 +19,8 @@
       :updateNews="updateNews"> </SecondaryTags>
 
     <Bibliography
-      :bibliography_name="bibliography_name"
-      :bibliography_link="bibliography_link"
+      :bibliography_name="newsPiece.bibliography_name"
+      :bibliography_link="newsPiece.bibliography_link"
       :slug="slug"
       :content="content"
       :title="title"
@@ -89,7 +89,7 @@ export default {
     }
   },
   created() {
-    (this.newsPiece);
+    console.log(this.newsPiece);
   }
 };
 </script>

@@ -183,7 +183,7 @@ export default {
         this.$set(this.news, i, this.updatedNews[i]);
       }
       this.updatedNews.splice(0);
-
+      console.log(this.news)
       this.updateNews += 1;
     },
     getLastDigit(pageString) {
