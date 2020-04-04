@@ -208,7 +208,13 @@ export default {
           this.pageNumbers.push(
             "/api/news/?page=" + this.getLastDigit(this.next)
           );
-        } else {
+        }
+        else if (data.count<=4){
+            this.pageNumbers.push(
+            "/api/news/?page=1"
+          );
+        }
+         else {
           this.next = null;
         }
      
