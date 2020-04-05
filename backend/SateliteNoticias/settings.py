@@ -27,7 +27,7 @@ SECRET_KEY = '-yfc1z9s0xhz=iy5$qp5hn%bmv0*04+jgzx-xp2*js$)4c=h-*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['satelite-noticias.herokuapp.com']
+ALLOWED_HOSTS = ['satelite-noticias.herokuapp.com','localhost']
 
 
 # Application definition

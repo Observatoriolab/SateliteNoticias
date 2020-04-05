@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
 import News from "../views/News.vue";
 import NewsEditor from "../views/NewsEditor.vue";
 import EditionEditor from "../views/EditionEditor.vue";
@@ -13,8 +12,8 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: Home
+    name: "MainPage",
+    component: MainPage
   },
   {
     path: "/news/:slug",
@@ -42,12 +41,8 @@ const routes = [
     path: "*",
     name: "page-not-found",
     component: NotFound
-  },
-  {
-    path: "/prueba",
-    name: "MainPage",
-    component: MainPage
   }
+ 
 ];
 
 const router = new VueRouter({

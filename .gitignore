@@ -114,3 +114,4 @@ package-lock.json
 
 #node_modules of npm install
 /node_modules
+*.sqlite3
