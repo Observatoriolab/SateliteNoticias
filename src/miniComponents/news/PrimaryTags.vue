@@ -87,7 +87,7 @@ export default {
   },
 
   created() {
-    this.value.name=this.first
+    /*this.value.name=this.first
     this.value.code=this.first
 
     this.value.name=this.second
@@ -95,6 +95,7 @@ export default {
 
     this.value.name=this.third
     this.value.code=this.third
+    */
 /*  this.tagsInternal = this.tags;
     this.tagsInternal2 = this.tags2;
     this.tagsInternal3 = this.tags3;
