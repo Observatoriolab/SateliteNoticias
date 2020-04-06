@@ -11,13 +11,7 @@
     <b-row style="margin-left:auto;margin-right:auto; ">
       <b-col md="5">
         <h6>Nombre:</h6>
-
-        <vue-single-select
-          v-model="bibliographyNameModelSelect"
-          :options="bibliographyNameArray"
-          :getOptionValue="nameSelected"
-          :inputId="'id' + slug + content + title"
-        ></vue-single-select>
+        <multiselect  @input="nameSelected" v-model="value" :selectLabel="'Enter selecciona'" :options="options" placeholder="Selecciona uno" label="name" track-by="name"></multiselect>
       </b-col>
       <b-col md="2"></b-col>
       <b-col md="5">
@@ -28,8 +22,13 @@
   </b-row>
 </template>
 <script>
+import Multiselect from 'vue-multiselect'
+
 export default {
   name: "Bibliography",
+    components: {
+    Multiselect
+  },
   props: {
     bibliography_name: String,
     bibliography_link: String,
@@ -42,7 +41,11 @@ export default {
     bibliographyNameModelSelect: "",
     bibliographyNameArray: [],
     bibliographyLinkModelSelect: "",
-    bibliographyLinkArray: []
+    bibliographyLinkArray: [],
+    value: { name: '', code: ''},
+    options: [
+
+    ],
   }),
   methods: {
     createArrays() {
@@ -50,16 +53,24 @@ export default {
         var nameArray = this.bibliography_name.split(";");
         var linkArray = this.bibliography_link.split(";");
         for (var i = 0; i < nameArray.length - 1; i++) {
-          this.$set(this.bibliographyNameArray, i, nameArray[i]);
+          this.$set(this.options, i, {name:nameArray[i], code:nameArray[i]});
           this.$set(this.bibliographyLinkArray, i, linkArray[i]);
         }
       }
     },
-    nameSelected(parameter) {
+      nameSelected(parameter) {
+      console.log('hola como va')
+      console.log(parameter)
+      if(parameter !== null){
+        var arrNames = this.options.map(el => el.name);
+        var pos = arrNames.lastIndexOf(parameter.name);
+        this.bibliographyLinkModelSelect = this.bibliographyLinkArray[pos];
+      }
+      else{
+        this.bibliographyLinkModelSelect = ''
+      }
+    },
 
-      var pos = this.bibliographyNameArray.lastIndexOf(parameter);
-      this.bibliographyLinkModelSelect = this.bibliographyLinkArray[pos];
-    }
   },
   created() {
     this.createArrays();
